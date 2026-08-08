@@ -1,0 +1,36 @@
+# Registry of downloaded regulatory source documents.
+# status: pending (not yet parsed) | parsed (data extracted into data/regulations/)
+sources:
+  - file: medidas_de_administracion_de_pesca_recreativa_en_chile_2025-2026_v20260522.xlsx
+    url: https://www.sernapesca.cl/app/uploads/2026/05/medidas_de_administracion_de_pesca_recreativa_en_chile_2025-2026_v20260522.xlsx
+    publisher: Sernapesca
+    title: Medidas de administración de pesca recreativa en Chile 2025-2026 (Excel)
+    version: v20260522
+    fetched: 2026-08-08
+    sha256_8: def39386
+    status: pending
+  - file: medidas_de_administracion_de_pesca_recreativa_en_chile_2025-2026_v20260522.pdf
+    url: https://www.sernapesca.cl/app/uploads/2026/05/medidas_de_administracion_de_pesca_recreativa_en_chile_2025-2026_v20260522.pdf
+    publisher: Sernapesca
+    title: Medidas de administración de pesca recreativa en Chile 2025-2026 (PDF)
+    version: v20260522
+    fetched: 2026-08-08
+    sha256_8: 0cb183e4
+    status: pending
+  - file: Triptico-de-Pesca-Recreativa_2025.pdf
+    url: https://www.sernapesca.cl/app/uploads/2025/10/Triptico-de-Pesca-Recreativa_2025.pdf
+    publisher: Sernapesca
+    title: Tríptico de Pesca Recreativa 2025
+    version: "2025"
+    fetched: 2026-08-08
+    sha256_8: 662e3ec4
+    status: pending
+
+# Pages watched for new versions (used by /update):
+watch:
+  - url: https://www.sernapesca.cl/manuales_y_publicaciones/temporadas-de-pesca-recreativa-en-chile/
+    what: consolidated medidas Excel/PDF links (versioned filenames)
+  - url: https://www.sernapesca.cl/noticias/?area_trabajo%5B%5D=pesca-recreativa
+    what: news announcing season openings / new resolutions
+  - url: https://www.subpesca.cl/portal/difusion/Noticias/
+    what: Subpesca announcements

@@ -185,7 +185,7 @@ def main():
   way["natural"="water"]["name"~"^({name_regex(lakes)})$"];
   relation["natural"="water"]["name"~"^({name_regex(lakes)})$"];
 );
-out tags geom;"""
+out geom;"""
     lakes_res = overpass(q_lakes)
     print(f"  lakes: {len(lakes_res['elements'])} elements")
     time.sleep(5)
@@ -195,7 +195,7 @@ out tags geom;"""
   relation["waterway"]["name"~"^({name_regex(rivers)})$"](area:{CHILE_AREA});
   way["waterway"~"^(river|stream)$"]["name"~"^({name_regex(rivers)})$"](area:{CHILE_AREA});
 );
-out tags geom;"""
+out geom;"""
     ww_res = overpass(q_waterways)
     print(f"  waterways: {len(ww_res['elements'])} elements")
     time.sleep(5)
@@ -205,7 +205,7 @@ out tags geom;"""
   way["natural"="water"]["water"~"^(river|canal|stream)$"]["name"~"^({name_regex(rivers)})$"](area:{CHILE_AREA});
   relation["natural"="water"]["water"~"^(river|canal|stream)$"]["name"~"^({name_regex(rivers)})$"](area:{CHILE_AREA});
 );
-out tags geom;"""
+out geom;"""
     rpoly_res = overpass(q_rpoly)
     print(f"  river polygons: {len(rpoly_res['elements'])} elements")
 

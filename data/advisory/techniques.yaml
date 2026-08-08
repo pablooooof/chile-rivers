@@ -1,0 +1,21 @@
+# EDITORIAL layer — NOT regulatory. What to fish with, by species and month.
+# Authored by Pablo. The map will show this in the popup once entries exist.
+#
+# Format (one entry per waterbody or region; months are 1-12):
+#
+# entries:
+#   - waterbody: rio-petrohue          # or region: los-lagos
+#     species:
+#       - name: Trucha arcoíris
+#         months:
+#           1:  { technique: "Mosca seca / ninfa", notes: "..." }
+#           2:  { technique: "..." }
+#       - name: Salmón chinook
+#         months:
+#           10: { technique: "Spey, streamers pesados, tube flies", notes: "aguas altas" }
+#
+# Species slugs used by the regulations layer, for reference:
+#   trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho, salmon-salar,
+#   perca-trucha, puye, pejerrey-chileno.
+
+entries: []

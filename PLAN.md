@@ -71,9 +71,9 @@ chile-rivers/
 │   ├── fetch_sources.py    # pull Sernapesca/Subpesca pages, detect new versions
 │   ├── parse_medidas.py    # consolidated XLSX → draft regulation yaml (human-reviewed)
 │   ├── fetch_geometry.py   # Overpass + IDE Chile downloads → geojson per id
-│   ├── build.py            # join regulations + geometry → web/data/*.geojson
+│   ├── build.py            # join regulations + geometry → docs/data/*.geojson
 │   └── validate.py         # every water body has geometry, source, no date conflicts
-└── web/                    # static site: MapLibre GL JS, no backend
+└── docs/                    # static site: MapLibre GL JS, no backend
     ├── index.html
     └── data/               # built geojson with computed season properties
 ```

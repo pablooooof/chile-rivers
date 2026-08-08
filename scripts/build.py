@@ -5,6 +5,7 @@ layering: national baseline < regional rules < water-body-specific rules.
 Validates cross-references (regulation waterbody ids vs registry, geometry files).
 
 Usage: py scripts/build.py [--season 2026-2027]
+Output goes to docs/ (served by GitHub Pages).
 """
 import argparse
 import datetime as dt
@@ -205,9 +206,10 @@ def main():
             print("  -", w)
 
     out = {"type": "FeatureCollection", "features": features}
-    outdir = ROOT / "web/data"
+    outdir = ROOT / "docs/data"
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "waterbodies.geojson").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
+    print(f"geojson size: {(outdir / 'waterbodies.geojson').stat().st_size / 1e6:.1f} MB")
     (outdir / "meta.json").write_text(json.dumps({
         "season": season, "built": dt.date.today().isoformat(),
         "waterbodies": len(features),

@@ -120,6 +120,7 @@ waterbodies:
   - { id: rio-ibanez,            name: "Río Ibáñez",       type: river, region: aysen, osm_name: "Río Ibáñez" }
   - { id: rio-paloma,            name: "Río Paloma",       type: river, region: aysen, osm_name: "Río Paloma", bbox: [-45.95, -72.60, -45.30, -71.90], optional: true }
   - { id: rio-cochrane,          name: "Río Cochrane",     type: river, region: aysen, osm_name: "Río Cochrane", bbox: [-47.40, -72.85, -47.00, -72.15], optional: true }
+  - { id: rio-jeinimeni,         name: "Río Jeinimeni",    type: river, region: aysen, osm_name: "Río Jeinimeni", alt_names: ["Río Jeinemeni", "Río Jeinameni"], bbox: [-46.95, -72.15, -46.40, -71.50], optional: true }
   - { id: lago-general-carrera,  name: "Lago General Carrera", type: lake, region: aysen, osm_name: "Lago General Carrera", alt_names: ["Lago General Carrera / Lago Buenos Aires"] }
   - { id: lago-cochrane,         name: "Lago Cochrane",    type: lake, region: aysen, osm_name: "Lago Cochrane", alt_names: ["Lago Cochrane / Lago Pueyrredón"] }
   - { id: lago-bertrand,         name: "Lago Bertrand",    type: lake, region: aysen, osm_name: "Lago Bertrand" }

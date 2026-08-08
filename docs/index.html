@@ -152,6 +152,7 @@ const I18N = {
     busBtn: "Buses", airBtn: "Vuelos",
     tpBus: "Terminal de buses", tpAir: "Aeropuerto",
     tpEta: "Tiempo desde Santiago", tpFlight: "Vuelo desde Santiago",
+    tpFrom: "Desde", tpDuration: "Duración",
     tpPrice: "Precio aprox.", tpBook: "Buscar pasajes", tpBookFlight: "Buscar vuelos",
     tpAirlines: "Aerolíneas:",
     tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
@@ -189,6 +190,7 @@ const I18N = {
     busBtn: "Buses", airBtn: "Flights",
     tpBus: "Bus terminal", tpAir: "Airport",
     tpEta: "Travel from Santiago", tpFlight: "Flight from Santiago",
+    tpFrom: "From", tpDuration: "Duration",
     tpPrice: "Est. price", tpBook: "Search tickets", tpBookFlight: "Search flights",
     tpAirlines: "Airlines:",
     tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
@@ -446,11 +448,24 @@ function showTransportPopup(p, coords) {
   const airlinesHtml = !isBus && p.airlines
     ? `<div class="tp-airlines">${t.tpAirlines} ${p.airlines}</div>` : "";
   const isOrigin = p.price_min === 0;
-  const bodyHtml = isOrigin ? `<div style="font-size:12px;color:var(--muted);margin-top:4px">${t.tpOrigin}</div>` : `
+  let routesArr = [];
+  try { routesArr = typeof p.routes === "string" ? JSON.parse(p.routes) : (p.routes || []); }
+  catch (e) { routesArr = []; }
+  const routesHtml = routesArr.map(r => `
+    <div style="margin-top:8px;font-weight:700;font-size:12px">🚌 ${t.tpFrom} ${r.from}</div>
+    <div class="tp-row"><span class="tp-label">${t.tpDuration}</span><span class="tp-val">${t.tpHours(r.eta_h)}</span></div>
+    <div class="tp-row"><span class="tp-label">${t.tpPrice}</span><span class="tp-val">${t.tpPriceFmt(r.price_min, r.price_max)}</span></div>
+    ${r.op ? `<div class="tp-airlines">${r.op}</div>` : ""}`).join("");
+  // legacy Santiago block only when the stop carries Santiago data
+  const santiagoHtml = (p.eta_h != null || p.flight_h != null) ? `
+    ${routesArr.length ? `<div style="margin-top:8px;font-weight:700;font-size:12px">${isBus ? "🚌" : "✈️"} ${t.tpFrom} Santiago</div>` : ""}
     <div class="tp-row"><span class="tp-label">${etaLabel}</span><span class="tp-val">${etaVal}</span></div>
     <div class="tp-row"><span class="tp-label">${t.tpPrice}</span><span class="tp-val">${priceVal}</span></div>
     ${airlinesHtml}
-    <a class="tp-book" href="${bookUrl}" target="_blank" rel="noopener">${bookLabel}</a>`;
+    <a class="tp-book" href="${bookUrl}" target="_blank" rel="noopener">${bookLabel}</a>` : "";
+  const bodyHtml = isOrigin
+    ? `<div style="font-size:12px;color:var(--muted);margin-top:4px">${t.tpOrigin}</div>${routesHtml}`
+    : `${routesHtml}${santiagoHtml}`;
 
   const html = `<div class="tp-popup">
     <h3>${isBus ? "🚌" : "✈️"} ${p.name}</h3>
@@ -507,9 +522,13 @@ function timelineHtml(phases, season) {
   const H = laneEnds.length * (laneH + gap) + gap;
   const segHtml = segs.map(p => {
     const cr = p.mode === "catch_and_release";
-    return `<div class="seg" title="${fmt(p.s)} – ${fmt(p.e)} · ${cr ? t.tlCr : t.tlRet}"
+    const tip = `${fmt(p.s)} – ${fmt(p.e)} · ${cr ? t.tlCr : t.tlRet}${p.sp ? " · " + p.sp : ""}`;
+    // species overlays (e.g. chinook window) render as a thinner secondary bar
+    const h = p.ov ? 6 : laneH;
+    return `<div class="seg" title="${tip}"
       style="left:${pct(p.s)}%;width:${Math.max(1.6, pct(p.e) - pct(p.s))}%;
-             top:${gap + p.lane * (laneH + gap)}px;background:var(--${cr ? "sep" : "nov"})"></div>`;
+             top:${gap + p.lane * (laneH + gap) + (p.ov ? 2 : 0)}px;height:${h}px;
+             background:var(--${cr ? "sep" : "nov"});${p.ov ? "opacity:.75;" : ""}"></div>`;
   }).join("");
   const today = new Date().toISOString().slice(0, 10);
   const tp = Date.parse(today);

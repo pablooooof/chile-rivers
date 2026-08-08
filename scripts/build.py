@@ -96,6 +96,9 @@ def main():
     registry = yaml.safe_load((ROOT / "data/waterbodies/registry.yaml").read_text(encoding="utf-8"))["waterbodies"]
     rules = load_rules()
     reg_ids = {e["id"] for e in registry}
+    adv = yaml.safe_load((ROOT / "data/advisory/techniques.yaml").read_text(encoding="utf-8")) or {}
+    presence = adv.get("presence") or {}
+    sp_names = adv.get("species_names") or {}
 
     errors, warnings = [], []
     for r in rules:
@@ -142,6 +145,11 @@ def main():
                          and r.get("region") == e["region"]
                          and isinstance(r.get("species"), list)
                          and r.get("waterbody_type") in (None, e["type"])]
+        # a species overlay only applies where the species actually occurs
+        pres = presence.get(wid)
+        if pres is not None:
+            overlays = [r for r in overlays if not isinstance(r.get("species"), list)
+                        or any(s in pres for s in r["species"])]
         if not base:
             errors.append(f"no applicable rule for {wid}")
             continue
@@ -149,11 +157,15 @@ def main():
         phases = []
         veda_notes, sources, gear_notes, prohib_notes = [], [], [], []
         for r in base + overlays:
+            is_ov = r in overlays
+            sp_txt = ""
+            if is_ov and isinstance(r.get("species"), list):
+                sp_txt = ", ".join(sp_names.get(s, s.replace("-", " ")) for s in r["species"])
             for win in r.get("windows", []):
                 start, end = resolve_window(win, y0)
                 phases.append({"s": start.isoformat(), "e": end.isoformat(),
                                "mode": win["mode"], "label": phase_label(win, r),
-                               "overlay": r in overlays})
+                               "overlay": is_ov, "sp": sp_txt})
             if r.get("veda"):
                 veda_notes.append(" ".join(r["veda"].split()))
             if r.get("gear"):
@@ -173,6 +185,7 @@ def main():
                 merged[key]["label"] += " · " + p["label"]
                 if p["mode"] == "retention":
                     merged[key]["mode"] = "retention"
+                merged[key]["overlay"] = merged[key]["overlay"] and p["overlay"]
             else:
                 merged[key] = p
         phases = sorted(merged.values(), key=lambda p: p["s"])
@@ -198,7 +211,8 @@ def main():
         feat["properties"].update({
             "season": season, "opens": opens, "closes": closes, "cat": cat,
             "rule_level": level,
-            "phases": [{k: p[k] for k in ("s", "e", "mode", "label")} for p in phases],
+            "phases": [{"s": p["s"], "e": p["e"], "mode": p["mode"], "label": p["label"],
+                        "ov": p.get("overlay", False), "sp": p.get("sp", "")} for p in phases],
             "veda": veda_notes, "gear": gear_notes[:2], "prohibitions": prohib_notes[:2],
             "sources": sources,
         })
@@ -223,8 +237,7 @@ def main():
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "waterbodies.geojson").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     print(f"geojson size: {(outdir / 'waterbodies.geojson').stat().st_size / 1e6:.1f} MB")
-    adv = yaml.safe_load((ROOT / "data/advisory/techniques.yaml").read_text(encoding="utf-8")) or {}
-    unknown = set(adv.get("presence") or {}) - reg_ids
+    unknown = set(presence) - reg_ids
     if unknown:
         print("advisory presence for unknown waterbodies:", ", ".join(sorted(unknown)))
     (outdir / "advisory.json").write_text(json.dumps(

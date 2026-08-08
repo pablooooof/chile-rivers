@@ -224,8 +224,12 @@ def main():
     (outdir / "waterbodies.geojson").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     print(f"geojson size: {(outdir / 'waterbodies.geojson').stat().st_size / 1e6:.1f} MB")
     adv = yaml.safe_load((ROOT / "data/advisory/techniques.yaml").read_text(encoding="utf-8")) or {}
+    unknown = set(adv.get("presence") or {}) - reg_ids
+    if unknown:
+        print("advisory presence for unknown waterbodies:", ", ".join(sorted(unknown)))
     (outdir / "advisory.json").write_text(json.dumps(
-        {"general": adv.get("general") or [], "waterbodies": adv.get("waterbodies") or {}},
+        {"general": adv.get("general") or [], "waterbodies": adv.get("waterbodies") or {},
+         "presence": adv.get("presence") or {}, "species_names": adv.get("species_names") or {}},
         ensure_ascii=False), encoding="utf-8")
     (outdir / "meta.json").write_text(json.dumps({
         "season": season, "built": dt.date.today().isoformat(),

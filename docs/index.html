@@ -133,7 +133,7 @@ document.getElementById("btn-sat").addEventListener("click", ev => {
   ev.currentTarget.textContent = on ? "🗺️ Mapa" : "🛰️ Satélite";
 });
 
-let ADV = { general: [], waterbodies: {} };
+let ADV = { general: [], waterbodies: {}, presence: {}, species_names: {} };
 
 map.on("load", async () => {
   const [data, meta, adv] = await Promise.all([
@@ -279,32 +279,68 @@ function setAdvMonth(m) {
   if (el) el.outerHTML = advisoryHtml(advWb);
 }
 
+function speciesBlock(sp) {
+  if (advMonth === 0) {
+    const rows = ADV_MONTHS.filter(m => sp.months[m]).map(m => `<tr>
+      <th>${MONTH_NAMES[m - 1].slice(0, 3)}</th>
+      <td>${sp.months[m].fly}</td><td>${sp.months[m].spin}</td></tr>`).join("");
+    return `<h3>${sp.species}</h3>
+      <table><tr><th></th><th>🪶 Mosca</th><th>🎣 Spinning</th></tr>${rows}</table>
+      ${sp.notes ? `<p style="font-size:11.5px;color:var(--muted)">${sp.notes}</p>` : ""}`;
+  }
+  const sel = sp.months[advMonth];
+  const body = sel
+    ? `<div class="now"><b>${MONTH_NAMES[advMonth - 1]}</b>
+         🪶 <em>Mosca:</em> ${sel.fly}<br>🎣 <em>Spinning:</em> ${sel.spin}</div>`
+    : `<div class="now">Sin recomendación para ${MONTH_NAMES[advMonth - 1]} (temporada cerrada o mes sin actividad destacada).</div>`;
+  return `<h3>${sp.species}</h3>${body}`;
+}
+
 function advisoryHtml(wbId) {
   advWb = wbId;
-  const entries = [...(ADV.waterbodies[wbId] || []), ...ADV.general];
-  if (!entries.length) return "";
+  const specific = ADV.waterbodies[wbId] || [];
+  const presence = ADV.presence[wbId] || null;
+  // species already covered by a specific guide (inferred from its title)
+  const covered = new Set();
+  for (const sp of specific) {
+    const t = sp.species.toLowerCase();
+    if (/trucha|arco|café|cafe/.test(t)) { covered.add("trucha-arcoiris"); covered.add("trucha-cafe"); }
+    if (/chinook/.test(t)) covered.add("salmon-chinook");
+    if (/coho/.test(t)) covered.add("salmon-coho");
+    if (/salar|atl/.test(t)) covered.add("salmon-salar");
+    if (/pejerrey/.test(t)) covered.add("pejerrey-argentino");
+    if (/carpa/.test(t)) covered.add("carpa");
+  }
+  // general guidance only for present species without a specific guide
+  const general = ADV.general.filter(g => {
+    if (!g.applies) return !specific.length;
+    const target = presence ? g.applies.filter(s => presence.includes(s)) : g.applies;
+    return target.some(s => !covered.has(s));
+  });
+  if (!specific.length && !general.length && !presence) return "";
+
+  const presenceHtml = presence
+    ? `<div style="font-size:12px;margin:6px 0"><strong>Especies presentes:</strong> ${
+        presence.map(s => ADV.species_names[s] || s).join(", ")}</div>`
+    : "";
   const chips = `<div class="chips">
       <span class="chip ${advMonth === 0 ? "on" : ""}" onclick="setAdvMonth(0)">Todos</span>` +
     ADV_MONTHS.map(m => `<span class="chip ${advMonth === m ? "on" : ""}"
       onclick="setAdvMonth(${m})">${MONTH_NAMES[m - 1].slice(0, 3)}</span>`).join("") + `</div>`;
-  const blocks = entries.map(sp => {
-    let body;
-    if (advMonth === 0) {
-      const rows = ADV_MONTHS.filter(m => sp.months[m]).map(m => `<tr>
-        <th>${MONTH_NAMES[m - 1].slice(0, 3)}</th>
-        <td>${sp.months[m].fly}</td><td>${sp.months[m].spin}</td></tr>`).join("");
-      body = `<table><tr><th></th><th>🪶 Mosca</th><th>🎣 Spinning</th></tr>${rows}</table>`;
-    } else {
-      const sel = sp.months[advMonth];
-      body = sel
-        ? `<div class="now"><b>${MONTH_NAMES[advMonth - 1]}</b>
-             🪶 <em>Mosca:</em> ${sel.fly}<br>🎣 <em>Spinning:</em> ${sel.spin}</div>`
-        : `<div class="now">Sin recomendación para ${MONTH_NAMES[advMonth - 1]} (temporada cerrada o especie ausente).</div>`;
-    }
-    return `<h3>${sp.species}</h3>${body}`;
-  }).join("");
+
+  const specificHtml = specific.length
+    ? `<div style="font-size:12px;font-weight:600;color:#23662a;margin-top:6px">📍 Guía específica de este cuerpo de agua</div>`
+      + specific.map(speciesBlock).join("")
+    : "";
+  const generalHtml = general.length
+    ? `<div style="font-size:12px;font-weight:600;color:#b26a00;margin-top:10px">⚠️ Guía general del sur de Chile — NO específica de este cuerpo de agua${
+        presence ? ", filtrada a sus especies" : ""}</div>`
+      + general.map(speciesBlock).join("")
+    : "";
+
   return `<div class="adv" id="adv-root"><h3>Con qué pescar <span class="tag">— guía editorial, no normativa;
-    priman las restricciones de aparejos de cada cuerpo de agua</span></h3>${chips}${blocks}</div>`;
+    priman las restricciones de aparejos de cada cuerpo de agua</span></h3>
+    ${presenceHtml}${chips}${specificHtml}${generalHtml}</div>`;
 }
 </script>
 </body>

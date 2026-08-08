@@ -126,6 +126,31 @@ def in_bbox(el, bbox):
     return any(s <= p["lat"] <= n and w <= p["lon"] <= e for p in el_points(el))
 
 
+def clip_geom_to_bbox(geom, bbox):
+    """Drop geometry parts that lie entirely outside bbox — a same-named river
+    elsewhere can slip in when one of its ways clips the bbox corner."""
+    if not bbox or not geom:
+        return geom
+    s, w, n, e = bbox
+
+    def part_inside(coords):
+        return any(s <= p[1] <= n and w <= p[0] <= e for p in coords)
+
+    def clip(g):
+        if g["type"] == "MultiLineString":
+            g["coordinates"] = [l for l in g["coordinates"] if part_inside(l)]
+            return g if g["coordinates"] else None
+        if g["type"] == "MultiPolygon":
+            g["coordinates"] = [p for p in g["coordinates"] if p and part_inside(p[0])]
+            return g if g["coordinates"] else None
+        return g
+
+    if geom["type"] == "GeometryCollection":
+        geom["geometries"] = [gg for gg in (clip(g) for g in geom["geometries"]) if gg]
+        return geom if geom["geometries"] else None
+    return clip(geom)
+
+
 def polygons_from_elements(elements):
     """Build MultiPolygon coordinates from Overpass ways/relations with geometry."""
     outers, inners = [], []
@@ -264,6 +289,7 @@ out geom;"""
                 geom = {"type": "MultiPolygon", "coordinates": polys}
             elif lines:
                 geom = {"type": "MultiLineString", "coordinates": lines}
+        geom = clip_geom_to_bbox(geom, e.get("bbox"))
         if geom:
             feat = {"type": "Feature", "properties": {"id": e["id"], "name": e["name"],
                     "type": e["type"], "region": e["region"]}, "geometry": geom}

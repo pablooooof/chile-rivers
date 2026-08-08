@@ -24,6 +24,16 @@ waterbodies:
   - { id: rio-pangal,            name: "Río Pangal",       type: river, region: ohiggins, osm_name: "Río Pangal", bbox: [-34.40, -70.65, -34.05, -70.15], optional: true }
   - { id: lago-rapel,            name: "Lago Rapel",       type: lake,  region: ohiggins, osm_name: "Lago Rapel", alt_names: ["Embalse Rapel"] }
 
+  # ── Maule ───────────────────────────────────────────────────────────────────
+  - { id: rio-maule,             name: "Río Maule",        type: river, region: maule, osm_name: "Río Maule", bbox: [-36.60, -72.90, -35.20, -70.35] }
+  - { id: rio-melado,            name: "Río Melado",       type: river, region: maule, osm_name: "Río Melado" }
+  - { id: rio-achibueno,         name: "Río Achibueno",    type: river, region: maule, osm_name: "Río Achibueno" }
+  - { id: rio-ancoa,             name: "Río Ancoa",        type: river, region: maule, osm_name: "Río Ancoa", optional: true }
+  - { id: rio-longavi,           name: "Río Longaví",      type: river, region: maule, osm_name: "Río Longaví", optional: true }
+  - { id: rio-claro-maule,       name: "Río Claro (Maule)", type: river, region: maule, osm_name: "Río Claro", bbox: [-35.60, -71.30, -35.15, -70.80], optional: true }
+  - { id: laguna-del-maule,      name: "Laguna del Maule", type: lake,  region: maule, osm_name: "Laguna del Maule" }
+  - { id: embalse-colbun,        name: "Embalse Colbún",   type: lake,  region: maule, osm_name: "Embalse Colbún", alt_names: ["Lago Colbún", "Embalse Colbun"] }
+
   # ── La Araucanía ────────────────────────────────────────────────────────────
   - { id: lago-villarrica,       name: "Lago Villarrica",  type: lake,  region: araucania, osm_name: "Lago Villarrica" }
   - { id: lago-caburgua,         name: "Lago Caburgua",    type: lake,  region: araucania, osm_name: "Lago Caburgua", alt_names: ["Lago Caburga"] }

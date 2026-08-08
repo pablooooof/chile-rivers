@@ -1,6 +1,6 @@
-# Chile Rivers — mapa de temporadas de pesca recreativa
+﻿# Chile Rivers — mapa de temporadas de pesca recreativa
 
-Mapa web de ríos y lagos del sur de Chile (Los Ríos, Los Lagos y Aysén por ahora)
+Mapa web de ríos y lagos del sur de Chile (Santiago a Aysén)
 coloreados según la fecha de apertura de la temporada de pesca recreativa
 2026-2027, con las fases de cada cuerpo de agua (devolución obligatoria vs.
 retención), especies y fuentes normativas.

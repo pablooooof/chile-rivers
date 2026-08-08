@@ -229,7 +229,8 @@ def main():
         print("advisory presence for unknown waterbodies:", ", ".join(sorted(unknown)))
     (outdir / "advisory.json").write_text(json.dumps(
         {"general": adv.get("general") or [], "waterbodies": adv.get("waterbodies") or {},
-         "presence": adv.get("presence") or {}, "species_names": adv.get("species_names") or {}},
+         "presence": adv.get("presence") or {}, "species_names": adv.get("species_names") or {},
+         "species_names_en": adv.get("species_names_en") or {}},
         ensure_ascii=False), encoding="utf-8")
     (outdir / "meta.json").write_text(json.dumps({
         "season": season, "built": dt.date.today().isoformat(),

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pesca recreativa · Ríos y lagos del sur de Chile</title>
+<title>Pesca recreativa · Ríos y lagos de Chile</title>
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <style>
@@ -16,10 +16,14 @@
   #map { position: absolute; inset: 0; }
   header {
     position: absolute; top: 12px; left: 12px; z-index: 5; background: var(--panel-bg);
-    padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); max-width: 320px;
+    padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); max-width: 330px;
   }
-  header h1 { margin: 0; font-size: 15px; }
+  header h1 { margin: 0; font-size: 15px; padding-right: 34px; }
   header p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+  #btn-lang {
+    position: absolute; top: 8px; right: 8px; border: 1px solid var(--line); background: #fff;
+    border-radius: 6px; font-size: 11px; font-weight: 700; padding: 2px 6px; cursor: pointer; color: var(--ink);
+  }
   .legend { margin-top: 8px; font-size: 12px; display: grid; gap: 3px; }
   .legend span { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
   #panel {
@@ -52,13 +56,6 @@
     font-size: 12.5px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.15);
   }
   #btn-sat.on { background: #1c2430; color: #fff; }
-  .adv { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 8px; }
-  .adv h3 { font-size: 13px; margin: 0 0 2px; }
-  .adv .tag { font-size: 10px; color: var(--muted); font-weight: normal; }
-  .adv .now { background: #fff8e1; border-radius: 6px; padding: 6px 8px; margin: 6px 0; font-size: 12.5px; }
-  .adv .now b { display: block; margin-bottom: 2px; }
-  .adv table { border-collapse: collapse; font-size: 11.5px; margin: 4px 0; }
-  .adv td, .adv th { border: 1px solid var(--line); padding: 3px 5px; vertical-align: top; text-align: left; }
   .tl { margin: 14px 0 4px; }
   .tl .track { position: relative; background: #eef1f5; border-radius: 7px; }
   .tl .seg { position: absolute; height: 10px; border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
@@ -69,6 +66,13 @@
   .tl .months span:first-child { border-left: 0; }
   .tl .cap { display: flex; gap: 12px; font-size: 10px; color: var(--muted); margin-top: 5px; }
   .tl .cap i { display: inline-block; width: 12px; height: 7px; border-radius: 3px; margin-right: 4px; vertical-align: 0; }
+  .adv { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 8px; }
+  .adv h3 { font-size: 13px; margin: 0 0 2px; }
+  .adv .tag { font-size: 10px; color: var(--muted); font-weight: normal; }
+  .adv .now { background: #fff8e1; border-radius: 6px; padding: 6px 8px; margin: 6px 0; font-size: 12.5px; }
+  .adv .now b { display: block; margin-bottom: 2px; }
+  .adv table { border-collapse: collapse; font-size: 11.5px; margin: 4px 0; }
+  .adv td, .adv th { border: 1px solid var(--line); padding: 3px 5px; vertical-align: top; text-align: left; }
   .adv .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
   .adv .chip { border: 1px solid var(--line); border-radius: 12px; padding: 2px 9px; font-size: 11px; cursor: pointer; background: #fff; user-select: none; }
   .adv .chip.on { background: #1c2430; color: #fff; border-color: #1c2430; }
@@ -77,23 +81,105 @@
 <body>
 <div id="map"></div>
 <header>
-  <h1>🎣 Pesca recreativa — sur de Chile</h1>
-  <p id="season-line">Temporada 2026-2027 · haz clic en un río o lago</p>
-  <div class="legend">
-    <div><span style="background:var(--sep)"></span>Abre en septiembre (solo devolución)</div>
-    <div><span style="background:var(--oct)"></span>Abre en octubre</div>
-    <div><span style="background:var(--nov-early)"></span>Abre 1-12 de noviembre</div>
-    <div><span style="background:var(--nov)"></span>Abre 2° viernes de noviembre (regla general)</div>
-    <div><span style="background:var(--other)"></span>Otro régimen</div>
-  </div>
+  <button id="btn-lang"></button>
+  <h1 id="hdr-title"></h1>
+  <p id="season-line"></p>
+  <div class="legend" id="legend"></div>
 </header>
 <div id="panel">
   <button class="close" onclick="closePanel()">×</button>
   <div id="panel-content"></div>
 </div>
-<button id="btn-sat" title="Cambiar vista base">🛰️ Satélite</button>
-<footer>Datos: Sernapesca / Subpesca (resoluciones citadas por cuerpo de agua) · Mapa: © OpenStreetMap, © CARTO · Proyecto informativo — verifique la normativa vigente antes de pescar</footer>
+<button id="btn-sat" title="Base map"></button>
+<footer id="footer"></footer>
 <script>
+// ── i18n ────────────────────────────────────────────────────────────────────
+const I18N = {
+  es: {
+    title: "🎣 Pesca recreativa — Chile",
+    seasonLine: (s, d) => `Temporada ${s} · actualizado ${d} · haz clic en un río o lago`,
+    seasonLineNoMeta: "Haz clic en un río o lago",
+    legend: [["sep", "Abre en septiembre (solo devolución)"], ["oct", "Abre en octubre"],
+             ["nov-early", "Abre 1–12 de noviembre"], ["nov", "Abre 2° viernes de noviembre (regla general)"],
+             ["other", "Otro régimen"]],
+    footer: "Datos: Sernapesca / Subpesca (resoluciones citadas por cuerpo de agua) · Mapa: © OpenStreetMap, © CARTO · Proyecto informativo — verifique la normativa vigente antes de pescar",
+    sat: "🛰️ Satélite", mapBtn: "🗺️ Mapa",
+    lake: "Lago", river: "Río", regionOf: r => `Región de ${r}`, season: "Temporada",
+    badges: { waterbody: "regla específica", region: "regla regional", national: "regla nacional" },
+    openCr: "🟢 Abierta ahora — solo con devolución", openRet: "🔵 Abierta ahora — se permite retención",
+    closedUntil: d => `⚪ Cerrada — abre el ${d}`, closed: "⚪ Temporada cerrada",
+    seasonLbl: "Temporada:", veda: "Veda", gear: "Aparejos y modalidad", prohib: "Prohibiciones",
+    sources: "Fuentes:", srcNote: "",
+    tlCr: "solo devolución", tlRet: "retención", tlClosed: "cerrado", today: "HOY",
+    advTitle: "Con qué pescar",
+    advTag: "— guía editorial, no normativa; priman las restricciones de aparejos de cada cuerpo de agua",
+    speciesPresent: "Especies presentes:",
+    specific: "📍 Guía específica de este cuerpo de agua",
+    generalHdr: filt => `⚠️ Guía general del sur de Chile — NO específica de este cuerpo de agua${filt ? ", filtrada a sus especies" : ""}`,
+    all: "Todos", fly: "🪶 Mosca", spinCol: "🎣 Spinning", flyLbl: "Mosca", spinLbl: "Spinning",
+    noReco: m => `Sin recomendación para ${m} (temporada cerrada o mes sin actividad destacada).`,
+    months: ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
+    monthsShort: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
+    regions: { metropolitana: "Santiago (Metropolitana)", ohiggins: "O'Higgins", maule: "Maule",
+               araucania: "La Araucanía", "los-rios": "Los Ríos", "los-lagos": "Los Lagos", aysen: "Aysén" },
+  },
+  en: {
+    title: "🎣 Recreational fishing — Chile",
+    seasonLine: (s, d) => `Season ${s} · updated ${d} · click a river or lake`,
+    seasonLineNoMeta: "Click a river or lake",
+    legend: [["sep", "Opens in September (catch & release)"], ["oct", "Opens in October"],
+             ["nov-early", "Opens Nov 1–12"], ["nov", "Opens 2nd Friday of November (default rule)"],
+             ["other", "Other regime"]],
+    footer: "Data: Sernapesca / Subpesca (resolutions cited per water body) · Map: © OpenStreetMap, © CARTO · Informational project — verify current regulations before fishing",
+    sat: "🛰️ Satellite", mapBtn: "🗺️ Map",
+    lake: "Lake", river: "River", regionOf: r => `${r} Region`, season: "Season",
+    badges: { waterbody: "water-specific rule", region: "regional rule", national: "national rule" },
+    openCr: "🟢 Open now — catch & release only", openRet: "🔵 Open now — harvest allowed",
+    closedUntil: d => `⚪ Closed — opens ${d}`, closed: "⚪ Season closed",
+    seasonLbl: "Season:", veda: "Closure (veda)", gear: "Gear & method", prohib: "Prohibitions",
+    sources: "Sources:", srcNote: " (regulatory texts quoted in Spanish)",
+    tlCr: "C&R only", tlRet: "harvest", tlClosed: "closed", today: "TODAY",
+    advTitle: "What to fish with",
+    advTag: "— editorial guide, not regulatory; each water's gear restrictions always prevail",
+    speciesPresent: "Species present:",
+    specific: "📍 Guide specific to this water",
+    generalHdr: filt => `⚠️ General southern-Chile guide — NOT specific to this water${filt ? ", filtered to its species" : ""}`,
+    all: "All", fly: "🪶 Fly", spinCol: "🎣 Spinning", flyLbl: "Fly", spinLbl: "Spinning",
+    noReco: m => `No recommendation for ${m} (season closed or no notable activity).`,
+    months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    monthsShort: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    regions: { metropolitana: "Santiago (Metropolitan)", ohiggins: "O'Higgins", maule: "Maule",
+               araucania: "La Araucanía", "los-rios": "Los Ríos", "los-lagos": "Los Lagos", aysen: "Aysén" },
+  }
+};
+let lang = localStorage.getItem("lang") || "es";
+const T = () => I18N[lang];
+
+// EN translation of regulation phase labels built in Spanish (ordered, longest first)
+const LABEL_REPL = [
+  ["Pesca con devolución obligatoria", "Catch & release"],
+  ["Pesca con retención", "Harvest"],
+  ["Devolución obligatoria de todas las truchas y fauna íctica nativa. Retención de 1 ejemplar de salmón salar, coho o chinook.", "All trout and native fish must be released. 1 salar, coho or chinook salmon may be kept."],
+  ["Devolución obligatoria de truchas y fauna nativa. Retención de 1 ejemplar de salmón salar, coho o chinook.", "Trout and native fish must be released. 1 salar, coho or chinook salmon may be kept."],
+  ["3 ejemplares o hasta 15 kilos por pescador y jornada", "3 fish or up to 15 kg per angler per day"],
+  ["3 ejemplares o hasta 15 kilos", "3 fish or up to 15 kg"],
+  ["1 ejemplar de salmón coho, del atlántico (salar) o chinook", "1 coho, Atlantic (salar) or chinook salmon"],
+  ["1 ejemplar de salmón salar, coho o chinook", "1 salar, coho or chinook salmon"],
+  ["2 ejemplares sin límite de peso", "2 fish, no weight limit"],
+  ["1 ejemplar sin límite de peso", "1 fish, no weight limit"],
+  ["1 ejemplar de cualquiera de las especies trucha arcoíris, trucha café o salmón plateado por día de pesca, debe liberar resto de captura.", "1 rainbow trout, brown trout or coho per day; release the rest."],
+  ["3 ejemplares sin límite de peso", "3 fish, no weight limit"],
+  ["trucha arcoiris", "rainbow trout"], ["trucha cafe", "brown trout"],
+  ["salmon chinook", "chinook salmon"], ["salmon coho", "coho salmon"], ["salmon salar", "Atlantic salmon"],
+];
+function trLabel(label) {
+  if (lang !== "en") return label;
+  let out = label;
+  for (const [es, en] of LABEL_REPL) out = out.split(es).join(en);
+  return out;
+}
+
+// ── map ─────────────────────────────────────────────────────────────────────
 const COLORS = { "sep": "#2e7d32", "oct": "#7cb342", "nov-early": "#f9a825", "nov": "#1e88e5", "other": "#9e9e9e" };
 const colorExpr = ["match", ["get", "cat"],
   "sep", COLORS["sep"], "oct", COLORS["oct"], "nov-early", COLORS["nov-early"], "nov", COLORS["nov"],
@@ -129,36 +215,36 @@ const map = new maplibregl.Map({
       { id: "base-sat", type: "raster", source: "esri", layout: { visibility: "none" } }
     ]
   },
-  center: [-72.6, -43.5], zoom: 6
+  center: [-72.6, -40.5], zoom: 5.5
 });
 map.addControl(new maplibregl.NavigationControl(), "bottom-right");
 
 document.getElementById("btn-sat").addEventListener("click", ev => {
-  if (!map.getLayer("labels")) return;  // not loaded yet
+  if (!map.getLayer("labels")) return;
   const on = map.getLayoutProperty("base-sat", "visibility") !== "visible";
   for (const id of ["base-sat", "sat-roads", "sat-places"])
     map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
   map.setLayoutProperty("labels", "visibility", on ? "none" : "visible");
   ev.currentTarget.classList.toggle("on", on);
-  ev.currentTarget.textContent = on ? "🗺️ Mapa" : "🛰️ Satélite";
+  ev.currentTarget.dataset.on = on ? "1" : "";
+  ev.currentTarget.textContent = on ? T().mapBtn : T().sat;
 });
 
-let ADV = { general: [], waterbodies: {}, presence: {}, species_names: {} };
+let ADV = { general: [], waterbodies: {}, presence: {}, species_names: {}, species_names_en: {} };
+let META = null;
+let lastProps = null;
 
 map.on("load", async () => {
-  // cache: no-cache -> revalidate with the CDN so deploys show up immediately
   const [data, meta, adv] = await Promise.all([
     fetch("data/waterbodies.geojson", { cache: "no-cache" }).then(r => r.json()),
     fetch("data/meta.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null),
     fetch("data/advisory.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null)
   ]);
-  // merge over defaults so an older cached advisory.json can never break the panel
-  if (adv) ADV = Object.assign({ general: [], waterbodies: {}, presence: {}, species_names: {} }, adv);
-  if (meta) document.getElementById("season-line").textContent =
-    `Temporada ${meta.season} · actualizado ${meta.built} · haz clic en un río o lago`;
+  if (adv) ADV = Object.assign({ general: [], waterbodies: {}, presence: {}, species_names: {}, species_names_en: {} }, adv);
+  META = meta;
+  applyLang();
 
   map.addSource("wb", { type: "geojson", data, promoteId: "id" });
-
   map.addLayer({ id: "wb-fill", type: "fill", source: "wb",
     filter: ["==", ["geometry-type"], "Polygon"],
     paint: { "fill-color": colorExpr, "fill-opacity":
@@ -173,7 +259,6 @@ map.on("load", async () => {
       "line-width": ["interpolate", ["linear"], ["zoom"], 5, 1.6, 8, 3.5, 11, 7, 14, 12],
       "line-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 1, 0.85] } });
 
-  // selection highlight: white casing + magenta stroke around the chosen water body
   const NONE = ["==", ["get", "id"], "___none___"];
   map.addLayer({ id: "sel-casing", type: "line", source: "wb", filter: NONE,
     layout: { "line-cap": "round", "line-join": "round" },
@@ -184,12 +269,10 @@ map.on("load", async () => {
     paint: { "line-color": "#d81b60",
       "line-width": ["interpolate", ["linear"], ["zoom"], 5, 3, 10, 6] } });
 
-  // reference overlays: roads + place names above the water layers
   map.addLayer({ id: "sat-roads", type: "raster", source: "esri_transport", layout: { visibility: "none" } });
   map.addLayer({ id: "sat-places", type: "raster", source: "esri_places", layout: { visibility: "none" } });
   map.addLayer({ id: "labels", type: "raster", source: "carto_labels" });
 
-  // fit to data
   const b = new maplibregl.LngLatBounds();
   const extend = c => { if (typeof c[0] === "number") b.extend(c); else c.forEach(extend); };
   data.features.forEach(f => extend(f.geometry.coordinates));
@@ -225,21 +308,43 @@ function closePanel() {
   const NONE = ["==", ["get", "id"], "___none___"];
   map.setFilter("sel-casing", NONE);
   map.setFilter("sel-line", NONE);
+  lastProps = null;
 }
 
+// ── language plumbing ───────────────────────────────────────────────────────
+function applyLang() {
+  const t = T();
+  document.documentElement.lang = lang;
+  document.getElementById("btn-lang").textContent = lang === "es" ? "EN" : "ES";
+  document.getElementById("hdr-title").textContent = t.title;
+  document.getElementById("season-line").textContent =
+    META ? t.seasonLine(META.season, META.built) : t.seasonLineNoMeta;
+  document.getElementById("legend").innerHTML = t.legend
+    .map(([k, txt]) => `<div><span style="background:${COLORS[k]}"></span>${txt}</div>`).join("");
+  document.getElementById("footer").textContent = t.footer;
+  const sat = document.getElementById("btn-sat");
+  sat.textContent = sat.dataset.on ? t.mapBtn : t.sat;
+  if (lastProps) showPanel(lastProps);
+}
+document.getElementById("btn-lang").addEventListener("click", () => {
+  lang = lang === "es" ? "en" : "es";
+  localStorage.setItem("lang", lang);
+  applyLang();
+});
+
+// ── panel ───────────────────────────────────────────────────────────────────
 const fmt = iso => {
   const [y, m, d] = iso.split("-").map(Number);
-  const months = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
-  return `${d} ${months[m-1]} ${y}`;
+  return `${d} ${T().monthsShort[m - 1]} ${y}`;
 };
 
 function timelineHtml(phases, season) {
   if (!phases.length) return "";
-  const y0 = parseInt(season);                 // e.g. 2026 for "2026-2027"
-  const t0 = Date.UTC(y0, 7, 1);               // 1 ago
-  const t1 = Date.UTC(y0 + 1, 5, 30);          // 30 jun
+  const t = T();
+  const y0 = parseInt(season);
+  const t0 = Date.UTC(y0, 7, 1);
+  const t1 = Date.UTC(y0 + 1, 5, 30);
   const pct = iso => Math.max(0, Math.min(100, (Date.parse(iso) - t0) / (t1 - t0) * 100));
-  // stack overlapping windows (e.g. chinook overlay) into lanes
   const laneEnds = [];
   const segs = phases.map(p => {
     let lane = 0;
@@ -251,7 +356,7 @@ function timelineHtml(phases, season) {
   const H = laneEnds.length * (laneH + gap) + gap;
   const segHtml = segs.map(p => {
     const cr = p.mode === "catch_and_release";
-    return `<div class="seg" title="${fmt(p.s)} – ${fmt(p.e)} · ${cr ? "solo devolución" : "retención"}"
+    return `<div class="seg" title="${fmt(p.s)} – ${fmt(p.e)} · ${cr ? t.tlCr : t.tlRet}"
       style="left:${pct(p.s)}%;width:${Math.max(1.6, pct(p.e) - pct(p.s))}%;
              top:${gap + p.lane * (laneH + gap)}px;background:var(--${cr ? "sep" : "nov"})"></div>`;
   }).join("");
@@ -259,73 +364,75 @@ function timelineHtml(phases, season) {
   const tp = Date.parse(today);
   const todayHtml = tp >= t0 && tp <= t1
     ? `<div class="today" style="left:${pct(today)}%"></div>
-       <div class="today-lbl" style="left:${pct(today)}%">HOY</div>` : "";
-  const months = ["ago", "sep", "oct", "nov", "dic", "ene", "feb", "mar", "abr", "may", "jun"];
+       <div class="today-lbl" style="left:${pct(today)}%">${t.today}</div>` : "";
+  const mIdx = [7, 8, 9, 10, 11, 0, 1, 2, 3, 4, 5];  // ago..jun
   return `<div class="tl">
     <div class="track" style="height:${H}px">${segHtml}${todayHtml}</div>
-    <div class="months">${months.map(m => `<span>${m}</span>`).join("")}</div>
+    <div class="months">${mIdx.map(i => `<span>${t.monthsShort[i]}</span>`).join("")}</div>
     <div class="cap">
-      <span><i style="background:var(--sep)"></i>solo devolución</span>
-      <span><i style="background:var(--nov)"></i>retención</span>
-      <span><i style="background:#eef1f5;box-shadow:inset 0 0 0 1px #dde3ea"></i>cerrado</span>
+      <span><i style="background:var(--sep)"></i>${t.tlCr}</span>
+      <span><i style="background:var(--nov)"></i>${t.tlRet}</span>
+      <span><i style="background:#eef1f5;box-shadow:inset 0 0 0 1px #dde3ea"></i>${t.tlClosed}</span>
     </div></div>`;
 }
 
 function statusNow(phases) {
+  const t = T();
   const today = new Date().toISOString().slice(0, 10);
   for (const p of phases) {
     if (p.s <= today && today <= p.e)
       return p.mode === "catch_and_release"
-        ? { cls: "open-cr", txt: "🟢 Abierta ahora — solo con devolución" }
-        : { cls: "open-ret", txt: "🔵 Abierta ahora — se permite retención" };
+        ? { cls: "open-cr", txt: t.openCr } : { cls: "open-ret", txt: t.openRet };
   }
   const next = phases.find(p => p.s > today);
-  if (next) return { cls: "closed", txt: `⚪ Cerrada — abre el ${fmt(next.s)}` };
-  return { cls: "closed", txt: "⚪ Temporada cerrada" };
+  if (next) return { cls: "closed", txt: t.closedUntil(fmt(next.s)) };
+  return { cls: "closed", txt: t.closed };
 }
 
 function showPanel(props) {
+  const t = T();
+  lastProps = props;
   const phases = JSON.parse(props.phases);
   const sources = JSON.parse(props.sources);
   const veda = JSON.parse(props.veda || "[]");
   const gear = JSON.parse(props.gear || "[]");
   const prohib = JSON.parse(props.prohibitions || "[]");
   const st = statusNow(phases);
-  const levelBadge = { waterbody: "regla específica", region: "regla regional", national: "regla nacional" }[props.rule_level] || "";
+  const levelBadge = t.badges[props.rule_level] || "";
   let advHtml = "";
   try { advHtml = advisoryHtml(props.id); }
   catch (err) { console.error("advisory render failed:", err); }
 
   document.getElementById("panel-content").innerHTML = `
     <h2>${props.name}<span class="badge">${levelBadge}</span></h2>
-    <div class="sub">${props.type === "lake" ? "Lago" : "Río"} · Región de ${
-      { "metropolitana": "Santiago (Metropolitana)", "ohiggins": "O'Higgins", "araucania": "La Araucanía",
-        "los-rios": "Los Ríos", "los-lagos": "Los Lagos", "aysen": "Aysén" }[props.region] || props.region
-    } · Temporada ${props.season}</div>
+    <div class="sub">${props.type === "lake" ? t.lake : t.river} · ${
+      t.regionOf(t.regions[props.region] || props.region)
+    } · ${t.season} ${props.season}</div>
     ${timelineHtml(phases, props.season)}
     <div class="status ${st.cls}">${st.txt}</div>
-    <div><strong>Temporada:</strong> ${fmt(props.opens)} → ${fmt(props.closes)}</div>
+    <div><strong>${t.seasonLbl}</strong> ${fmt(props.opens)} → ${fmt(props.closes)}</div>
     ${phases.map(p => `
       <div class="phase ${p.mode === "catch_and_release" ? "cr" : "ret"}">
         <div class="dates">${fmt(p.s)} – ${fmt(p.e)}</div>
-        <div class="lbl">${p.label}</div>
+        <div class="lbl">${trLabel(p.label)}</div>
       </div>`).join("")}
-    ${veda.length ? `<details><summary>Veda</summary>${veda.map(v => `<p>${v}</p>`).join("")}</details>` : ""}
-    ${gear.length ? `<details><summary>Aparejos y modalidad</summary>${gear.map(g => `<p>${g}</p>`).join("")}</details>` : ""}
-    ${prohib.length ? `<details><summary>Prohibiciones</summary>${prohib.map(p => `<p>${p}</p>`).join("")}</details>` : ""}
+    ${veda.length ? `<details><summary>${t.veda}</summary>${veda.map(v => `<p>${v}</p>`).join("")}</details>` : ""}
+    ${gear.length ? `<details><summary>${t.gear}</summary>${gear.map(g => `<p>${g}</p>`).join("")}</details>` : ""}
+    ${prohib.length ? `<details><summary>${t.prohib}</summary>${prohib.map(p => `<p>${p}</p>`).join("")}</details>` : ""}
     ${advHtml}
-    <div class="sources"><strong>Fuentes:</strong><br>${
+    <div class="sources"><strong>${t.sources}</strong>${t.srcNote}<br>${
       sources.map(s => s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.doc}</a>` : s.doc).join("<br>")
     }</div>`;
   document.getElementById("panel").classList.add("open");
 }
 
-const MONTH_NAMES = ["enero","febrero","marzo","abril","mayo","junio","julio",
-                     "agosto","septiembre","octubre","noviembre","diciembre"];
-
-const ADV_MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5];  // season order sep..may
-let advMonth = 0;   // 0 = show all months
+// ── advisory ────────────────────────────────────────────────────────────────
+const ADV_MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5];
+let advMonth = 0;
 let advWb = null;
+
+const loc = (obj, key) => (lang === "en" && obj[key + "_en"]) || obj[key];
+const speciesName = s => (lang === "en" ? ADV.species_names_en[s] : ADV.species_names[s]) || ADV.species_names[s] || s;
 
 function setAdvMonth(m) {
   advMonth = m;
@@ -334,38 +441,39 @@ function setAdvMonth(m) {
 }
 
 function speciesBlock(sp) {
+  const t = T();
   if (advMonth === 0) {
     const rows = ADV_MONTHS.filter(m => sp.months[m]).map(m => `<tr>
-      <th>${MONTH_NAMES[m - 1].slice(0, 3)}</th>
-      <td>${sp.months[m].fly}</td><td>${sp.months[m].spin}</td></tr>`).join("");
-    return `<h3>${sp.species}</h3>
-      <table><tr><th></th><th>🪶 Mosca</th><th>🎣 Spinning</th></tr>${rows}</table>
-      ${sp.notes ? `<p style="font-size:11.5px;color:var(--muted)">${sp.notes}</p>` : ""}`;
+      <th>${t.monthsShort[m - 1]}</th>
+      <td>${loc(sp.months[m], "fly")}</td><td>${loc(sp.months[m], "spin")}</td></tr>`).join("");
+    return `<h3>${loc(sp, "species")}</h3>
+      <table><tr><th></th><th>${t.fly}</th><th>${t.spinCol}</th></tr>${rows}</table>
+      ${loc(sp, "notes") ? `<p style="font-size:11.5px;color:var(--muted)">${loc(sp, "notes")}</p>` : ""}`;
   }
   const sel = sp.months[advMonth];
   const body = sel
-    ? `<div class="now"><b>${MONTH_NAMES[advMonth - 1]}</b>
-         🪶 <em>Mosca:</em> ${sel.fly}<br>🎣 <em>Spinning:</em> ${sel.spin}</div>`
-    : `<div class="now">Sin recomendación para ${MONTH_NAMES[advMonth - 1]} (temporada cerrada o mes sin actividad destacada).</div>`;
-  return `<h3>${sp.species}</h3>${body}`;
+    ? `<div class="now"><b>${t.months[advMonth - 1]}</b>
+         🪶 <em>${t.flyLbl}:</em> ${loc(sel, "fly")}<br>🎣 <em>${t.spinLbl}:</em> ${loc(sel, "spin")}</div>`
+    : `<div class="now">${t.noReco(t.months[advMonth - 1])}</div>`;
+  return `<h3>${loc(sp, "species")}</h3>${body}`;
 }
 
 function advisoryHtml(wbId) {
+  const t = T();
   advWb = wbId;
   const specific = ADV.waterbodies[wbId] || [];
   const presence = ADV.presence[wbId] || null;
-  // species already covered by a specific guide (inferred from its title)
   const covered = new Set();
   for (const sp of specific) {
-    const t = sp.species.toLowerCase();
-    if (/trucha|arco|café|cafe/.test(t)) { covered.add("trucha-arcoiris"); covered.add("trucha-cafe"); }
-    if (/chinook/.test(t)) covered.add("salmon-chinook");
-    if (/coho/.test(t)) covered.add("salmon-coho");
-    if (/salar|atl/.test(t)) covered.add("salmon-salar");
-    if (/pejerrey/.test(t)) covered.add("pejerrey-argentino");
-    if (/carpa/.test(t)) covered.add("carpa");
+    const s = sp.species.toLowerCase();
+    if (/trucha|arco|café|cafe/.test(s)) { covered.add("trucha-arcoiris"); covered.add("trucha-cafe"); }
+    if (/chinook/.test(s)) covered.add("salmon-chinook");
+    if (/coho/.test(s)) covered.add("salmon-coho");
+    if (/salar|atl/.test(s)) covered.add("salmon-salar");
+    if (/japon|cherry|masu/.test(s)) covered.add("salmon-japones");
+    if (/pejerrey/.test(s)) covered.add("pejerrey-argentino");
+    if (/carpa/.test(s)) covered.add("carpa");
   }
-  // general guidance only for present species without a specific guide
   const general = ADV.general.filter(g => {
     if (!g.applies) return !specific.length;
     const target = presence ? g.applies.filter(s => presence.includes(s)) : g.applies;
@@ -374,28 +482,24 @@ function advisoryHtml(wbId) {
   if (!specific.length && !general.length && !presence) return "";
 
   const presenceHtml = presence
-    ? `<div style="font-size:12px;margin:6px 0"><strong>Especies presentes:</strong> ${
-        presence.map(s => ADV.species_names[s] || s).join(", ")}</div>`
-    : "";
+    ? `<div style="font-size:12px;margin:6px 0"><strong>${t.speciesPresent}</strong> ${
+        presence.map(speciesName).join(", ")}</div>` : "";
   const chips = `<div class="chips">
-      <span class="chip ${advMonth === 0 ? "on" : ""}" onclick="setAdvMonth(0)">Todos</span>` +
+      <span class="chip ${advMonth === 0 ? "on" : ""}" onclick="setAdvMonth(0)">${t.all}</span>` +
     ADV_MONTHS.map(m => `<span class="chip ${advMonth === m ? "on" : ""}"
-      onclick="setAdvMonth(${m})">${MONTH_NAMES[m - 1].slice(0, 3)}</span>`).join("") + `</div>`;
-
+      onclick="setAdvMonth(${m})">${t.monthsShort[m - 1]}</span>`).join("") + `</div>`;
   const specificHtml = specific.length
-    ? `<div style="font-size:12px;font-weight:600;color:#23662a;margin-top:6px">📍 Guía específica de este cuerpo de agua</div>`
+    ? `<div style="font-size:12px;font-weight:600;color:#23662a;margin-top:6px">${t.specific}</div>`
       + specific.map(speciesBlock).join("")
     : "";
   const generalHtml = general.length
-    ? `<div style="font-size:12px;font-weight:600;color:#b26a00;margin-top:10px">⚠️ Guía general del sur de Chile — NO específica de este cuerpo de agua${
-        presence ? ", filtrada a sus especies" : ""}</div>`
+    ? `<div style="font-size:12px;font-weight:600;color:#b26a00;margin-top:10px">${t.generalHdr(!!presence)}</div>`
       + general.map(speciesBlock).join("")
     : "";
-
-  return `<div class="adv" id="adv-root"><h3>Con qué pescar <span class="tag">— guía editorial, no normativa;
-    priman las restricciones de aparejos de cada cuerpo de agua</span></h3>
+  return `<div class="adv" id="adv-root"><h3>${t.advTitle} <span class="tag">${t.advTag}</span></h3>
     ${presenceHtml}${chips}${specificHtml}${generalHtml}</div>`;
 }
+applyLang();
 </script>
 </body>
 </html>

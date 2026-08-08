@@ -246,7 +246,8 @@ function showPanel(props) {
   document.getElementById("panel-content").innerHTML = `
     <h2>${props.name}<span class="badge">${levelBadge}</span></h2>
     <div class="sub">${props.type === "lake" ? "Lago" : "Río"} · Región de ${
-      { "araucania": "La Araucanía", "los-rios": "Los Ríos", "los-lagos": "Los Lagos", "aysen": "Aysén" }[props.region] || props.region
+      { "metropolitana": "Santiago (Metropolitana)", "ohiggins": "O'Higgins", "araucania": "La Araucanía",
+        "los-rios": "Los Ríos", "los-lagos": "Los Lagos", "aysen": "Aysén" }[props.region] || props.region
     } · Temporada ${props.season}</div>
     <div class="status ${st.cls}">${st.txt}</div>
     <div><strong>Temporada:</strong> ${fmt(props.opens)} → ${fmt(props.closes)}</div>

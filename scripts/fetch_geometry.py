@@ -195,8 +195,8 @@ def main():
     print(f"querying {len(lakes)} lakes, {len(rivers)} rivers via Overpass...")
 
     # NB: (area:...) misses large multipolygon lake relations — use a bbox over
-    # southern Chile (south,west,north,east) instead; catches border lakes too.
-    q_lakes = f"""[out:json][timeout:300][bbox:-49.7,-76.0,-38.4,-70.7];
+    # central+southern Chile (south,west,north,east) instead; catches border lakes too.
+    q_lakes = f"""[out:json][timeout:300][bbox:-49.7,-76.0,-32.8,-69.6];
 (
   way["natural"="water"]["name"~"^({name_regex(lakes)})$"];
   relation["natural"="water"]["name"~"^({name_regex(lakes)})$"];

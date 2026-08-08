@@ -1,0 +1,32 @@
+# Región Metropolitana — recreational fishing rules.
+# Only one special water in the consolidated table (row 33): río Molina C&R.
+# Everything else follows the national baseline (D.S. 320).
+
+rules:
+  - id: rio-molina-cr
+    scope: waterbodies
+    region: metropolitana
+    waterbodies: [rio-molina]
+    species: all
+    seasons: ["2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: catch_and_release
+    gear: >
+      Señuelos con un anzuelo simple sin rebarba. Tramo de 20 km entre la
+      confluencia estero Las Tinajas/estero Cepo y la confluencia con el río San
+      Francisco. Especies invasoras (chanchito, gambusia, carpa, etc.) pueden
+      sacrificarse en su totalidad.
+    source:
+      doc: "Resolución Exenta N° 2353, de 20 de agosto de 2021, Subsecretaría de Pesca y Acuicultura"
+      table_row: 33
+    notes: >
+      "Por cuatro años desde 2021" — la vigencia para 2026-27 es dudosa (la tabla
+      consolidada 2025-26 aún la lista). WATCH: buscar renovación; mientras tanto
+      el río cae a la regla nacional para 2026-27.
+
+# Región de O'Higgins: sin medidas específicas en la tabla consolidada 2025-26 —
+# aplica la regla nacional (D.S. 320) a todos sus cuerpos de agua. No necesita
+# archivo propio; se deja constancia aquí.

@@ -36,6 +36,9 @@ show the proposed changes and get approval first.
    - Report as a table: water body / field / old / new / source row.
 
 4. **Known open watch items** (check these every run):
+   - Río Molina (Metropolitana, Res. Ex. 2353/2021 C&R): "cuatro años desde 2021" —
+     validity beyond 2025-26 doubtful; check for renewal or removal from the
+     consolidated table.
    - La Araucanía chinook early season (15 Sept–31 Mar, Toltén and Imperial basins,
      Res. Ex. 01/2021) covered only through season 2025-26 — renewal expected
      ~Aug-Sept 2026. Until it appears, those basins map to the regional rule (13 Nov).

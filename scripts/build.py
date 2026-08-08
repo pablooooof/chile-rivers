@@ -15,7 +15,8 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-REGULATION_FILES = ["baseline.yaml", "araucania.yaml", "los-rios.yaml", "los-lagos.yaml", "aysen.yaml"]
+REGULATION_FILES = ["baseline.yaml", "metropolitana.yaml", "araucania.yaml",
+                    "los-rios.yaml", "los-lagos.yaml", "aysen.yaml"]
 
 # A water-body rule that covers trout (resident species) defines the water's whole
 # regime; one that covers only migratory salmon merely supplements the general rule.

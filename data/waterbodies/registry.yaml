@@ -7,6 +7,23 @@
 # optional: true -> small/obscure; missing geometry is tolerated by build.py.
 
 waterbodies:
+  # ── Metropolitana ───────────────────────────────────────────────────────────
+  - { id: rio-maipo,             name: "Río Maipo",        type: river, region: metropolitana, osm_name: "Río Maipo", bbox: [-34.35, -71.80, -33.35, -69.70] }
+  - { id: rio-mapocho,           name: "Río Mapocho",      type: river, region: metropolitana, osm_name: "Río Mapocho" }
+  - { id: rio-colorado-maipo,    name: "Río Colorado (Maipo)", type: river, region: metropolitana, osm_name: "Río Colorado", bbox: [-33.65, -70.45, -33.05, -69.75] }
+  - { id: rio-yeso,              name: "Río Yeso",         type: river, region: metropolitana, osm_name: "Río Yeso", bbox: [-33.90, -70.35, -33.45, -69.80], optional: true }
+  - { id: rio-volcan-maipo,      name: "Río Volcán",       type: river, region: metropolitana, osm_name: "Río Volcán", bbox: [-33.95, -70.25, -33.65, -69.70], optional: true }
+  - { id: rio-clarillo,          name: "Río Clarillo",     type: river, region: metropolitana, osm_name: "Río Clarillo", bbox: [-33.95, -70.60, -33.60, -70.25], optional: true }
+  - { id: rio-molina,            name: "Río Molina",       type: river, region: metropolitana, osm_name: "Río Molina", bbox: [-33.50, -70.45, -33.10, -70.05], optional: true }
+  - { id: embalse-el-yeso,       name: "Embalse El Yeso",  type: lake,  region: metropolitana, osm_name: "Embalse El Yeso", alt_names: ["Embalse el Yeso"], bbox: [-33.80, -70.20, -33.55, -69.90] }
+  - { id: laguna-negra,          name: "Laguna Negra",     type: lake,  region: metropolitana, osm_name: "Laguna Negra", bbox: [-33.75, -70.25, -33.55, -69.95], optional: true }
+
+  # ── O'Higgins ───────────────────────────────────────────────────────────────
+  - { id: rio-cachapoal,         name: "Río Cachapoal",    type: river, region: ohiggins, osm_name: "Río Cachapoal" }
+  - { id: rio-tinguiririca,      name: "Río Tinguiririca", type: river, region: ohiggins, osm_name: "Río Tinguiririca" }
+  - { id: rio-pangal,            name: "Río Pangal",       type: river, region: ohiggins, osm_name: "Río Pangal", bbox: [-34.40, -70.65, -34.05, -70.15], optional: true }
+  - { id: lago-rapel,            name: "Lago Rapel",       type: lake,  region: ohiggins, osm_name: "Lago Rapel", alt_names: ["Embalse Rapel"] }
+
   # ── La Araucanía ────────────────────────────────────────────────────────────
   - { id: lago-villarrica,       name: "Lago Villarrica",  type: lake,  region: araucania, osm_name: "Lago Villarrica" }
   - { id: lago-caburgua,         name: "Lago Caburgua",    type: lake,  region: araucania, osm_name: "Lago Caburgua", alt_names: ["Lago Caburga"] }

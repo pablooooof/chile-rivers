@@ -59,6 +59,16 @@
   .adv .now b { display: block; margin-bottom: 2px; }
   .adv table { border-collapse: collapse; font-size: 11.5px; margin: 4px 0; }
   .adv td, .adv th { border: 1px solid var(--line); padding: 3px 5px; vertical-align: top; text-align: left; }
+  .tl { margin: 14px 0 4px; }
+  .tl .track { position: relative; background: #eef1f5; border-radius: 7px; }
+  .tl .seg { position: absolute; height: 10px; border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .tl .today { position: absolute; top: -5px; bottom: -5px; width: 2px; background: #e53935; border-radius: 1px; }
+  .tl .today-lbl { position: absolute; top: -15px; transform: translateX(-50%); font-size: 9px; color: #e53935; font-weight: 700; letter-spacing: .3px; }
+  .tl .months { display: flex; font-size: 9px; color: var(--muted); margin-top: 3px; }
+  .tl .months span { flex: 1; text-align: center; border-left: 1px solid var(--line); }
+  .tl .months span:first-child { border-left: 0; }
+  .tl .cap { display: flex; gap: 12px; font-size: 10px; color: var(--muted); margin-top: 5px; }
+  .tl .cap i { display: inline-block; width: 12px; height: 7px; border-radius: 3px; margin-right: 4px; vertical-align: 0; }
   .adv .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
   .adv .chip { border: 1px solid var(--line); border-radius: 12px; padding: 2px 9px; font-size: 11px; cursor: pointer; background: #fff; user-select: none; }
   .adv .chip.on { background: #1c2430; color: #fff; border-color: #1c2430; }
@@ -223,6 +233,44 @@ const fmt = iso => {
   return `${d} ${months[m-1]} ${y}`;
 };
 
+function timelineHtml(phases, season) {
+  if (!phases.length) return "";
+  const y0 = parseInt(season);                 // e.g. 2026 for "2026-2027"
+  const t0 = Date.UTC(y0, 7, 1);               // 1 ago
+  const t1 = Date.UTC(y0 + 1, 5, 30);          // 30 jun
+  const pct = iso => Math.max(0, Math.min(100, (Date.parse(iso) - t0) / (t1 - t0) * 100));
+  // stack overlapping windows (e.g. chinook overlay) into lanes
+  const laneEnds = [];
+  const segs = phases.map(p => {
+    let lane = 0;
+    while (laneEnds[lane] != null && p.s <= laneEnds[lane]) lane++;
+    laneEnds[lane] = p.e;
+    return { ...p, lane };
+  });
+  const laneH = 10, gap = 4;
+  const H = laneEnds.length * (laneH + gap) + gap;
+  const segHtml = segs.map(p => {
+    const cr = p.mode === "catch_and_release";
+    return `<div class="seg" title="${fmt(p.s)} – ${fmt(p.e)} · ${cr ? "solo devolución" : "retención"}"
+      style="left:${pct(p.s)}%;width:${Math.max(1.6, pct(p.e) - pct(p.s))}%;
+             top:${gap + p.lane * (laneH + gap)}px;background:var(--${cr ? "sep" : "nov"})"></div>`;
+  }).join("");
+  const today = new Date().toISOString().slice(0, 10);
+  const tp = Date.parse(today);
+  const todayHtml = tp >= t0 && tp <= t1
+    ? `<div class="today" style="left:${pct(today)}%"></div>
+       <div class="today-lbl" style="left:${pct(today)}%">HOY</div>` : "";
+  const months = ["ago", "sep", "oct", "nov", "dic", "ene", "feb", "mar", "abr", "may", "jun"];
+  return `<div class="tl">
+    <div class="track" style="height:${H}px">${segHtml}${todayHtml}</div>
+    <div class="months">${months.map(m => `<span>${m}</span>`).join("")}</div>
+    <div class="cap">
+      <span><i style="background:var(--sep)"></i>solo devolución</span>
+      <span><i style="background:var(--nov)"></i>retención</span>
+      <span><i style="background:#eef1f5;box-shadow:inset 0 0 0 1px #dde3ea"></i>cerrado</span>
+    </div></div>`;
+}
+
 function statusNow(phases) {
   const today = new Date().toISOString().slice(0, 10);
   for (const p of phases) {
@@ -254,6 +302,7 @@ function showPanel(props) {
       { "metropolitana": "Santiago (Metropolitana)", "ohiggins": "O'Higgins", "araucania": "La Araucanía",
         "los-rios": "Los Ríos", "los-lagos": "Los Lagos", "aysen": "Aysén" }[props.region] || props.region
     } · Temporada ${props.season}</div>
+    ${timelineHtml(phases, props.season)}
     <div class="status ${st.cls}">${st.txt}</div>
     <div><strong>Temporada:</strong> ${fmt(props.opens)} → ${fmt(props.closes)}</div>
     ${phases.map(p => `

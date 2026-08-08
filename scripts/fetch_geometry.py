@@ -143,6 +143,14 @@ def polygons_from_elements(elements):
             inners += assemble_rings(i_ways)
     if not outers:
         return None
+
+    # dedupe: the same lake often arrives twice (closed way + multipolygon
+    # relation); identical stacked rings cancel out under the fill rule
+    def ring_sig(r):
+        return (len(r), tuple(r[0]), tuple(r[len(r) // 2]))
+    outers = list({ring_sig(r): r for r in outers}.values())
+    inners = list({ring_sig(r): r for r in inners}.values())
+
     outers = [simplify(r) for r in outers]
     inners = [simplify(r) for r in inners if len(r) > 20]  # keep only big islands
     # assign inners to the largest outer (good enough for lakes)

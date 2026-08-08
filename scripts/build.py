@@ -170,12 +170,13 @@ def main():
 
         opens = base_phases[0]["s"]
         closes = max(p["e"] for p in base_phases)
-        om, od = int(opens[5:7]), int(opens[8:10])
+        om = int(opens[5:7])
+        nov_default = nth_weekday(y0, 11, WEEKDAYS["friday"], nth=2).isoformat()
         if om == 9:
             cat = "sep"
         elif om == 10:
             cat = "oct"
-        elif om == 11 and od < 13:
+        elif om == 11 and opens < nov_default:
             cat = "nov-early"
         elif om == 11:
             cat = "nov"
@@ -215,7 +216,7 @@ def main():
         "waterbodies": len(features),
         "consolidated_source": "Sernapesca, Medidas de administración de pesca recreativa en Chile 2025-2026 (v20260522); Res. Ex. 2075/2025 DZ Los Lagos (D.O. 04-09-2025); Res. Ex. 3004/2024 DZ Aysén y modificaciones; Res. Ex. 04/2024 DZ La Araucanía-Los Ríos.",
     }, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"\nbuilt web/data/waterbodies.geojson: {len(features)} features, season {season}")
+    print(f"\nbuilt docs/data/waterbodies.geojson: {len(features)} features, season {season}")
     return 1 if errors else 0
 
 

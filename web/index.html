@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pesca recreativa · Ríos y lagos del sur de Chile</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+  :root {
+    --panel-bg: #ffffff; --ink: #1c2430; --muted: #5b6774; --line: #e3e8ee;
+    --sep: #2e7d32; --oct: #7cb342; --nov-early: #f9a825; --nov: #1e88e5; --other: #9e9e9e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); }
+  #map { position: absolute; inset: 0; }
+  header {
+    position: absolute; top: 12px; left: 12px; z-index: 5; background: var(--panel-bg);
+    padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); max-width: 320px;
+  }
+  header h1 { margin: 0; font-size: 15px; }
+  header p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+  .legend { margin-top: 8px; font-size: 12px; display: grid; gap: 3px; }
+  .legend span { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  #panel {
+    position: absolute; top: 12px; right: 12px; bottom: 12px; z-index: 5; width: 360px; max-width: calc(100vw - 24px);
+    background: var(--panel-bg); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    padding: 16px; overflow-y: auto; display: none;
+  }
+  #panel.open { display: block; }
+  #panel h2 { margin: 0 0 2px; font-size: 18px; }
+  #panel .sub { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+  #panel .close { position: absolute; top: 8px; right: 12px; border: 0; background: none; font-size: 20px; cursor: pointer; color: var(--muted); }
+  .status { padding: 8px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .status.open-ret { background: #e3f1ff; color: #125da8; }
+  .status.open-cr { background: #e6f4e7; color: #23662a; }
+  .status.closed { background: #f4f4f4; color: #666; }
+  .phase { border-left: 3px solid var(--line); padding: 4px 0 4px 10px; margin: 8px 0; font-size: 13px; }
+  .phase .dates { font-weight: 600; }
+  .phase.cr { border-color: var(--sep); }
+  .phase.ret { border-color: var(--nov); }
+  .phase .lbl { color: var(--muted); margin-top: 2px; }
+  details { font-size: 12.5px; margin: 10px 0; }
+  details summary { cursor: pointer; font-weight: 600; }
+  details p { color: var(--muted); margin: 6px 0; }
+  .sources { font-size: 11.5px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 12px; padding-top: 8px; }
+  .badge { display:inline-block; font-size: 10.5px; background:#eef2f6; color:var(--muted); border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: 1px; }
+  footer { position: absolute; bottom: 0; left: 0; z-index: 4; font-size: 10px; background: rgba(255,255,255,.85); padding: 2px 8px; border-top-right-radius: 6px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<header>
+  <h1>🎣 Pesca recreativa — sur de Chile</h1>
+  <p id="season-line">Temporada 2026-2027 · haz clic en un río o lago</p>
+  <div class="legend">
+    <div><span style="background:var(--sep)"></span>Abre en septiembre (solo devolución)</div>
+    <div><span style="background:var(--oct)"></span>Abre en octubre</div>
+    <div><span style="background:var(--nov-early)"></span>Abre 1-12 de noviembre</div>
+    <div><span style="background:var(--nov)"></span>Abre 2° viernes de noviembre (regla general)</div>
+    <div><span style="background:var(--other)"></span>Otro régimen</div>
+  </div>
+</header>
+<div id="panel">
+  <button class="close" onclick="document.getElementById('panel').classList.remove('open')">×</button>
+  <div id="panel-content"></div>
+</div>
+<footer>Datos: Sernapesca / Subpesca (resoluciones citadas por cuerpo de agua) · Mapa: © OpenStreetMap, © CARTO · Proyecto informativo — verifique la normativa vigente antes de pescar</footer>
+<script>
+const COLORS = { "sep": "#2e7d32", "oct": "#7cb342", "nov-early": "#f9a825", "nov": "#1e88e5", "other": "#9e9e9e" };
+const colorExpr = ["match", ["get", "cat"],
+  "sep", COLORS["sep"], "oct", COLORS["oct"], "nov-early", COLORS["nov-early"], "nov", COLORS["nov"],
+  COLORS["other"]];
+
+const map = new maplibregl.Map({
+  container: "map",
+  style: {
+    version: 8,
+    sources: { carto: { type: "raster",
+      tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
+              "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
+              "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"],
+      tileSize: 256, attribution: "© OpenStreetMap contributors, © CARTO" } },
+    layers: [{ id: "base", type: "raster", source: "carto" }]
+  },
+  center: [-72.6, -43.5], zoom: 6
+});
+map.addControl(new maplibregl.NavigationControl(), "bottom-right");
+
+map.on("load", async () => {
+  const [data, meta] = await Promise.all([
+    fetch("data/waterbodies.geojson").then(r => r.json()),
+    fetch("data/meta.json").then(r => r.json()).catch(() => null)
+  ]);
+  if (meta) document.getElementById("season-line").textContent =
+    `Temporada ${meta.season} · actualizado ${meta.built} · haz clic en un río o lago`;
+
+  map.addSource("wb", { type: "geojson", data, promoteId: "id" });
+
+  map.addLayer({ id: "wb-fill", type: "fill", source: "wb",
+    filter: ["==", ["geometry-type"], "Polygon"],
+    paint: { "fill-color": colorExpr, "fill-opacity":
+      ["case", ["boolean", ["feature-state", "hover"], false], 0.85, 0.6] } });
+  map.addLayer({ id: "wb-outline", type: "line", source: "wb",
+    filter: ["==", ["geometry-type"], "Polygon"],
+    paint: { "line-color": colorExpr, "line-width": 1.2 } });
+  map.addLayer({ id: "wb-river", type: "line", source: "wb",
+    filter: ["==", ["geometry-type"], "LineString"],
+    layout: { "line-cap": "round", "line-join": "round" },
+    paint: { "line-color": colorExpr,
+      "line-width": ["interpolate", ["linear"], ["zoom"], 5, 1.6, 8, 3.5, 11, 7, 14, 12],
+      "line-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 1, 0.85] } });
+
+  // fit to data
+  const b = new maplibregl.LngLatBounds();
+  const extend = c => { if (typeof c[0] === "number") b.extend(c); else c.forEach(extend); };
+  data.features.forEach(f => extend(f.geometry.coordinates));
+  map.fitBounds(b, { padding: 60 });
+
+  let hovered = null;
+  for (const layer of ["wb-fill", "wb-river"]) {
+    map.on("mousemove", layer, e => {
+      map.getCanvas().style.cursor = "pointer";
+      if (hovered) map.setFeatureState({ source: "wb", id: hovered }, { hover: false });
+      hovered = e.features[0].id;
+      map.setFeatureState({ source: "wb", id: hovered }, { hover: true });
+    });
+    map.on("mouseleave", layer, () => {
+      map.getCanvas().style.cursor = "";
+      if (hovered) map.setFeatureState({ source: "wb", id: hovered }, { hover: false });
+      hovered = null;
+    });
+    map.on("click", layer, e => showPanel(e.features[0].properties));
+  }
+});
+
+const fmt = iso => {
+  const [y, m, d] = iso.split("-").map(Number);
+  const months = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  return `${d} ${months[m-1]} ${y}`;
+};
+
+function statusNow(phases) {
+  const today = new Date().toISOString().slice(0, 10);
+  for (const p of phases) {
+    if (p.s <= today && today <= p.e)
+      return p.mode === "catch_and_release"
+        ? { cls: "open-cr", txt: "🟢 Abierta ahora — solo con devolución" }
+        : { cls: "open-ret", txt: "🔵 Abierta ahora — se permite retención" };
+  }
+  const next = phases.find(p => p.s > today);
+  if (next) return { cls: "closed", txt: `⚪ Cerrada — abre el ${fmt(next.s)}` };
+  return { cls: "closed", txt: "⚪ Temporada cerrada" };
+}
+
+function showPanel(props) {
+  const phases = JSON.parse(props.phases);
+  const sources = JSON.parse(props.sources);
+  const veda = JSON.parse(props.veda || "[]");
+  const gear = JSON.parse(props.gear || "[]");
+  const prohib = JSON.parse(props.prohibitions || "[]");
+  const st = statusNow(phases);
+  const levelBadge = { waterbody: "regla específica", region: "regla regional", national: "regla nacional" }[props.rule_level] || "";
+
+  document.getElementById("panel-content").innerHTML = `
+    <h2>${props.name}<span class="badge">${levelBadge}</span></h2>
+    <div class="sub">${props.type === "lake" ? "Lago" : "Río"} · Región de ${
+      { "los-rios": "Los Ríos", "los-lagos": "Los Lagos", "aysen": "Aysén" }[props.region] || props.region
+    } · Temporada ${props.season}</div>
+    <div class="status ${st.cls}">${st.txt}</div>
+    <div><strong>Temporada:</strong> ${fmt(props.opens)} → ${fmt(props.closes)}</div>
+    ${phases.map(p => `
+      <div class="phase ${p.mode === "catch_and_release" ? "cr" : "ret"}">
+        <div class="dates">${fmt(p.s)} – ${fmt(p.e)}</div>
+        <div class="lbl">${p.label}</div>
+      </div>`).join("")}
+    ${veda.length ? `<details><summary>Veda</summary>${veda.map(v => `<p>${v}</p>`).join("")}</details>` : ""}
+    ${gear.length ? `<details><summary>Aparejos y modalidad</summary>${gear.map(g => `<p>${g}</p>`).join("")}</details>` : ""}
+    ${prohib.length ? `<details><summary>Prohibiciones</summary>${prohib.map(p => `<p>${p}</p>`).join("")}</details>` : ""}
+    <div class="sources"><strong>Fuentes:</strong><br>${
+      sources.map(s => s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.doc}</a>` : s.doc).join("<br>")
+    }</div>`;
+  document.getElementById("panel").classList.add("open");
+}
+</script>
+</body>
+</html>

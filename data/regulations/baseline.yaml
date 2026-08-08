@@ -1,0 +1,65 @@
+# National baseline for recreational fishing of salmonids in continental waters.
+# Applies to any water body with no more specific regional/water-body rule.
+#
+# Schema used across data/regulations/*.yaml
+# ------------------------------------------
+# Each file has `rules:` — a list of records. Fields:
+#   id            unique slug
+#   scope         national | region | waterbodies
+#   region        region slug (when scope != national)
+#   waterbodies   list of registry ids (when scope == waterbodies)
+#   tributaries   included | excluded  (whether affluent/effluent streams are covered)
+#   species       salmonids | list of species slugs
+#   seasons       list of "YYYY-YYYY" season labels the rule covers, or `all`
+#   windows       list of fishing windows; each with start/end and a mode:
+#     start/end   { month: 1-12, nth: N, weekday: mon..sun }  -> Nth weekday of month
+#                 { month: 1-12, last: true, weekday: ... }   -> last weekday of month
+#                 { month: 1-12, day: D }                      -> fixed date
+#                 (end in an earlier month than start = following calendar year)
+#     mode        retention | catch_and_release
+#     bag         free-text bag limit (when mode: retention)
+#   gear          free-text gear restrictions
+#   prohibitions  free-text prohibitions
+#   priority      higher wins when rules overlap (baseline=0, region=10, waterbody=20)
+#   source        document citation (doc, url, published)
+#
+# The 2025-2026 consolidated table row number is recorded as source.table_row for
+# traceability against data/sources/medidas_..._v20260522.xlsx.
+
+rules:
+  - id: national-default-salmonids
+    scope: national
+    species: salmonids
+    seasons: all
+    priority: 0
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos por pescador y jornada"
+    gear: >
+      Uso exclusivo de señuelo artificial con un anzuelo simple o un anzuelo triple
+      ("araña"). Peso máximo de la plomada 100 gramos. Una sola caña a la vez.
+      Chinguillo de longitud máxima 100 cm y diámetro no superior a 70 cm.
+    prohibitions: >
+      Prohibida la pesca nocturna (21:00 a 06:00) a menos de 500 m de desembocaduras
+      de ríos y esteros y de desagües de lagos, lagunas y tranques. Prohibida la
+      comercialización de salmonídeos de aguas continentales (salvo de cultivo).
+    source:
+      doc: "Decreto Supremo N° 320, de 12 de agosto de 1981 (mod. D.S. 425 y 149 de 1986), Ministerio de Economía"
+      table_row: 10
+      url: https://www.bcn.cl/leychile/navegar?idNorma=19495
+
+  - id: national-native-species-veda
+    scope: national
+    species: [especies-nativas-protegidas]
+    seasons: all
+    priority: 0
+    windows: []   # no fishing at all
+    prohibitions: >
+      Veda extractiva de 15 años para especies ícticas nativas protegidas (ver anexo
+      del consolidado): del 06 de octubre de 2011 al 05 de octubre de 2026.
+      WATCH: expires 2026-10-05 — check for renewal.
+    source:
+      doc: "Decreto Exento N° 878, de 06 de octubre de 2011"
+      table_row: 4

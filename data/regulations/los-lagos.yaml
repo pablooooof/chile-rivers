@@ -1,0 +1,192 @@
+# Región de Los Lagos — recreational fishing rules (salmonids focus).
+# Extracted from Sernapesca consolidated table 2025-2026 v20260522 (rows noted),
+# corrected against the Diario Oficial extract of Res. Ex. N° 2075/2025.
+
+rules:
+  - id: los-lagos-early-opening-cr
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [lago-llanquihue, lago-rupanco, lago-puyehue, rio-maullin, rio-rahue,
+                  rio-pilmaiquen, rio-puelo, rio-ventisquero, rio-manso, rio-traidor,
+                  rio-puelo-chico]
+    tributaries: excluded
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028", "2028-2029"]
+    priority: 20
+    windows:
+      - start: { month: 9, nth: 1, weekday: friday }
+        end: { month: 11, nth: 2, weekday: thursday }
+        mode: catch_and_release
+    gear: >
+      Señuelo artificial con máximo un anzuelo simple sin rebarba. Pesca embarcada y
+      de orilla solo a un radio no menor a 1.000 m del centro de desembocadura o
+      nacimiento de cualquier afluente/efluente. Chinguillo máx. 100 cm / 70 cm.
+    prohibitions: >
+      Prohibida la pesca desde puentes/caminos sobre los ríos Maullín, Pilmaiquén y
+      Puelo o sus afluentes. Prohibidos bicheros/tenazas/ganchos. Prohibida pesca
+      nocturna 22:00-06:00. Prohibida pesca en sector "Las Compuertas" del lago
+      Puyehue. Prohibido eviscerar durante actividad y transporte.
+    source:
+      doc: "Resolución Exenta N° 2075, de 28 de agosto de 2025, DZ Pesca y Acuicultura Los Lagos"
+      published_do: 2025-09-04
+      do_pdf: data/sources/res-ex-2075-2025-los-lagos_DO.pdf
+      url: https://www.subpesca.cl/portal/615/w3-article-126974.html
+      table_row: 49
+    notes: >
+      D.O. text says PRIMER viernes de septiembre (consolidated table v20260522 says
+      "segundo" — typo). Season 2026-27 opens 2026-09-04, C&R until 2026-11-12.
+      Río Puelo covered: sector bajo/medio/alto desde Los Hitos (lago Inferior) hasta
+      desembocadura en estuario Reloncaví.
+
+  - id: los-lagos-main-lakes-season
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [lago-llanquihue, lago-rupanco, lago-puyehue, rio-maullin, rio-pilmaiquen]
+    tributaries: included
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028", "2028-2029"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: >
+          Devolución obligatoria de todas las truchas y fauna íctica nativa.
+          Retención de 1 ejemplar de salmón salar, coho o chinook.
+    gear: "Señuelo artificial, máximo un anzuelo simple sin rebarba. Chinguillo máx. 100/70 cm."
+    prohibitions: >
+      Mismas prohibiciones que la apertura anticipada (puentes, bicheros, pesca
+      nocturna 22:00-06:00, Las Compuertas, eviscerado).
+    source:
+      doc: "Resolución Exenta N° 2075, de 28 de agosto de 2025, DZ Los Lagos"
+      published_do: 2025-09-04
+      table_row: 50
+
+  - id: puelo-rahue-season
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [rio-puelo, rio-rahue, rio-ventisquero, rio-manso, rio-traidor, rio-puelo-chico]
+    tributaries: included
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028", "2028-2029"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, day: 31 }
+        mode: retention
+        bag: >
+          Devolución obligatoria de truchas y fauna nativa. Retención de 1 ejemplar
+          de salmón salar, coho o chinook.
+    gear: "Señuelo artificial, máximo un anzuelo simple sin rebarba."
+    source:
+      doc: "Resolución Exenta N° 2075, de 28 de agosto de 2025, DZ Los Lagos"
+      published_do: 2025-09-04
+      table_row: 52
+    notes: "Cuenca del río Puelo y río Rahue: temporada extendida hasta el 31 de mayo."
+
+  - id: lagunas-candelaria-sin-nombre-cr
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [laguna-candelaria, laguna-sin-nombre]
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028", "2028-2029"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 3, weekday: sunday }
+        mode: catch_and_release
+    gear: "Solo mosca artificial, anzuelos sin rebarba. Solo motores eléctricos."
+    source:
+      doc: "Resolución Exenta N° 2075, de 28 de agosto de 2025, DZ Los Lagos"
+      published_do: 2025-09-04
+      table_row: 53
+
+  - id: palena-petrohue-todos-los-santos-season
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [rio-petrohue, lago-todos-los-santos, rio-futaleufu, rio-palena,
+                  rio-yelcho, lago-yelcho, rio-espolon]
+    tributaries: included
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028", "2028-2029"]
+    priority: 20
+    windows:
+      - start: { month: 11, day: 1 }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: "1 ejemplar de salmón salar, coho o chinook"
+    gear: >
+      Señuelo artificial, máximo un anzuelo simple sin rebarba. Parte superior del río
+      Futaleufú (límite internacional hasta sector "Sofía") con devolución obligatoria
+      de todos los salmonídeos. Chinguillo máx. 100/70 cm.
+    prohibitions: >
+      Prohibida pesca desde puentes/caminos. Prohibidos bicheros/arpones/lanzas.
+      Prohibida pesca nocturna 22:00-06:00. Prohibida pesca en sector "Los Patos" del
+      río Petrohué. Prohibida pesca con motor encendido en todo el río Petrohué.
+    source:
+      doc: "Resolución Exenta N° 2428, de 27 de octubre de 2025, DZ Los Lagos"
+      published: 2025-11-12
+      table_row: 54
+    notes: >
+      Covers "cuerpos y cursos de agua de la provincia de Palena" + río Petrohué +
+      lago Todos Los Santos. The Palena waterbodies listed here (Futaleufú, Palena,
+      Yelcho, Espolón) are the named majors within that province; rule applies
+      province-wide. Opens 1 November (earlier than national default).
+
+  - id: rio-pescado-rio-sur-restricted
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [rio-pescado, rio-sur]
+    tributaries: included
+    species: salmonids
+    seasons: all
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: >
+          1 ejemplar (trucha arcoíris, trucha café o salmón plateado) por día;
+          resto con devolución obligatoria.
+    gear: >
+      Solo mosca artificial con anzuelos sin rebarba. Incluye zona de desembocadura
+      en el lago Llanquihue hasta 1.000 m. Prohibido el uso de embarcaciones.
+    source:
+      doc: "Decreto N° 224, de 08 de agosto de 1985"
+      table_row: 56
+
+  - id: lago-llanquihue-may-2026-extension
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [lago-llanquihue]
+    species: salmonids
+    seasons: ["2025-2026"]
+    priority: 25
+    windows:
+      - start: { month: 5, day: 4 }
+        end: { month: 5, day: 31 }
+        mode: catch_and_release
+    source:
+      doc: "Resolución Exenta N° 1167, de 29 de abril de 2026, DZ Los Lagos"
+      published: 2026-05-13
+      table_row: 51
+    notes: >
+      One-off May 2026 C&R extension (season 2025-26 only). WATCH: may be repeated
+      for May 2027 by a new resolution.
+
+  - id: rio-petrohue-may-2026-extension
+    scope: waterbodies
+    region: los-lagos
+    waterbodies: [rio-petrohue]
+    species: salmonids
+    seasons: ["2025-2026"]
+    priority: 25
+    windows:
+      - start: { month: 5, day: 4 }
+        end: { month: 5, day: 31 }
+        mode: catch_and_release
+    source:
+      doc: "Resolución Exenta N° 1168, de 29 de abril de 2026, DZ Los Lagos"
+      published: 2026-05-13
+      table_row: 55
+    notes: "Excluye tributarios San Antonio y El Salto. Same WATCH as lago Llanquihue."

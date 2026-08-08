@@ -1,0 +1,117 @@
+# Región de Aysén — recreational fishing rules (salmonids focus).
+# Aysén uses calendar-date phases (not floating weekdays), different for lakes vs
+# rivers, set by Res. Ex. N° 3004/2024 (mod. 893/2025 y 75/2026), years 2025-2027.
+
+rules:
+  - id: aysen-lakes-phases
+    scope: region
+    region: aysen
+    waterbody_type: lake     # applies to lagos y lagunas only
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027"]
+    priority: 10
+    windows:
+      - start: { month: 10, day: 12 }
+        end: { month: 11, day: 9 }
+        mode: catch_and_release
+      - start: { month: 11, day: 10 }
+        end: { month: 4, day: 1 }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos"
+      - start: { month: 4, day: 2 }
+        end: { month: 5, day: 6 }
+        mode: catch_and_release
+    veda: "Prohibida cualquier actividad de pesca del 07 de mayo al 11 de octubre (años 2025-2027)."
+    gear: "Señuelos artificiales. Chinguillo."
+    prohibitions: >
+      Prohibida la extracción (incluso con devolución) todo el año en zonas de
+      protección de desove: desagüe lago Pollux, desagüe lago Frío, Pozón Ibáñez
+      (río Claro) y otras (coordenadas en Res. Ex. 3004-2024 y 893-2025).
+    source:
+      doc: "Res. Ex. N° 3004, 31 dic 2024 (mod. Res. Ex. N° 893, 08 abr 2025), DZ Pesca y Acuicultura Aysén"
+      published_do: 2025-01-09
+      table_row: 58
+
+  - id: aysen-rivers-phases
+    scope: region
+    region: aysen
+    waterbody_type: river    # applies to ríos only
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027"]
+    priority: 10
+    windows:
+      - start: { month: 10, day: 12 }
+        end: { month: 11, day: 30 }
+        mode: catch_and_release
+      - start: { month: 12, day: 1 }
+        end: { month: 2, day: 28 }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos"
+      - start: { month: 3, day: 1 }
+        end: { month: 5, day: 6 }
+        mode: catch_and_release
+    veda: "Prohibida cualquier actividad de pesca del 07 de mayo al 11 de octubre (años 2025-2027)."
+    gear: "Señuelos artificiales. Chinguillo."
+    prohibitions: >
+      Prohibida la extracción todo el año en zonas de protección de desove: río
+      Ñirehuao (sector Mañihuales) y río Mañihuales (sector El Toqui) — desove de
+      salmón chinook abril-mayo — entre otras.
+    source:
+      doc: "Res. Ex. N° 3004, 31 dic 2024 (mod. Res. Ex. N° 893, 08 abr 2025), DZ Aysén"
+      published_do: 2025-01-09
+      table_row: 61
+
+  - id: rio-paloma-cr
+    scope: waterbodies
+    region: aysen
+    waterbodies: [rio-paloma]
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027"]
+    priority: 20
+    windows:
+      - start: { month: 10, day: 12 }
+        end: { month: 5, day: 6 }
+        mode: catch_and_release
+    veda: "07 de mayo al 11 de octubre."
+    source:
+      doc: "Res. Ex. N° 3004, 31 dic 2024 (mod. Res. Ex. N° 893, 08 abr 2025), DZ Aysén"
+      published_do: 2025-01-09
+      table_row: 64
+
+  - id: aysen-chinook-retention
+    scope: region
+    region: aysen
+    species: [salmon-chinook]
+    seasons: ["2025-2026", "2026-2027"]
+    priority: 12
+    windows:
+      - start: { month: 10, day: 12 }
+        end: { month: 1, day: 15 }
+        mode: retention
+        bag: "2 ejemplares sin límite de peso"
+    veda: "Veda biológica del chinook: 16 de enero al 11 de octubre (años 2025-2027)."
+    source:
+      doc: "Res. Ex. N° 3004, 31 dic 2024 (mod. Res. Ex. N° 893, 08 abr 2025), DZ Aysén"
+      published_do: 2025-01-09
+      table_row: 65
+
+  - id: rio-aysen-chinook-extension-2026
+    scope: waterbodies
+    region: aysen
+    waterbodies: [rio-aysen]
+    species: [salmon-chinook]
+    seasons: ["2025-2026"]
+    priority: 25
+    windows:
+      - start: { month: 10, day: 12 }
+        end: { month: 2, day: 28 }
+        mode: retention
+        bag: "2 ejemplares sin límite de peso"
+    gear: >
+      Zona única de extensión: desde la desembocadura del río Aysén (sector La Barra)
+      hasta la confluencia con el río Blanco (~15 km).
+    source:
+      doc: "Resolución Exenta N° 75, de 13 de enero de 2026, DZ Aysén (mod. Res. Ex. 3004-2024)"
+      published: 2026-01-13
+      table_row: 66
+    notes: "One-off extension for season 2025-26. WATCH: may repeat for 2026-27."

@@ -25,6 +25,18 @@ sources:
     fetched: 2026-08-08
     sha256_8: 662e3ec4
     status: pending
+  - file: res-ex-2075-2025-los-lagos_DO.pdf
+    url: https://www.diariooficial.interior.gob.cl/publicaciones/2025/09/04/44242/01/2694125.pdf
+    publisher: Diario Oficial
+    title: "Res. Ex. N° 2075/2025 DZ Los Lagos (extracto D.O.): medidas cuencas lagos Llanquihue, Rupanco, Puyehue y ríos Maullín, Rahue, Pilmaiquén, Puelo"
+    version: D.O. 2025-09-04
+    fetched: 2026-08-08
+    status: parsed
+    note: >
+      Authoritative on the early-opening rule: "entre el primer viernes septiembre y el
+      segundo jueves del mes de noviembre... para los años 2025, 2026, 2027 y 2028".
+      The Sernapesca consolidated table v20260522 (row 49) says "segundo viernes de
+      septiembre" — that is a typo; the D.O. text prevails. 2026 opening = 2026-09-04.
 
 # Pages watched for new versions (used by /update):
 watch:

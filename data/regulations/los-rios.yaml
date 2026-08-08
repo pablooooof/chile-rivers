@@ -1,0 +1,146 @@
+# Región de Los Ríos — recreational fishing rules (salmonids focus).
+# Extracted from Sernapesca consolidated table 2025-2026 v20260522 (rows noted).
+
+rules:
+  - id: los-rios-regional-season
+    scope: region
+    region: los-rios
+    species: salmonids
+    seasons: ["2024-2025", "2025-2026", "2026-2027", "2027-2028", "2028-2029", "2029-2030"]
+    priority: 10
+    windows:
+      - start: { month: 10, nth: 2, weekday: friday }
+        end: { month: 5, last: true, weekday: sunday }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos"
+    gear: >
+      Pesca con caña y señuelo artificial con un anzuelo simple o triple ("araña").
+      Plomada máx. 100 g. Una caña a la vez. Chinguillo máx. 100 cm / 70 cm diámetro.
+    prohibitions: >
+      Prohibida toda pesca recreativa entre 22:00 y 06:00 en todos los cursos y
+      cuerpos de agua de la región.
+    source:
+      doc: "Resolución Exenta N° 04, de 02 de septiembre de 2024, DZ Pesca y Acuicultura regiones de La Araucanía y Los Ríos"
+      published: 2024-09-03
+      table_row: 40
+    notes: >
+      Early regional opening: 2nd Friday of October (2026-10-09 for season 2026-27),
+      extended close: last Sunday of May (2027-05-30).
+
+  - id: rio-conaripe-trout-cr
+    scope: waterbodies
+    region: los-rios
+    waterbodies: [rio-conaripe]
+    tributaries: included
+    species: [trucha-cafe, trucha-arcoiris]
+    seasons: ["2020-2021", "2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026", "2026-2027", "2027-2028", "2028-2029", "2029-2030"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: catch_and_release
+    gear: "Pesca con mosca, señuelo simple sin rebarba. Nacimiento/desembocadura: radio 500 m en lagos Pellaifa y Calafquén."
+    source:
+      doc: "Resolución Exenta N° 02, de 01 de octubre de 2020, DZ La Araucanía y Los Ríos"
+      published: 2020-10-01
+      table_row: 44
+
+  - id: rio-conaripe-salmon-retention
+    scope: waterbodies
+    region: los-rios
+    waterbodies: [rio-conaripe]
+    tributaries: included
+    species: [salmon-coho, salmon-salar, salmon-chinook]
+    seasons: ["2020-2021", "2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026", "2026-2027", "2027-2028", "2028-2029", "2029-2030"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: "1 ejemplar de salmón coho, del atlántico (salar) o chinook"
+    gear: "Pesca con mosca, señuelo simple sin rebarba."
+    source:
+      doc: "Resolución Exenta N° 02, de 01 de octubre de 2020, DZ La Araucanía y Los Ríos"
+      published: 2020-10-01
+      table_row: 45
+
+  - id: rio-llanquihue-san-pedro-cr
+    scope: waterbodies
+    region: los-rios
+    waterbodies: [rio-llanquihue-los-rios, rio-san-pedro]
+    tributaries: included
+    species: all
+    seasons: ["2020-2021", "2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026", "2026-2027", "2027-2028", "2028-2029", "2029-2030"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: catch_and_release
+    gear: >
+      Pesca con mosca, señuelo simple sin rebarba, se permite mosca en tándem
+      (dropper). Zona: río Llanquihue desde unión Neltume+Fuy y desembocadura en lago
+      Panguipulli hasta lago Riñihue; río San Pedro desde lago Riñihue (incl. río
+      Mañío) hasta confluencia con río Malihue.
+    source:
+      doc: "Resolución Exenta N° 02, de 01 de octubre de 2020, DZ La Araucanía y Los Ríos"
+      published: 2020-10-01
+      table_row: 46
+    notes: >
+      Row 47 gives 1-salmon retention (coho/salar/chinook) in the same zone.
+
+  - id: lago-huishue-gris-cholchol-blanco-cr
+    scope: waterbodies
+    region: los-rios
+    waterbodies: [lago-huishue, lago-gris, rio-cholchol-ranco, rio-blanco-ranco]
+    species: all
+    seasons: ["2025-2026", "2026-2027", "2027-2028", "2028-2029", "2029-2030"]
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: catch_and_release
+    gear: "Pesca con mosca, señuelo simple sin rebarba. Protocolo anti-didymo obligatorio."
+    source:
+      doc: "Resolución Exenta N° 01, de 31 de enero de 2025, DZ La Araucanía y Los Ríos"
+      published: 2025-02-03
+      table_row: 48
+
+  - id: rio-calcurrupe-cr-expired
+    scope: waterbodies
+    region: los-rios
+    waterbodies: [rio-calcurrupe]
+    tributaries: included
+    species: [trucha-arcoiris, trucha-cafe]
+    seasons: ["2025-2026"]   # C&R decade ended 2026-01-18; no longer applies 2026-27
+    priority: 20
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 1, day: 18 }
+        mode: catch_and_release
+    source:
+      doc: "Resolución Exenta N° 01, de 12 de enero de 2016, DZ La Araucanía y Los Ríos"
+      published: 2016-01-19
+      table_row: 41
+    notes: >
+      10-year mandatory C&R (2016-01-19 a 2026-01-18) EXPIRED mid-season 2025-26.
+      WATCH: unless a new resolution appears, Calcurrupe reverts to the regional
+      Los Ríos rule for season 2026-27. Check Subpesca normativa before publishing
+      2026-27 data for this river.
+
+  - id: humedal-huitag-veda
+    scope: waterbodies
+    region: los-rios
+    waterbodies: [lago-calafquen]
+    species: all
+    seasons: ["2020-2021", "2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026", "2026-2027", "2027-2028", "2028-2029", "2029-2030"]
+    priority: 15   # partial-zone veda; does not close the whole lake
+    windows: []
+    prohibitions: >
+      Zona de exclusión de pesca recreativa: Humedal Huitag del lago Calafquén
+      (polígono de 390 ha, perímetro 13 km; vértices en Res. Ex. N° 02/2020).
+      El resto del lago sigue la regla regional.
+    partial_zone: true
+    source:
+      doc: "Resolución Exenta N° 02, de 01 de octubre de 2020, DZ La Araucanía y Los Ríos"
+      published: 2020-10-01
+      table_row: 39

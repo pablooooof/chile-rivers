@@ -76,6 +76,28 @@
   .adv .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
   .adv .chip { border: 1px solid var(--line); border-radius: 12px; padding: 2px 9px; font-size: 11px; cursor: pointer; background: #fff; user-select: none; }
   .adv .chip.on { background: #1c2430; color: #fff; border-color: #1c2430; }
+  .transport-toggles { margin-top: 8px; display: flex; gap: 6px; }
+  .transport-toggles button {
+    border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 3px 8px;
+    font-size: 11.5px; cursor: pointer; color: var(--muted); display: flex; align-items: center; gap: 4px;
+  }
+  .transport-toggles button .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+  .transport-toggles button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .transport-toggles button.on .dot { box-shadow: 0 0 0 1px rgba(255,255,255,.5); }
+  .maplibregl-popup { z-index: 6; }
+  .maplibregl-popup-content {
+    border-radius: 10px; padding: 12px 14px; box-shadow: 0 2px 12px rgba(0,0,0,.18);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 280px; font-size: 13px;
+  }
+  .tp-popup h3 { margin: 0 0 4px; font-size: 15px; }
+  .tp-popup .tp-type { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  .tp-popup .tp-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+  .tp-popup .tp-row:last-child { border-bottom: 0; }
+  .tp-popup .tp-row .tp-label { color: var(--muted); }
+  .tp-popup .tp-row .tp-val { font-weight: 600; text-align: right; }
+  .tp-popup .tp-book { display: inline-block; margin-top: 8px; background: var(--ink); color: #fff; border-radius: 6px; padding: 5px 12px; font-size: 12px; text-decoration: none; font-weight: 600; }
+  .tp-popup .tp-book:hover { opacity: .85; }
+  .tp-popup .tp-airlines { font-size: 11px; color: var(--muted); margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -85,6 +107,10 @@
   <h1 id="hdr-title"></h1>
   <p id="season-line"></p>
   <div class="legend" id="legend"></div>
+  <div class="transport-toggles">
+    <button id="btn-bus" onclick="toggleTransport('bus')"><span class="dot" style="background:#e65100"></span><span id="lbl-bus"></span></button>
+    <button id="btn-air" onclick="toggleTransport('airport')"><span class="dot" style="background:#6a1b9a"></span><span id="lbl-air"></span></button>
+  </div>
 </header>
 <div id="panel">
   <button class="close" onclick="closePanel()">×</button>
@@ -122,6 +148,14 @@ const I18N = {
     monthsShort: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
     regions: { metropolitana: "Santiago (Metropolitana)", ohiggins: "O'Higgins", maule: "Maule",
                araucania: "La Araucanía", "los-rios": "Los Ríos", "los-lagos": "Los Lagos", aysen: "Aysén" },
+    busBtn: "Buses", airBtn: "Vuelos",
+    tpBus: "Terminal de buses", tpAir: "Aeropuerto",
+    tpEta: "Tiempo desde Santiago", tpFlight: "Vuelo desde Santiago",
+    tpPrice: "Precio aprox.", tpBook: "Buscar pasajes", tpBookFlight: "Buscar vuelos",
+    tpAirlines: "Aerolíneas:",
+    tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
+    tpPriceFmt: (min, max) => min === 0 ? "—" : `$${(min/1000).toFixed(0)}k – $${(max/1000).toFixed(0)}k CLP`,
+    tpOrigin: "Santiago",
   },
   en: {
     title: "🎣 Recreational fishing — Chile",
@@ -150,6 +184,14 @@ const I18N = {
     monthsShort: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
     regions: { metropolitana: "Santiago (Metropolitan)", ohiggins: "O'Higgins", maule: "Maule",
                araucania: "La Araucanía", "los-rios": "Los Ríos", "los-lagos": "Los Lagos", aysen: "Aysén" },
+    busBtn: "Buses", airBtn: "Flights",
+    tpBus: "Bus terminal", tpAir: "Airport",
+    tpEta: "Travel from Santiago", tpFlight: "Flight from Santiago",
+    tpPrice: "Est. price", tpBook: "Search tickets", tpBookFlight: "Search flights",
+    tpAirlines: "Airlines:",
+    tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
+    tpPriceFmt: (min, max) => min === 0 ? "—" : `$${(min/1000).toFixed(0)}k – $${(max/1000).toFixed(0)}k CLP`,
+    tpOrigin: "Santiago",
   }
 };
 let lang = localStorage.getItem("lang") || "es";
@@ -189,6 +231,7 @@ const map = new maplibregl.Map({
   container: "map",
   style: {
     version: 8,
+    glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
     sources: {
       carto: { type: "raster",
         tiles: ["https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png",
@@ -233,12 +276,16 @@ document.getElementById("btn-sat").addEventListener("click", ev => {
 let ADV = { general: [], waterbodies: {}, presence: {}, species_names: {}, species_names_en: {} };
 let META = null;
 let lastProps = null;
+let TRANSPORT = null;
+let tpPopup = null;
+const tpState = { bus: false, airport: false };
 
 map.on("load", async () => {
-  const [data, meta, adv] = await Promise.all([
+  const [data, meta, adv, transportData] = await Promise.all([
     fetch("data/waterbodies.geojson", { cache: "no-cache" }).then(r => r.json()),
     fetch("data/meta.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null),
-    fetch("data/advisory.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null)
+    fetch("data/advisory.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null),
+    fetch("data/transport.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null)
   ]);
   if (adv) ADV = Object.assign({ general: [], waterbodies: {}, presence: {}, species_names: {}, species_names_en: {} }, adv);
   META = meta;
@@ -272,6 +319,62 @@ map.on("load", async () => {
   map.addLayer({ id: "sat-roads", type: "raster", source: "esri_transport", layout: { visibility: "none" } });
   map.addLayer({ id: "sat-places", type: "raster", source: "esri_places", layout: { visibility: "none" } });
   map.addLayer({ id: "labels", type: "raster", source: "carto_labels" });
+
+  // ── transport layers ───────────────────────────────────────────────────────
+  if (transportData) {
+    TRANSPORT = transportData;
+    const busFc = { type: "FeatureCollection", features: transportData.features.filter(f => f.properties.transport === "bus") };
+    const airFc = { type: "FeatureCollection", features: transportData.features.filter(f => f.properties.transport === "airport") };
+    map.addSource("tp-bus", { type: "geojson", data: busFc });
+    map.addSource("tp-air", { type: "geojson", data: airFc });
+
+    map.addLayer({ id: "tp-bus-shadow", type: "circle", source: "tp-bus",
+      layout: { visibility: "none" },
+      paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5, 8, 9, 12, 13],
+               "circle-color": "#000", "circle-opacity": 0.15, "circle-translate": [0, 2] } });
+    map.addLayer({ id: "tp-bus-circle", type: "circle", source: "tp-bus",
+      layout: { visibility: "none" },
+      paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 4, 8, 8, 12, 12],
+               "circle-color": "#e65100", "circle-stroke-width": 2, "circle-stroke-color": "#fff" } });
+    map.addLayer({ id: "tp-bus-label", type: "symbol", source: "tp-bus",
+      layout: { visibility: "none", "text-field": ["get", "name"], "text-size": 11,
+                "text-offset": [0, 1.4], "text-anchor": "top",
+                "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"] },
+      paint: { "text-color": "#bf360c", "text-halo-color": "#fff", "text-halo-width": 1.5 },
+      minzoom: 7 });
+
+    map.addLayer({ id: "tp-air-shadow", type: "circle", source: "tp-air",
+      layout: { visibility: "none" },
+      paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 6, 8, 10, 12, 14],
+               "circle-color": "#000", "circle-opacity": 0.15, "circle-translate": [0, 2] } });
+    map.addLayer({ id: "tp-air-circle", type: "circle", source: "tp-air",
+      layout: { visibility: "none" },
+      paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 5, 8, 9, 12, 13],
+               "circle-color": "#6a1b9a", "circle-stroke-width": 2, "circle-stroke-color": "#fff" } });
+    map.addLayer({ id: "tp-air-label", type: "symbol", source: "tp-air",
+      layout: { visibility: "none", "text-field": ["concat", ["get", "name"], " (", ["get", "iata"], ")"],
+                "text-size": 11, "text-offset": [0, 1.5], "text-anchor": "top",
+                "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"] },
+      paint: { "text-color": "#4a148c", "text-halo-color": "#fff", "text-halo-width": 1.5 },
+      minzoom: 6 });
+
+    for (const layer of ["tp-bus-circle", "tp-air-circle"]) {
+      map.on("mouseenter", layer, () => map.getCanvas().style.cursor = "pointer");
+      map.on("mouseleave", layer, () => map.getCanvas().style.cursor = "");
+      map.on("click", layer, e => {
+        const p = e.features[0].properties;
+        const coords = e.features[0].geometry.coordinates.slice();
+        showTransportPopup(p, coords);
+      });
+    }
+    for (const type of ["bus", "airport"]) {
+      if (tpState[type]) {
+        const pfx = type === "bus" ? "tp-bus" : "tp-air";
+        for (const suf of ["-shadow", "-circle", "-label"])
+          if (map.getLayer(pfx + suf)) map.setLayoutProperty(pfx + suf, "visibility", "visible");
+      }
+    }
+  }
 
   const b = new maplibregl.LngLatBounds();
   const extend = c => { if (typeof c[0] === "number") b.extend(c); else c.forEach(extend); };
@@ -311,6 +414,50 @@ function closePanel() {
   lastProps = null;
 }
 
+// ── transport layer ────────────────────────────────────────────────────────
+function toggleTransport(type) {
+  tpState[type] = !tpState[type];
+  const vis = tpState[type] ? "visible" : "none";
+  const prefix = type === "bus" ? "tp-bus" : "tp-air";
+  for (const suf of ["-shadow", "-circle", "-label"])
+    if (map.getLayer(prefix + suf)) map.setLayoutProperty(prefix + suf, "visibility", vis);
+  const btn = document.getElementById(type === "bus" ? "btn-bus" : "btn-air");
+  btn.classList.toggle("on", tpState[type]);
+  if (!tpState[type] && tpPopup) tpPopup.remove();
+}
+
+function showTransportPopup(p, coords) {
+  if (tpPopup) tpPopup.remove();
+  const t = T();
+  const isBus = p.transport === "bus";
+  const etaLabel = isBus ? t.tpEta : t.tpFlight;
+  const etaVal = t.tpHours(isBus ? p.eta_h : p.flight_h);
+  const priceVal = t.tpPriceFmt(p.price_min, p.price_max);
+  const bookUrl = isBus
+    ? `https://www.recorrido.cl/es/bus/santiago/${encodeURIComponent(p.name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g,"-"))}`
+    : `https://www.google.com/travel/flights?q=flights+to+${encodeURIComponent(p.iata || p.name)}`;
+  const bookLabel = isBus ? t.tpBook : t.tpBookFlight;
+  const typeLabel = isBus ? t.tpBus : t.tpAir;
+  const subtitleHtml = isBus
+    ? `<div class="tp-type">${p.terminal || typeLabel}</div>`
+    : `<div class="tp-type">${p.airport_name || typeLabel} · ${p.iata || ""}</div>`;
+  const airlinesHtml = !isBus && p.airlines
+    ? `<div class="tp-airlines">${t.tpAirlines} ${p.airlines}</div>` : "";
+  const isOrigin = p.price_min === 0;
+  const bodyHtml = isOrigin ? `<div style="font-size:12px;color:var(--muted);margin-top:4px">${t.tpOrigin}</div>` : `
+    <div class="tp-row"><span class="tp-label">${etaLabel}</span><span class="tp-val">${etaVal}</span></div>
+    <div class="tp-row"><span class="tp-label">${t.tpPrice}</span><span class="tp-val">${priceVal}</span></div>
+    ${airlinesHtml}
+    <a class="tp-book" href="${bookUrl}" target="_blank" rel="noopener">${bookLabel}</a>`;
+
+  const html = `<div class="tp-popup">
+    <h3>${isBus ? "🚌" : "✈️"} ${p.name}</h3>
+    ${subtitleHtml}${bodyHtml}
+  </div>`;
+  tpPopup = new maplibregl.Popup({ offset: 12, maxWidth: "280px" })
+    .setLngLat(coords).setHTML(html).addTo(map);
+}
+
 // ── language plumbing ───────────────────────────────────────────────────────
 function applyLang() {
   const t = T();
@@ -324,6 +471,8 @@ function applyLang() {
   document.getElementById("footer").textContent = t.footer;
   const sat = document.getElementById("btn-sat");
   sat.textContent = sat.dataset.on ? t.mapBtn : t.sat;
+  document.getElementById("lbl-bus").textContent = t.busBtn;
+  document.getElementById("lbl-air").textContent = t.airBtn;
   if (lastProps) showPanel(lastProps);
 }
 document.getElementById("btn-lang").addEventListener("click", () => {

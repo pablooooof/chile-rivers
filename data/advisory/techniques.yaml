@@ -129,6 +129,7 @@ presence:
   rio-baker: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-japones]
   rio-ibanez: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-cochrane: [trucha-arcoiris, trucha-cafe]
+  rio-jeinimeni: [trucha-arcoiris, trucha-cafe]
   lago-general-carrera: [trucha-arcoiris, trucha-cafe, salmon-japones]
   lago-cochrane: [trucha-arcoiris, trucha-cafe]
   lago-bertrand: [trucha-arcoiris, trucha-cafe]
@@ -416,6 +417,18 @@ waterbodies:
               spin: "Micro-spoons, aproximación baja.", spin_en: "Micro-spoons, low approach." }
       notes: "Sector Mañihuales: zona de desove protegida todo el año."
       notes_en: "Mañihuales sector is a protected spawning zone year-round."
+  rio-jeinimeni:
+    - species: "Trucha arcoíris y café"
+      species_en: "Rainbow & brown trout"
+      months:
+        11: { fly: "Río fronterizo de agua muy clara (microclima de Chile Chico): ninfas finas y streamers chicos tras el deshielo.", fly_en: "Very clear border river (Chile Chico's dry microclimate): fine nymphs and small streamers after snowmelt.",
+              spin: "Giratorias #2 en pozones de grava; acceso por la Reserva Jeinimeni.", spin_en: "#2 spinners in the gravel pools; access via the Jeinimeni Reserve." }
+        1:  { fly: "Secas atractoras y terrestres con viento de estepa; peces desconfiados en agua baja.", fly_en: "Attractor dries and terrestrials in the steppe wind; spooky fish in low water.",
+              spin: "Micro-lures, aproximación baja y lances largos.", spin_en: "Micro-lures, low approach and long casts." }
+        3:  { fly: "Otoño: cafés agresivas pre-desove con streamers; los mejores días del año.", fly_en: "Autumn: aggressive pre-spawn browns on streamers; the best days of the year.",
+              spin: "Cucharas cobre; recordar C&R desde el 1 de marzo (regla de ríos Aysén).", spin_en: "Copper spoons; remember C&R from March 1 (Aysén river rule)." }
+      notes: "Desemboca en el lago General Carrera junto a Chile Chico; tramos son límite internacional — pescar sólo del lado chileno."
+      notes_en: "Flows into Lago General Carrera at Chile Chico; some reaches are the international border — fish the Chilean side only."
   rio-cisnes:
     - species: "Trucha café y arcoíris"
       species_en: "Brown & rainbow trout"

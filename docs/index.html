@@ -136,12 +136,14 @@ document.getElementById("btn-sat").addEventListener("click", ev => {
 let ADV = { general: [], waterbodies: {}, presence: {}, species_names: {} };
 
 map.on("load", async () => {
+  // cache: no-cache -> revalidate with the CDN so deploys show up immediately
   const [data, meta, adv] = await Promise.all([
-    fetch("data/waterbodies.geojson").then(r => r.json()),
-    fetch("data/meta.json").then(r => r.json()).catch(() => null),
-    fetch("data/advisory.json").then(r => r.json()).catch(() => null)
+    fetch("data/waterbodies.geojson", { cache: "no-cache" }).then(r => r.json()),
+    fetch("data/meta.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null),
+    fetch("data/advisory.json", { cache: "no-cache" }).then(r => r.json()).catch(() => null)
   ]);
-  if (adv) ADV = adv;
+  // merge over defaults so an older cached advisory.json can never break the panel
+  if (adv) ADV = Object.assign({ general: [], waterbodies: {}, presence: {}, species_names: {} }, adv);
   if (meta) document.getElementById("season-line").textContent =
     `Temporada ${meta.season} · actualizado ${meta.built} · haz clic en un río o lago`;
 
@@ -242,6 +244,9 @@ function showPanel(props) {
   const prohib = JSON.parse(props.prohibitions || "[]");
   const st = statusNow(phases);
   const levelBadge = { waterbody: "regla específica", region: "regla regional", national: "regla nacional" }[props.rule_level] || "";
+  let advHtml = "";
+  try { advHtml = advisoryHtml(props.id); }
+  catch (err) { console.error("advisory render failed:", err); }
 
   document.getElementById("panel-content").innerHTML = `
     <h2>${props.name}<span class="badge">${levelBadge}</span></h2>
@@ -259,7 +264,7 @@ function showPanel(props) {
     ${veda.length ? `<details><summary>Veda</summary>${veda.map(v => `<p>${v}</p>`).join("")}</details>` : ""}
     ${gear.length ? `<details><summary>Aparejos y modalidad</summary>${gear.map(g => `<p>${g}</p>`).join("")}</details>` : ""}
     ${prohib.length ? `<details><summary>Prohibiciones</summary>${prohib.map(p => `<p>${p}</p>`).join("")}</details>` : ""}
-    ${advisoryHtml(props.id)}
+    ${advHtml}
     <div class="sources"><strong>Fuentes:</strong><br>${
       sources.map(s => s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.doc}</a>` : s.doc).join("<br>")
     }</div>`;

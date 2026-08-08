@@ -110,6 +110,22 @@ def way_coords(el):
     return [[round(p["lon"], 6), round(p["lat"], 6)] for p in el.get("geometry") or []]
 
 
+def el_points(el):
+    """All lon/lat points of an element (way geometry or relation member geometry)."""
+    pts = list(el.get("geometry") or [])
+    for m in el.get("members", []):
+        pts += m.get("geometry") or []
+    return pts
+
+
+def in_bbox(el, bbox):
+    """True if any point of the element lies inside bbox [S, W, N, E]."""
+    if not bbox:
+        return True
+    s, w, n, e = bbox
+    return any(s <= p["lat"] <= n and w <= p["lon"] <= e for p in el_points(el))
+
+
 def polygons_from_elements(elements):
     """Build MultiPolygon coordinates from Overpass ways/relations with geometry."""
     outers, inners = [], []
@@ -217,6 +233,8 @@ out geom;"""
             for e in lookup.get(nm, []):
                 if (e["type"] == "lake") != (kind == "lake"):
                     continue
+                if not in_bbox(el, e.get("bbox")):
+                    continue
                 buckets.setdefault(e["id"], {"lake": [], "waterway": [], "rpoly": []})[kind].append(el)
 
     written, missing = [], []
@@ -245,6 +263,9 @@ out geom;"""
                 json.dumps(feat, ensure_ascii=False), encoding="utf-8")
             written.append(e["id"])
         else:
+            stale = outdir / f"{e['id']}.geojson"
+            if stale.exists():
+                stale.unlink()  # drop geometry from a previous, wrongly-matched run
             missing.append((e["id"], e.get("optional", False)))
 
     print(f"\nwrote {len(written)} geometries")

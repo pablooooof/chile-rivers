@@ -1,0 +1,74 @@
+# Región de La Araucanía — recreational fishing rules (salmonids focus).
+# Extracted from Sernapesca consolidated table 2025-2026 v20260522 (rows noted).
+# The general season here is the national default; the special feature is the
+# early chinook season (15 Sept) in the Toltén and Imperial basins.
+
+rules:
+  - id: araucania-regional-season
+    scope: region
+    region: araucania
+    species: salmonids
+    seasons: all
+    priority: 10
+    windows:
+      - start: { month: 11, nth: 2, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos"
+    gear: >
+      Señuelo artificial con un anzuelo simple o triple ("araña"). Plomada máx.
+      100 g. Una caña a la vez. Chinguillo máx. 100 cm / 70 cm diámetro.
+    prohibitions: >
+      Prohibida toda pesca recreativa desde una hora después de la puesta de sol
+      hasta una hora antes de su salida, en todos los cursos y cuerpos de agua de
+      la región (Res. Ex. N° 02/2021 DZ La Araucanía y Los Ríos, vigente hasta que
+      el Consejo Regional lo estime).
+    source:
+      doc: "Decreto Supremo N° 320, de 12 de agosto de 1981 (mod. D.S. 425 y 149 de 1986); Res. Ex. N° 02, de 18 de agosto de 2021, DZ La Araucanía y Los Ríos (pesca nocturna)"
+      table_row: 38
+
+  - id: tolten-chinook-early
+    scope: waterbodies
+    region: araucania
+    waterbodies: [rio-tolten, lago-villarrica, rio-trancura, rio-liucura, rio-allipen,
+                  lago-caburgua, lago-colico]
+    species: [salmon-chinook]
+    seasons: ["2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026"]
+    priority: 20
+    windows:
+      - start: { month: 9, day: 15 }
+        end: { month: 3, day: 31 }
+        mode: retention
+        bag: "1 ejemplar sin límite de peso"
+    prohibitions: >
+      Prohibida la pesca del salmón chinook todo el año aguas arriba del puente
+      Medina (río Allipén) hacia el este de la cuenca.
+    source:
+      doc: "Resolución Exenta N° 01, de 12 de agosto de 2021, DZ La Araucanía y Los Ríos"
+      table_row: 36
+    notes: >
+      Cuenca del río Toltén. WATCH: la resolución cubre hasta la temporada
+      2025-26; para 2026-27 se espera renovación (~ago-sep 2026). Mientras no
+      aparezca, la cuenca cae a la regla regional (13 nov).
+
+  - id: imperial-chinook-early
+    scope: waterbodies
+    region: araucania
+    waterbodies: [rio-imperial, rio-cholchol, rio-cautin, rio-quepe]
+    species: [salmon-chinook]
+    seasons: ["2021-2022", "2022-2023", "2023-2024", "2024-2025", "2025-2026"]
+    priority: 20
+    windows:
+      - start: { month: 9, day: 15 }
+        end: { month: 3, day: 31 }
+        mode: retention
+        bag: "1 ejemplar sin límite de peso"
+    gear: >
+      Solo en el cauce principal: Imperial, Cholchol, Cautín hasta Cajón y
+      Vilcún/Quepe hasta el puente camino a Cunco.
+    source:
+      doc: "Resolución Exenta N° 01, de 12 de agosto de 2021, DZ La Araucanía y Los Ríos"
+      table_row: 37
+    notes: >
+      Cuenca del río Imperial. Same WATCH as the Toltén rule (covers through
+      season 2025-26; renewal expected).

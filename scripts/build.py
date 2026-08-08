@@ -15,7 +15,11 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-REGULATION_FILES = ["baseline.yaml", "los-rios.yaml", "los-lagos.yaml", "aysen.yaml"]
+REGULATION_FILES = ["baseline.yaml", "araucania.yaml", "los-rios.yaml", "los-lagos.yaml", "aysen.yaml"]
+
+# A water-body rule that covers trout (resident species) defines the water's whole
+# regime; one that covers only migratory salmon merely supplements the general rule.
+TROUT = {"trucha-arcoiris", "trucha-cafe"}
 
 MODE_LABEL = {"catch_and_release": "Pesca con devolución obligatoria",
               "retention": "Pesca con retención"}
@@ -110,29 +114,36 @@ def main():
         applicable = [r for r in rules if season_applies(r, season) and not r.get("partial_zone")]
         wb_rules = [r for r in applicable if r.get("scope") == "waterbodies"
                     and wid in (r.get("waterbodies") or [])]
-        base = wb_rules
-        level = "waterbody"
-        if not base:
+
+        def covers_residents(rs):
+            sp = set()
+            for r in rs:
+                s = r.get("species")
+                sp |= set(s) if isinstance(s, list) else {"salmonids"}
+            return "salmonids" in sp or sp == {"all"} or "all" in sp or sp & TROUT
+
+        overlays = []
+        if wb_rules and covers_residents(wb_rules):
+            base, level = wb_rules, "waterbody"
+        else:
+            overlays = wb_rules  # salmon-only supplements (e.g. Toltén chinook)
             base = [r for r in applicable if r.get("scope") == "region"
                     and r.get("region") == e["region"]
                     and r.get("waterbody_type") in (None, e["type"])
                     and not (isinstance(r.get("species"), list))]
-            level = "region"
-        if not base:
-            base = [r for r in applicable if r.get("scope") == "national"
-                    and r.get("species") == "salmonids"]
-            level = "national"
+            level = "waterbody" if overlays else "region"
+            if not base:
+                base = [r for r in applicable if r.get("scope") == "national"
+                        and r.get("species") == "salmonids"]
+                level = "national" if not overlays else level
+            # species-specific regional overlays (e.g. Aysén chinook)
+            overlays += [r for r in applicable if r.get("scope") == "region"
+                         and r.get("region") == e["region"]
+                         and isinstance(r.get("species"), list)
+                         and r.get("waterbody_type") in (None, e["type"])]
         if not base:
             errors.append(f"no applicable rule for {wid}")
             continue
-
-        # species-specific regional overlays (e.g. Aysén chinook) on regional/national base
-        overlays = []
-        if level != "waterbody":
-            overlays = [r for r in applicable if r.get("scope") == "region"
-                        and r.get("region") == e["region"]
-                        and isinstance(r.get("species"), list)
-                        and r.get("waterbody_type") in (None, e["type"])]
 
         phases = []
         veda_notes, sources, gear_notes, prohib_notes = [], [], [], []
@@ -211,6 +222,10 @@ def main():
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "waterbodies.geojson").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     print(f"geojson size: {(outdir / 'waterbodies.geojson').stat().st_size / 1e6:.1f} MB")
+    adv = yaml.safe_load((ROOT / "data/advisory/techniques.yaml").read_text(encoding="utf-8")) or {}
+    (outdir / "advisory.json").write_text(json.dumps(
+        {"general": adv.get("general") or [], "waterbodies": adv.get("waterbodies") or {}},
+        ensure_ascii=False), encoding="utf-8")
     (outdir / "meta.json").write_text(json.dumps({
         "season": season, "built": dt.date.today().isoformat(),
         "waterbodies": len(features),

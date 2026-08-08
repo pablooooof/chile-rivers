@@ -1,9 +1,25 @@
 # Canonical registry of water bodies shown on the map.
 # id: stable slug used by regulations yaml and geometry filenames.
 # osm_name: exact `name` tag to query in Overpass (alt_names tried as fallback).
-# optional: true -> small/obscure; missing geometry is tolerated by validate.py.
+# bbox: [S, W, N, E] — REQUIRED for ambiguous names (many Chilean rivers share
+#   names, e.g. Río Blanco/Cholchol/Sur); fetch_geometry.py discards matches
+#   whose geometry falls entirely outside the bbox.
+# optional: true -> small/obscure; missing geometry is tolerated by build.py.
 
 waterbodies:
+  # ── La Araucanía ────────────────────────────────────────────────────────────
+  - { id: lago-villarrica,       name: "Lago Villarrica",  type: lake,  region: araucania, osm_name: "Lago Villarrica" }
+  - { id: lago-caburgua,         name: "Lago Caburgua",    type: lake,  region: araucania, osm_name: "Lago Caburgua", alt_names: ["Lago Caburga"] }
+  - { id: lago-colico,           name: "Lago Colico",      type: lake,  region: araucania, osm_name: "Lago Colico" }
+  - { id: rio-tolten,            name: "Río Toltén",       type: river, region: araucania, osm_name: "Río Toltén" }
+  - { id: rio-trancura,          name: "Río Trancura",     type: river, region: araucania, osm_name: "Río Trancura", alt_names: ["Río Pucón"] }
+  - { id: rio-liucura,           name: "Río Liucura",      type: river, region: araucania, osm_name: "Río Liucura", bbox: [-39.45, -71.95, -39.10, -71.40], optional: true }
+  - { id: rio-allipen,           name: "Río Allipén",      type: river, region: araucania, osm_name: "Río Allipén" }
+  - { id: rio-imperial,          name: "Río Imperial",     type: river, region: araucania, osm_name: "Río Imperial" }
+  - { id: rio-cholchol,          name: "Río Cholchol",     type: river, region: araucania, osm_name: "Río Cholchol", alt_names: ["Río Chol Chol"], bbox: [-38.95, -73.25, -38.25, -72.50] }
+  - { id: rio-cautin,            name: "Río Cautín",       type: river, region: araucania, osm_name: "Río Cautín" }
+  - { id: rio-quepe,             name: "Río Quepe",        type: river, region: araucania, osm_name: "Río Quepe", optional: true }
+
   # ── Los Ríos ────────────────────────────────────────────────────────────────
   - { id: lago-calafquen,        name: "Lago Calafquén",   type: lake,  region: los-rios, osm_name: "Lago Calafquén" }
   - { id: lago-panguipulli,      name: "Lago Panguipulli", type: lake,  region: los-rios, osm_name: "Lago Panguipulli" }
@@ -13,20 +29,20 @@ waterbodies:
   - { id: lago-pirihueico,       name: "Lago Pirihueico",  type: lake,  region: los-rios, osm_name: "Lago Pirihueico", alt_names: ["Lago Pirehueico"] }
   - { id: lago-ranco,            name: "Lago Ranco",       type: lake,  region: los-rios, osm_name: "Lago Ranco" }
   - { id: lago-maihue,           name: "Lago Maihue",      type: lake,  region: los-rios, osm_name: "Lago Maihue" }
-  - { id: lago-huishue,          name: "Lago Huishue",     type: lake,  region: los-rios, osm_name: "Lago Huishue", optional: true }
-  - { id: lago-gris,             name: "Lago Gris",        type: lake,  region: los-rios, osm_name: "Lago Gris", optional: true }
+  - { id: lago-huishue,          name: "Lago Huishue",     type: lake,  region: los-rios, osm_name: "Lago Huishue", bbox: [-40.60, -72.40, -40.15, -71.90], optional: true }
+  - { id: lago-gris,             name: "Lago Gris",        type: lake,  region: los-rios, osm_name: "Lago Gris", bbox: [-40.60, -72.40, -40.15, -71.90], optional: true }
   - { id: rio-calcurrupe,        name: "Río Calcurrupe",   type: river, region: los-rios, osm_name: "Río Calcurrupe" }
-  - { id: rio-conaripe,          name: "Río Coñaripe",     type: river, region: los-rios, osm_name: "Río Coñaripe", optional: true, alt_names: ["Río Llancahue"] }
-  - { id: rio-llanquihue-los-rios, name: "Río Llanquihue (Los Ríos)", type: river, region: los-rios, osm_name: "Río Llanquihue", optional: true }
-  - { id: rio-san-pedro,         name: "Río San Pedro",    type: river, region: los-rios, osm_name: "Río San Pedro" }
+  - { id: rio-conaripe,          name: "Río Coñaripe",     type: river, region: los-rios, osm_name: "Río Coñaripe", bbox: [-39.70, -72.10, -39.35, -71.70], optional: true, alt_names: ["Río Llancahue"] }
+  - { id: rio-llanquihue-los-rios, name: "Río Llanquihue (Los Ríos)", type: river, region: los-rios, osm_name: "Río Llanquihue", bbox: [-40.00, -72.20, -39.70, -71.75], optional: true }
+  - { id: rio-san-pedro,         name: "Río San Pedro",    type: river, region: los-rios, osm_name: "Río San Pedro", bbox: [-39.95, -73.05, -39.40, -72.15] }
   - { id: rio-calle-calle,       name: "Río Calle-Calle",  type: river, region: los-rios, osm_name: "Río Calle-Calle", alt_names: ["Río Calle Calle"] }
   - { id: rio-valdivia,          name: "Río Valdivia",     type: river, region: los-rios, osm_name: "Río Valdivia" }
-  - { id: rio-cruces,            name: "Río Cruces",       type: river, region: los-rios, osm_name: "Río Cruces" }
+  - { id: rio-cruces,            name: "Río Cruces",       type: river, region: los-rios, osm_name: "Río Cruces", bbox: [-39.95, -73.40, -39.20, -72.75] }
   - { id: rio-bueno,             name: "Río Bueno",        type: river, region: los-rios, osm_name: "Río Bueno" }
   - { id: rio-fuy,               name: "Río Fuy",          type: river, region: los-rios, osm_name: "Río Fuy", optional: true, alt_names: ["Río Fui"] }
   - { id: rio-enco,              name: "Río Enco",         type: river, region: los-rios, osm_name: "Río Enco", optional: true }
-  - { id: rio-cholchol-ranco,    name: "Río Cholchol (Lago Ranco)", type: river, region: los-rios, osm_name: "Río Cholchol", optional: true }
-  - { id: rio-blanco-ranco,      name: "Río Blanco (Lago Ranco)",   type: river, region: los-rios, osm_name: "Río Blanco", optional: true }
+  - { id: rio-cholchol-ranco,    name: "Río Cholchol (Lago Ranco)", type: river, region: los-rios, osm_name: "Río Cholchol", bbox: [-40.65, -72.60, -40.05, -71.85], optional: true }
+  - { id: rio-blanco-ranco,      name: "Río Blanco (Lago Ranco)",   type: river, region: los-rios, osm_name: "Río Blanco", bbox: [-40.65, -72.60, -40.05, -71.85], optional: true }
 
   # ── Los Lagos ───────────────────────────────────────────────────────────────
   - { id: lago-llanquihue,       name: "Lago Llanquihue",  type: lake,  region: los-lagos, osm_name: "Lago Llanquihue" }
@@ -35,24 +51,24 @@ waterbodies:
   - { id: lago-todos-los-santos, name: "Lago Todos los Santos", type: lake, region: los-lagos, osm_name: "Lago Todos los Santos", alt_names: ["Lago Todos Los Santos"] }
   - { id: lago-chapo,            name: "Lago Chapo",       type: lake,  region: los-lagos, osm_name: "Lago Chapo" }
   - { id: lago-yelcho,           name: "Lago Yelcho",      type: lake,  region: los-lagos, osm_name: "Lago Yelcho" }
-  - { id: lago-tagua-tagua,      name: "Lago Tagua Tagua", type: lake,  region: los-lagos, osm_name: "Lago Tagua Tagua", optional: true }
+  - { id: lago-tagua-tagua,      name: "Lago Tagua Tagua", type: lake,  region: los-lagos, osm_name: "Lago Tagua Tagua", bbox: [-41.75, -72.40, -41.55, -71.95], optional: true }
   - { id: rio-maullin,           name: "Río Maullín",      type: river, region: los-lagos, osm_name: "Río Maullín" }
-  - { id: rio-rahue,             name: "Río Rahue",        type: river, region: los-lagos, osm_name: "Río Rahue" }
+  - { id: rio-rahue,             name: "Río Rahue",        type: river, region: los-lagos, osm_name: "Río Rahue", bbox: [-41.05, -73.65, -40.25, -72.35] }
   - { id: rio-pilmaiquen,        name: "Río Pilmaiquén",   type: river, region: los-lagos, osm_name: "Río Pilmaiquén", alt_names: ["Río Pilmaiquen"] }
-  - { id: rio-puelo,             name: "Río Puelo",        type: river, region: los-lagos, osm_name: "Río Puelo" }
-  - { id: rio-ventisquero,       name: "Río Ventisquero",  type: river, region: los-lagos, osm_name: "Río Ventisquero", optional: true }
-  - { id: rio-manso,             name: "Río Manso",        type: river, region: los-lagos, osm_name: "Río Manso" }
-  - { id: rio-traidor,           name: "Río Traidor",      type: river, region: los-lagos, osm_name: "Río Traidor", optional: true }
-  - { id: rio-puelo-chico,       name: "Río Puelo Chico",  type: river, region: los-lagos, osm_name: "Río Puelo Chico", optional: true }
+  - { id: rio-puelo,             name: "Río Puelo",        type: river, region: los-lagos, osm_name: "Río Puelo", bbox: [-42.20, -72.75, -41.30, -71.75] }
+  - { id: rio-ventisquero,       name: "Río Ventisquero",  type: river, region: los-lagos, osm_name: "Río Ventisquero", bbox: [-42.30, -72.60, -41.55, -71.70], optional: true }
+  - { id: rio-manso,             name: "Río Manso",        type: river, region: los-lagos, osm_name: "Río Manso", bbox: [-42.05, -72.40, -41.45, -71.60] }
+  - { id: rio-traidor,           name: "Río Traidor",      type: river, region: los-lagos, osm_name: "Río Traidor", bbox: [-42.30, -72.60, -41.55, -71.70], optional: true }
+  - { id: rio-puelo-chico,       name: "Río Puelo Chico",  type: river, region: los-lagos, osm_name: "Río Puelo Chico", bbox: [-42.30, -72.60, -41.55, -71.70], optional: true }
   - { id: rio-petrohue,          name: "Río Petrohué",     type: river, region: los-lagos, osm_name: "Río Petrohué" }
-  - { id: rio-pescado,           name: "Río Pescado",      type: river, region: los-lagos, osm_name: "Río Pescado", optional: true }
-  - { id: rio-sur,               name: "Río Sur",          type: river, region: los-lagos, osm_name: "Río Sur", optional: true }
+  - { id: rio-pescado,           name: "Río Pescado",      type: river, region: los-lagos, osm_name: "Río Pescado", bbox: [-41.40, -72.90, -41.00, -72.40], optional: true }
+  - { id: rio-sur,               name: "Río Sur",          type: river, region: los-lagos, osm_name: "Río Sur", bbox: [-41.50, -73.00, -41.05, -72.50], optional: true }
   - { id: rio-futaleufu,         name: "Río Futaleufú",    type: river, region: los-lagos, osm_name: "Río Futaleufú" }
   - { id: rio-palena,            name: "Río Palena",       type: river, region: los-lagos, osm_name: "Río Palena" }
   - { id: rio-yelcho,            name: "Río Yelcho",       type: river, region: los-lagos, osm_name: "Río Yelcho" }
   - { id: rio-espolon,           name: "Río Espolón",      type: river, region: los-lagos, osm_name: "Río Espolón", optional: true }
-  - { id: laguna-candelaria,     name: "Laguna Candelaria", type: lake, region: los-lagos, osm_name: "Laguna Candelaria", optional: true }
-  - { id: laguna-sin-nombre,     name: "Laguna Sin Nombre (cuenca Puelo)", type: lake, region: los-lagos, osm_name: "Laguna Sin Nombre", optional: true }
+  - { id: laguna-candelaria,     name: "Laguna Candelaria", type: lake, region: los-lagos, osm_name: "Laguna Candelaria", bbox: [-42.25, -72.45, -41.65, -71.75], optional: true }
+  - { id: laguna-sin-nombre,     name: "Laguna Sin Nombre (cuenca Puelo)", type: lake, region: los-lagos, osm_name: "Laguna Sin Nombre", bbox: [-42.25, -72.45, -41.65, -71.75], optional: true }
 
   # ── Aysén ───────────────────────────────────────────────────────────────────
   - { id: rio-aysen,             name: "Río Aysén",        type: river, region: aysen, osm_name: "Río Aysén", alt_names: ["Río Aisén"] }
@@ -62,15 +78,15 @@ waterbodies:
   - { id: rio-cisnes,            name: "Río Cisnes",       type: river, region: aysen, osm_name: "Río Cisnes" }
   - { id: rio-baker,             name: "Río Baker",        type: river, region: aysen, osm_name: "Río Baker" }
   - { id: rio-ibanez,            name: "Río Ibáñez",       type: river, region: aysen, osm_name: "Río Ibáñez" }
-  - { id: rio-paloma,            name: "Río Paloma",       type: river, region: aysen, osm_name: "Río Paloma", optional: true }
-  - { id: rio-cochrane,          name: "Río Cochrane",     type: river, region: aysen, osm_name: "Río Cochrane", optional: true }
+  - { id: rio-paloma,            name: "Río Paloma",       type: river, region: aysen, osm_name: "Río Paloma", bbox: [-45.95, -72.60, -45.30, -71.90], optional: true }
+  - { id: rio-cochrane,          name: "Río Cochrane",     type: river, region: aysen, osm_name: "Río Cochrane", bbox: [-47.40, -72.85, -47.00, -72.15], optional: true }
   - { id: lago-general-carrera,  name: "Lago General Carrera", type: lake, region: aysen, osm_name: "Lago General Carrera", alt_names: ["Lago General Carrera / Lago Buenos Aires"] }
   - { id: lago-cochrane,         name: "Lago Cochrane",    type: lake, region: aysen, osm_name: "Lago Cochrane", alt_names: ["Lago Cochrane / Lago Pueyrredón"] }
   - { id: lago-bertrand,         name: "Lago Bertrand",    type: lake, region: aysen, osm_name: "Lago Bertrand" }
   - { id: lago-elizalde,         name: "Lago Elizalde",    type: lake, region: aysen, osm_name: "Lago Elizalde" }
-  - { id: lago-la-paloma,        name: "Lago La Paloma",   type: lake, region: aysen, osm_name: "Lago La Paloma", optional: true }
-  - { id: lago-pollux,           name: "Lago Pollux",      type: lake, region: aysen, osm_name: "Lago Pollux", optional: true }
-  - { id: lago-frio,             name: "Lago Frío",        type: lake, region: aysen, osm_name: "Lago Frío", optional: true }
-  - { id: lago-riesco,           name: "Lago Riesco",      type: lake, region: aysen, osm_name: "Lago Riesco", optional: true }
+  - { id: lago-la-paloma,        name: "Lago La Paloma",   type: lake, region: aysen, osm_name: "Lago La Paloma", bbox: [-45.90, -72.60, -45.45, -72.00], optional: true }
+  - { id: lago-pollux,           name: "Lago Pollux",      type: lake, region: aysen, osm_name: "Lago Pollux", bbox: [-45.90, -72.25, -45.55, -71.80], optional: true }
+  - { id: lago-frio,             name: "Lago Frío",        type: lake, region: aysen, osm_name: "Lago Frío", bbox: [-45.90, -72.25, -45.55, -71.80], optional: true }
+  - { id: lago-riesco,           name: "Lago Riesco",      type: lake, region: aysen, osm_name: "Lago Riesco", bbox: [-45.60, -72.95, -45.15, -72.35], optional: true }
   - { id: lago-rosselot,         name: "Lago Rosselot",    type: lake, region: aysen, osm_name: "Lago Rosselot", optional: true }
-  - { id: lago-verde,            name: "Lago Verde",       type: lake, region: aysen, osm_name: "Lago Verde", optional: true }
+  - { id: lago-verde,            name: "Lago Verde",       type: lake, region: aysen, osm_name: "Lago Verde", bbox: [-44.50, -72.15, -44.00, -71.55], optional: true }

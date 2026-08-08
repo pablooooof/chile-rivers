@@ -36,6 +36,9 @@ show the proposed changes and get approval first.
    - Report as a table: water body / field / old / new / source row.
 
 4. **Known open watch items** (check these every run):
+   - La Araucanía chinook early season (15 Sept–31 Mar, Toltén and Imperial basins,
+     Res. Ex. 01/2021) covered only through season 2025-26 — renewal expected
+     ~Aug-Sept 2026. Until it appears, those basins map to the regional rule (13 Nov).
    - Río Calcurrupe (Los Ríos): 10-year C&R expired 2026-01-18 — expect a new
      resolution; until then it reverts to the regional rule.
    - Decreto 878 native-species veda expires 2026-10-05 — expect renewal.

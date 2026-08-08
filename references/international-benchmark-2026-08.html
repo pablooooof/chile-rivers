@@ -1,0 +1,853 @@
+<title>Chile Rivers — International Benchmark & Roadmap</title>
+<style>
+  @import url('data:text/css,');
+
+  :root {
+    --bg: #F5F1EA;
+    --bg-alt: #ECE7DD;
+    --surface: #FFFFFF;
+    --ink: #1A3347;
+    --body: #3D4F5F;
+    --muted: #7A8B97;
+    --river: #1A6B5A;
+    --river-light: #E3F0EC;
+    --amber: #B07D24;
+    --amber-light: #FBF3E0;
+    --line: #D9D2C5;
+    --line-light: #EBE6DC;
+    --badge-have: #1A6B5A;
+    --badge-gap: #9E5A20;
+    --badge-new: #2C6FA0;
+    --shadow: rgba(26,51,71,.08);
+    --mono: "Cascadia Code", "Fira Code", "SF Mono", "Consolas", monospace;
+    --serif: Georgia, "Times New Roman", "Noto Serif", serif;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #151E26;
+      --bg-alt: #1B2530;
+      --surface: #1E2A36;
+      --ink: #D8E3EC;
+      --body: #A8BAC8;
+      --muted: #6B7D8C;
+      --river: #4CC9A8;
+      --river-light: #172E28;
+      --amber: #E0A840;
+      --amber-light: #2A2418;
+      --line: #2A3844;
+      --line-light: #222D38;
+      --badge-have: #4CC9A8;
+      --badge-gap: #E0A840;
+      --badge-new: #5CA8E0;
+      --shadow: rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #151E26;
+    --bg-alt: #1B2530;
+    --surface: #1E2A36;
+    --ink: #D8E3EC;
+    --body: #A8BAC8;
+    --muted: #6B7D8C;
+    --river: #4CC9A8;
+    --river-light: #172E28;
+    --amber: #E0A840;
+    --amber-light: #2A2418;
+    --line: #2A3844;
+    --line-light: #222D38;
+    --badge-have: #4CC9A8;
+    --badge-gap: #E0A840;
+    --badge-new: #5CA8E0;
+    --shadow: rgba(0,0,0,.25);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    color: var(--ink);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 40px;
+    letter-spacing: .3px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 48px 0 6px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--line);
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  h2 .num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin-right: 8px;
+    letter-spacing: .5px;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 700;
+    margin: 28px 0 8px;
+  }
+
+  p { margin: 8px 0; }
+
+  a {
+    color: var(--river);
+    text-decoration-color: color-mix(in srgb, var(--river) 35%, transparent);
+    text-underline-offset: 2px;
+  }
+  a:hover { text-decoration-color: var(--river); }
+
+  /* ── current state banner ──────────────────────────────── */
+  .current-state {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+  .current-state h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .feature-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .ftag {
+    font-size: 12.5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--river-light);
+    color: var(--badge-have);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── benchmark table ───────────────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0 24px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    background: var(--surface);
+  }
+  thead th {
+    background: var(--bg-alt);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--muted);
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--line);
+    position: sticky;
+    top: 0;
+    white-space: nowrap;
+  }
+  thead th:first-child { border-top-left-radius: 9px; }
+  thead th:last-child { border-top-right-radius: 9px; }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line-light);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    min-width: 160px;
+  }
+  .check { color: var(--badge-have); font-weight: 700; }
+  .partial { color: var(--amber); }
+  .miss { color: var(--muted); opacity: .5; }
+  .site-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .3px;
+  }
+
+  /* ── roadmap cards ─────────────────────────────────────── */
+  .tier-label {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .tier-label.t1 { background: var(--river-light); color: var(--badge-have); }
+  .tier-label.t2 { background: var(--amber-light); color: var(--badge-gap); }
+  .tier-label.t3 { background: color-mix(in srgb, var(--badge-new) 12%, var(--bg)); color: var(--badge-new); }
+
+  .roadmap-grid {
+    display: grid;
+    gap: 12px;
+    margin: 12px 0 32px;
+  }
+  .roadmap-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 3px var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 16px;
+    align-items: start;
+  }
+  .roadmap-card .rc-title {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 14.5px;
+  }
+  .roadmap-card .rc-meta {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .roadmap-card .rc-desc {
+    font-size: 13.5px;
+    color: var(--body);
+    grid-column: 1;
+  }
+  .roadmap-card .rc-ref {
+    font-size: 12px;
+    color: var(--muted);
+    grid-column: 1 / -1;
+    margin-top: 2px;
+  }
+  .pill {
+    font-size: 10.5px;
+    font-family: var(--mono);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: .3px;
+  }
+  .pill.effort-low { background: var(--river-light); color: var(--badge-have); }
+  .pill.effort-med { background: var(--amber-light); color: var(--badge-gap); }
+  .pill.effort-high { background: color-mix(in srgb, var(--badge-new) 12%, var(--bg)); color: var(--badge-new); }
+  .pill.impact { background: var(--bg-alt); color: var(--muted); }
+
+  /* ── sites section ─────────────────────────────────────── */
+  .sites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .site-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+  .site-card .sc-name {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .sc-country {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .3px;
+  }
+  .sc-desc {
+    font-size: 13px;
+    color: var(--body);
+    margin: 8px 0 10px;
+  }
+  .sc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .sc-tag {
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--bg-alt);
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .sc-free {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--badge-have);
+    margin-top: 8px;
+  }
+  .sc-freemium {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--amber);
+    margin-top: 8px;
+  }
+
+  /* ── principles box ────────────────────────────────────── */
+  .principles {
+    background: var(--river-light);
+    border-left: 3px solid var(--river);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 24px 0;
+    font-size: 13.5px;
+  }
+  .principles strong { color: var(--ink); }
+
+  /* ── responsive ────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .container { padding: 32px 16px 60px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 17px; }
+    .roadmap-card {
+      grid-template-columns: 1fr;
+    }
+    .roadmap-card .rc-meta {
+      grid-column: 1;
+      grid-row: auto;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+</style>
+
+<div class="container">
+
+<h1>Chile Rivers — International Benchmark & Roadmap</h1>
+<p class="subtitle">Research across USA, Canada, Japan & Europe fishing platforms · August 2026</p>
+
+<div class="current-state">
+  <h3>What Chile Rivers has today</h3>
+  <div class="feature-tags">
+    <span class="ftag">Interactive map (MapLibre)</span>
+    <span class="ftag">Season color-coding</span>
+    <span class="ftag">Regulation detail panel</span>
+    <span class="ftag">Season timeline bar</span>
+    <span class="ftag">Gear & technique advisory</span>
+    <span class="ftag">Species presence</span>
+    <span class="ftag">Source citations</span>
+    <span class="ftag">Satellite view</span>
+    <span class="ftag">ES/EN bilingual</span>
+    <span class="ftag">Bus & airport transport layer</span>
+    <span class="ftag">Open-source (GitHub Pages)</span>
+    <span class="ftag">100% free</span>
+  </div>
+</div>
+
+<!-- ─── SITES RESEARCHED ─────────────────────────────────── -->
+
+<h2><span class="num">01</span> Sites Researched</h2>
+
+<div class="sites-grid">
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://anglerfinder.com/map/">AnglerFinder</a></div>
+    <div class="sc-country">USA</div>
+    <div class="sc-desc">123,000+ public fishing spots. Click any pin for species, regulations, and access info. GeoJSON downloadable for developers.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">species data</span>
+      <span class="sc-tag">access points</span>
+      <span class="sc-tag">open data</span>
+      <span class="sc-tag">embed widget</span>
+    </div>
+    <div class="sc-free">Free</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://fishbrain.com/">Fishbrain</a></div>
+    <div class="sc-country">USA / GLOBAL</div>
+    <div class="sc-desc">15M+ user community. AI-powered BiteTime forecasts, catch logging, species ID (300+), depth charts, regulations in 30+ US states.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">catch reports</span>
+      <span class="sc-tag">AI forecasts</span>
+      <span class="sc-tag">fish ID</span>
+      <span class="sc-tag">social</span>
+      <span class="sc-tag">depth charts</span>
+    </div>
+    <div class="sc-freemium">Freemium</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://www.onxmaps.com/fish/app/features">onX Fish</a></div>
+    <div class="sc-country">USA</div>
+    <div class="sc-desc">Offline maps with depth contours, species abundance/stocking data, property lines, and lake-specific regulations. Filter by trophy potential.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">offline maps</span>
+      <span class="sc-tag">stocking data</span>
+      <span class="sc-tag">depth contours</span>
+      <span class="sc-tag">property lines</span>
+    </div>
+    <div class="sc-freemium">Freemium ($35/yr full)</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://usa.fishermap.org/">FisherMap</a></div>
+    <div class="sc-country">USA / UK</div>
+    <div class="sc-desc">Depth maps, fishing reports with analytics by region/lake/species, marine charts. Community-driven spot reports.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">depth maps</span>
+      <span class="sc-tag">reports analytics</span>
+      <span class="sc-tag">marine charts</span>
+    </div>
+    <div class="sc-free">Free</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://www.anglersatlas.com/">Angler's Atlas</a></div>
+    <div class="sc-country">CANADA</div>
+    <div class="sc-desc">Catch logging with offline sync, citizen-science data sharing with conservation researchers. Tournament platform with leaderboards.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">catch logging</span>
+      <span class="sc-tag">offline sync</span>
+      <span class="sc-tag">citizen science</span>
+      <span class="sc-tag">tournaments</span>
+    </div>
+    <div class="sc-free">Free</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://hookedontario.ca/map">Hooked Ontario</a></div>
+    <div class="sc-country">CANADA · ON</div>
+    <div class="sc-desc">Zone-based map of Ontario lakes and rivers. Filter by species, jump from map to zone-specific regulations and limits.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">zone regulations</span>
+      <span class="sc-tag">species filter</span>
+      <span class="sc-tag">limits display</span>
+    </div>
+    <div class="sc-free">Free</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://www.quebec.ca/en/tourism-recreation-sport/sporting-and-outdoor-activities/sport-fishing/first-steps-interactive-map">Quebec Fishing Map</a></div>
+    <div class="sc-country">CANADA · QC</div>
+    <div class="sc-desc">Government map with per-waterbody regulation grid: seasons, catch limits, length restrictions, bait rules, line count. Bookmarks, geolocation, print.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">official regs</span>
+      <span class="sc-tag">catch limits</span>
+      <span class="sc-tag">length limits</span>
+      <span class="sc-tag">gear rules</span>
+    </div>
+    <div class="sc-free">Free (government)</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://play.google.com/store/apps/details?id=clearwaterproject.info.tsuritickets&hl=en-US">Tsurichike (つりチケ)</a></div>
+    <div class="sc-country">JAPAN</div>
+    <div class="sc-desc">Buy river fishing permits from 100+ fisheries cooperatives. Maps show species, parking, facilities. Cooperative-sourced fishing reports.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">permit purchase</span>
+      <span class="sc-tag">cooperative data</span>
+      <span class="sc-tag">facilities map</span>
+    </div>
+    <div class="sc-free">Free app (permits cost)</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://getfishmap.com/en">FishMap</a></div>
+    <div class="sc-country">SCANDINAVIA / EU</div>
+    <div class="sc-desc">35,000+ lakes (Sweden, Norway, Finland, Denmark). Live weather, species conditions, GPS catch log. Weekly challenges, fishing buddy matching. Built by one dev.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">live weather</span>
+      <span class="sc-tag">catch log</span>
+      <span class="sc-tag">challenges</span>
+      <span class="sc-tag">solo dev</span>
+    </div>
+    <div class="sc-free">Free (donation-supported)</div>
+  </div>
+
+  <div class="site-card">
+    <div class="sc-name"><a href="https://piscamaps.com/">PiscaMaps</a></div>
+    <div class="sc-country">EUROPE (10 countries)</div>
+    <div class="sc-desc">91,000+ venues. Night fishing, boat, bivvy rules per venue. Trip planner with cost estimator, checklists, nearby camping. Swim mapper for bank positions.</div>
+    <div class="sc-tags">
+      <span class="sc-tag">venue rules</span>
+      <span class="sc-tag">trip planner</span>
+      <span class="sc-tag">cost estimator</span>
+      <span class="sc-tag">swim mapper</span>
+    </div>
+    <div class="sc-free">Free</div>
+  </div>
+
+</div>
+
+<!-- ─── FEATURE MATRIX ───────────────────────────────────── -->
+
+<h2><span class="num">02</span> Feature Matrix</h2>
+<p>How Chile Rivers compares on features that matter. <span class="check">&#10004;</span> = has it, <span class="partial">&#9679;</span> = partial, <span class="miss">—</span> = missing.</p>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+  <th>Feature</th>
+  <th class="site-label">Chile Rivers</th>
+  <th class="site-label">AnglerFinder</th>
+  <th class="site-label">Fishbrain</th>
+  <th class="site-label">Quebec Gov</th>
+  <th class="site-label">FishMap EU</th>
+  <th class="site-label">PiscaMaps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Interactive map</td>
+  <td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Season / open-close status</td>
+  <td class="check">&#10004;</td><td class="miss">—</td><td class="partial">&#9679;</td><td class="check">&#10004;</td><td class="partial">&#9679;</td><td class="partial">&#9679;</td>
+</tr>
+<tr>
+  <td>Regulation source citations</td>
+  <td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Gear / method advisory</td>
+  <td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="partial">&#9679;</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Transport / trip access</td>
+  <td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Bilingual / i18n</td>
+  <td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Species filter on map</td>
+  <td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Search by name</td>
+  <td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Catch limits / bag limits</td>
+  <td class="partial">&#9679;</td><td class="miss">—</td><td class="partial">&#9679;</td><td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Catch / trip logging</td>
+  <td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Community reports</td>
+  <td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Weather / conditions</td>
+  <td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Access points (ramps, wading)</td>
+  <td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Depth / bathymetric charts</td>
+  <td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Offline / PWA</td>
+  <td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Open data / GeoJSON export</td>
+  <td class="partial">&#9679;</td><td class="check">&#10004;</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td><td class="miss">—</td>
+</tr>
+<tr>
+  <td>Bookmarks / favorites</td>
+  <td class="miss">—</td><td class="miss">—</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="miss">—</td><td class="check">&#10004;</td>
+</tr>
+<tr>
+  <td>Free model</td>
+  <td class="check">&#10004;</td><td class="check">&#10004;</td><td class="partial">&#9679;</td><td class="check">&#10004;</td><td class="check">&#10004;</td><td class="check">&#10004;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ─── KEY OBSERVATIONS ─────────────────────────────────── -->
+
+<h2><span class="num">03</span> Key Observations</h2>
+
+<div class="principles">
+  <strong>Chile Rivers already outperforms most sites in regulation depth.</strong> No other free site combines per-waterbody regulation citations, season visualization, gear advisories, and transport planning in a single map. Quebec's government map is the closest in regulation quality, but lacks transport or advisory layers. Most platforms trade regulation accuracy for social/community features.
+</div>
+
+<h3>Gaps that matter</h3>
+<p><strong>Search and filter</strong> — every comparable site lets you search by waterbody name or filter by species. Chile Rivers has neither. This is the most common workflow: "where can I fish for brown trout right now?"</p>
+<p><strong>Offline access</strong> — Patagonia has poor cell coverage. onX Fish, Angler's Atlas, and FishMap all offer offline maps. A service worker / PWA approach would let anglers cache the map before a trip.</p>
+<p><strong>Community layer</strong> — Fishbrain and FishMap prove that catch reports and trip logs create retention. But these require backends, moderation, and ongoing cost — the opposite of a free static site. A lighter approach: curated "fishing reports" or links to community forums.</p>
+<p><strong>Weather context</strong> — Fishbrain and FishMap show weather at each spot. Free APIs (Open-Meteo) could add current temperature, wind, and river flow to the detail panel with no cost.</p>
+
+<h3>What Chile Rivers does uniquely</h3>
+<p><strong>Regulation traceability</strong> — citing specific Sernapesca/Subpesca resolutions by waterbody. No other free site globally does this at the individual river level.</p>
+<p><strong>Transport integration</strong> — bus terminals and airports with travel times/prices from Santiago. Only PiscaMaps attempts trip logistics, and not as cleanly.</p>
+<p><strong>Season timeline visualization</strong> — the visual bar showing C&R → harvest → closure phases with a "today" marker. Unique across all sites reviewed.</p>
+
+<!-- ─── ROADMAP ───────────────────────────────────────────── -->
+
+<h2><span class="num">04</span> Roadmap — Prioritized To-Do List</h2>
+<p>Ordered by impact vs. effort, keeping the project free and static-first.</p>
+
+<span class="tier-label t1">Tier 1 — High impact, low effort</span>
+<div class="roadmap-grid">
+
+  <div class="roadmap-card">
+    <div class="rc-title">Search by waterbody name</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Add a search input that filters the loaded GeoJSON features by name. Auto-complete dropdown, fly-to on select. Already have the data client-side — no backend needed.</div>
+    <div class="rc-ref">See: Quebec map, AnglerFinder, Fishbrain — all have search-first UX</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Filter by species</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Species presence data already exists in advisory.json. Add chip-style toggles (rainbow trout, brown trout, chinook, coho, etc.) that filter visible waterbodies on the map.</div>
+    <div class="rc-ref">See: Hooked Ontario, FishMap — species chips above the map</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Filter by "open now" status</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Toggle to show only waterbodies currently open for fishing (C&R or harvest). Season data is already computed — wire it to a map filter expression.</div>
+    <div class="rc-ref">See: Quebec map's regulatory grid — anglers want "what's open right now?"</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">URL deep-links to individual waterbodies</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Update the URL hash when a waterbody is selected (#rio-petrohue). On page load, parse the hash, fly to the feature, and open the panel. Enables sharing specific rivers.</div>
+    <div class="rc-ref">See: AnglerFinder deep-links, Quebec map's bookmark feature</div>
+  </div>
+
+</div>
+
+<span class="tier-label t2">Tier 2 — High impact, moderate effort</span>
+<div class="roadmap-grid">
+
+  <div class="roadmap-card">
+    <div class="rc-title">PWA / offline mode</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Add a service worker to cache the app shell + GeoJSON. Anglers in Patagonia lose signal on the river. Pre-cache map tiles for the covered region at useful zoom levels.</div>
+    <div class="rc-ref">See: onX Fish offline maps, Angler's Atlas offline sync — critical for remote areas</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Weather & river conditions</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Show current temperature, wind, precipitation in the detail panel using Open-Meteo (free, no API key). Optionally pull river flow from DGA (Dirección General de Aguas) if data is available.</div>
+    <div class="rc-ref">See: FishMap live weather, Fishbrain BiteTime — weather is the #1 trip-day question</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Expand geographic coverage</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Extend north to Biobío, Maule, O'Higgins, and Metropolitana (already started with Araucanía and Metropolitana YAML). Every new region multiplies the user base.</div>
+    <div class="rc-ref">See: AnglerFinder (all 50 states), PiscaMaps (10 countries) — completeness drives adoption</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Nearby services layer</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Toggleable layer for fly shops, fishing guides, lodging, campgrounds near each waterbody. Source from Overpass (tourism=camp_site, shop=fishing) or curate manually.</div>
+    <div class="rc-ref">See: Fishbrain (tackle shops/marinas), PiscaMaps (nearby camping links)</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Access points & wading spots</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Mark boat ramps, bridge crossings, and known wading access along each river. Overpass can supply leisure=slipway and highway=ford. Community can contribute missing ones via GitHub issues.</div>
+    <div class="rc-ref">See: AnglerFinder (access per spot), onX Fish (public access points)</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Mobile-first responsive redesign</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Panel as a bottom sheet on mobile (like Google Maps), swipe-to-expand. Current sidebar overlaps the map on narrow screens. Add "Add to Home Screen" PWA prompt.</div>
+    <div class="rc-ref">See: Fishbrain, FishMap — mobile is 70%+ of fishing app traffic</div>
+  </div>
+
+</div>
+
+<span class="tier-label t3">Tier 3 — Ambitious, higher effort</span>
+<div class="roadmap-grid">
+
+  <div class="roadmap-card">
+    <div class="rc-title">Community fishing reports (static)</div>
+    <div class="rc-meta">
+      <span class="pill effort-high">HIGH EFFORT</span>
+      <span class="pill impact">HIGH IMPACT</span>
+    </div>
+    <div class="rc-desc">Accept trip reports via GitHub Discussions or a Google Form. A build step aggregates approved reports into a JSON file. No backend, stays free — moderation through PR review. Show recent reports on each waterbody's panel.</div>
+    <div class="rc-ref">See: Fishbrain community, FishMap catch log — but adapted for a static site</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Fishing license guide by region</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Add a panel section or standalone page explaining how to get a fishing license in Chile (Sernapesca online, costs, requirements for foreigners). Link to official purchase page.</div>
+    <div class="rc-ref">See: AnglerFinder license guide, Japan's Tsurichike permit system</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Favorites / bookmarks (local storage)</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Let users star waterbodies; store in localStorage. Add a "My spots" view that lists bookmarked rivers/lakes with their current status. No login needed.</div>
+    <div class="rc-ref">See: Quebec bookmarks, PiscaMaps shortlist, Fishbrain waypoints</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Print-friendly regulation summary</div>
+    <div class="rc-meta">
+      <span class="pill effort-low">LOW EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">A print stylesheet or "Download PDF" for the detail panel. Anglers heading to areas without signal want to print regulations for the rivers they plan to fish.</div>
+    <div class="rc-ref">See: Quebec map's print functionality — offline reference when cell signal dies</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">River flow / water level data</div>
+    <div class="rc-meta">
+      <span class="pill effort-high">HIGH EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Pull gauge data from DGA's hydrometric stations (if API exists) or scrape published readings. Show current flow level and a 7-day sparkline in the detail panel.</div>
+    <div class="rc-ref">See: USGS river flow gauges — the gold standard for river fishing planning</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Portuguese (PT-BR) language</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">MED IMPACT</span>
+    </div>
+    <div class="rc-desc">Brazil has a large fly-fishing community that travels to Patagonia. Adding Portuguese would tap a major visiting-angler audience with the existing i18n system.</div>
+    <div class="rc-ref">See: FishMap (5 languages), PiscaMaps (multi-country) — language unlocks international users</div>
+  </div>
+
+  <div class="roadmap-card">
+    <div class="rc-title">Open data portal</div>
+    <div class="rc-meta">
+      <span class="pill effort-med">MED EFFORT</span>
+      <span class="pill impact">LOW IMPACT</span>
+    </div>
+    <div class="rc-desc">Publish waterbodies.geojson and regulation data with a clear license (CC BY-SA). Add an API documentation page. Other developers and researchers can build on top.</div>
+    <div class="rc-ref">See: AnglerFinder GeoJSON export, Angler's Atlas citizen-science data sharing</div>
+  </div>
+
+</div>
+
+<!-- ─── PRINCIPLES ────────────────────────────────────────── -->
+
+<h2><span class="num">05</span> Staying Free — How Others Do It</h2>
+
+<div class="principles">
+  <strong>The free-and-sustainable models from this research:</strong><br>
+  <strong>FishMap (Scandinavia)</strong> — built by a solo developer, donation-supported, no corporate backing. Closest to Chile Rivers' ethos.<br>
+  <strong>AnglerFinder</strong> — free with curated content; revenue from ads and affiliate links to gear retailers.<br>
+  <strong>Quebec / Ontario maps</strong> — government-funded public service; Chile's Sernapesca could theoretically partner.<br>
+  <strong>Angler's Atlas</strong> — free for anglers; monetizes through conservation research partnerships and tournament hosting.<br>
+  <strong>PiscaMaps</strong> — free with optional premium features; core map and regulation data always free.
+</div>
+
+<p>For Chile Rivers, the FishMap model is the most aligned: free and open-source, donation link for those who want to support, community contributions through GitHub. Affiliate links to local fly shops or guides could generate small revenue without compromising the free mission. A Sernapesca partnership (linking official data) would add legitimacy.</p>
+
+</div>

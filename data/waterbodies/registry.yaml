@@ -34,6 +34,19 @@ waterbodies:
   - { id: laguna-del-maule,      name: "Laguna del Maule", type: lake,  region: maule, osm_name: "Laguna del Maule" }
   - { id: embalse-colbun,        name: "Embalse Colbún",   type: lake,  region: maule, osm_name: "Embalse Colbún", alt_names: ["Lago Colbún", "Embalse Colbun"] }
 
+  # ── Ñuble ───────────────────────────────────────────────────────────────────
+  - { id: rio-nuble,             name: "Río Ñuble",        type: river, region: nuble, osm_name: "Río Ñuble" }
+  - { id: rio-itata,             name: "Río Itata",        type: river, region: nuble, osm_name: "Río Itata" }
+  - { id: rio-diguillin,         name: "Río Diguillín",    type: river, region: nuble, osm_name: "Río Diguillín", alt_names: ["Río Diguillin"], optional: true }
+
+  # ── Biobío ──────────────────────────────────────────────────────────────────
+  - { id: rio-biobio,            name: "Río Biobío",       type: river, region: biobio, osm_name: "Río Biobío", alt_names: ["Río Bío Bío", "Río Bío-Bío", "Río Bio Bio"] }
+  - { id: rio-laja,              name: "Río Laja",         type: river, region: biobio, osm_name: "Río Laja", alt_names: ["Río de la Laja", "Río La Laja"], bbox: [-37.55, -72.80, -37.00, -71.20] }
+  - { id: laguna-del-laja,       name: "Laguna del Laja",  type: lake,  region: biobio, osm_name: "Laguna del Laja", alt_names: ["Laguna de la Laja", "Lago Laja"] }
+  - { id: rio-duqueco,           name: "Río Duqueco",      type: river, region: biobio, osm_name: "Río Duqueco", optional: true }
+  - { id: rio-queuco,            name: "Río Queuco",       type: river, region: biobio, osm_name: "Río Queuco", optional: true }
+  - { id: lago-lleulleu,         name: "Lago Lleu Lleu",   type: lake,  region: biobio, osm_name: "Lago Lleulleu", alt_names: ["Lago Lleu Lleu", "Lago Lleu-Lleu"], optional: true }
+
   # ── La Araucanía ────────────────────────────────────────────────────────────
   - { id: lago-villarrica,       name: "Lago Villarrica",  type: lake,  region: araucania, osm_name: "Lago Villarrica" }
   - { id: lago-caburgua,         name: "Lago Caburgua",    type: lake,  region: araucania, osm_name: "Lago Caburgua", alt_names: ["Lago Caburga"] }

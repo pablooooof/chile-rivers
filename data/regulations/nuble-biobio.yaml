@@ -1,0 +1,53 @@
+# Regiones de Ñuble y del Biobío — recreational fishing rules (salmonids).
+# Both open early: 3rd Friday of October (Res. Ex. 2348 y 2347, de 13 de octubre
+# de 2025, DZ Pesca y Acuicultura regiones de Ñuble y del Biobío), rows 34-35 of
+# the consolidated table v20260522.
+
+rules:
+  - id: nuble-regional-season
+    scope: region
+    region: nuble
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028"]
+    priority: 10
+    windows:
+      - start: { month: 10, nth: 3, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos"
+    gear: >
+      Señuelo artificial con un anzuelo simple o triple ("araña"). Plomada máx.
+      100 g. Una caña a la vez. Chinguillo máx. 100 cm / 70 cm diámetro.
+    prohibitions: >
+      Prohibida la pesca nocturna (21:00 a 06:00) a menos de 500 m de
+      desembocaduras y desagües. Prohibida la comercialización de salmonídeos de
+      aguas continentales.
+    source:
+      doc: "Resolución Exenta N° 02348, de 13 de octubre de 2025, DZ Pesca y Acuicultura regiones de Ñuble y del Biobío"
+      published: 2025-10-13
+      table_row: 34
+    notes: "Apertura anticipada: tercer viernes de octubre (2026-10-16 para la temporada 2026-27)."
+
+  - id: biobio-regional-season
+    scope: region
+    region: biobio
+    species: salmonids
+    seasons: ["2025-2026", "2026-2027", "2027-2028"]
+    priority: 10
+    windows:
+      - start: { month: 10, nth: 3, weekday: friday }
+        end: { month: 5, nth: 1, weekday: sunday }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos"
+    gear: >
+      Señuelo artificial con un anzuelo simple o triple ("araña"). Plomada máx.
+      100 g. Una caña a la vez. Chinguillo máx. 100 cm / 70 cm diámetro.
+    prohibitions: >
+      Prohibida la pesca nocturna (21:00 a 06:00) a menos de 500 m de
+      desembocaduras y desagües. Prohibida la comercialización de salmonídeos de
+      aguas continentales.
+    source:
+      doc: "Resolución Exenta N° 02347, de 13 de octubre de 2025, DZ Pesca y Acuicultura regiones de Ñuble y del Biobío"
+      published: 2025-10-13
+      table_row: 35
+    notes: "Apertura anticipada: tercer viernes de octubre (2026-10-16 para la temporada 2026-27). WATCH: cubre hasta la temporada 2027-28."

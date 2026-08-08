@@ -50,6 +50,17 @@ presence:
   rio-claro-maule: [trucha-arcoiris]
   laguna-del-maule: [trucha-arcoiris]
   embalse-colbun: [trucha-arcoiris, pejerrey-argentino]
+  # Ñuble — trucha precordillerana; sin salmones establecidos
+  rio-nuble: [trucha-arcoiris, trucha-cafe]
+  rio-itata: [trucha-arcoiris, trucha-cafe]
+  rio-diguillin: [trucha-arcoiris, trucha-cafe]
+  # Biobío — chinook con registros (vagrantes) en el Biobío; trucha en el resto
+  rio-biobio: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-laja: [trucha-arcoiris, trucha-cafe]
+  laguna-del-laja: [trucha-arcoiris, trucha-cafe]
+  rio-duqueco: [trucha-arcoiris, trucha-cafe]
+  rio-queuco: [trucha-arcoiris, trucha-cafe]
+  lago-lleulleu: [pejerrey-argentino, trucha-arcoiris]
   # La Araucanía
   lago-villarrica: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   lago-caburgua: [trucha-arcoiris, trucha-cafe]
@@ -483,6 +494,39 @@ waterbodies:
               spin: "Trolling liviano; pejerrey con aparejos de boya en bahías.", spin_en: "Light trolling; silverside on float rigs in the bays." }
         1:  { fly: "Aguas templadas en verano: pescar temprano y profundo.", fly_en: "Warm summer water: fish early and deep.",
               spin: "Pejerrey al amanecer; trucha profunda con cucharas.", spin_en: "Silverside at dawn; trout deep on spoons." }
+  # ── Ñuble / Biobío ──
+  rio-nuble:
+    - species: "Trucha arcoíris y café"
+      species_en: "Rainbow & brown trout"
+      months:
+        10: { fly: "Apertura anticipada (3er viernes de oct): ninfas pesadas con deshielo en el valle de San Fabián.", fly_en: "Early opening (3rd Friday of Oct): heavy nymphs in snowmelt through the San Fabián valley.",
+              spin: "Giratorias #2-3 en pozones; agua alta y fría.", spin_en: "#2-3 spinners in the pools; high cold water." }
+        12: { fly: "Agua aclarando: secas atractoras y dry-dropper en correderas.", fly_en: "Clearing water: attractor dries and dry-dropper in the riffles.",
+              spin: "Lures medianos, sectores altos.", spin_en: "Medium lures, upper reaches." }
+        3:  { fly: "Otoño claro: terrestres chicos y streamers para cafés.", fly_en: "Clear autumn: small terrestrials and streamers for browns.",
+              spin: "Micro-spoons cobre.", spin_en: "Copper micro-spoons." }
+  rio-biobio:
+    - species: "Trucha arcoíris y café (Alto Biobío)"
+      species_en: "Rainbow & brown trout (Alto Biobío)"
+      months:
+        10: { fly: "Apertura 3er viernes de oct: streamers en el cañón (Ralco arriba); volumen grande.", fly_en: "Opens 3rd Friday of Oct: streamers in the canyon (above Ralco); big flows.",
+              spin: "Spoons medianos; el curso bajo (Concepción) no es pesquería de trucha.", spin_en: "Medium spoons; the lower river (Concepción) is not trout water." }
+        1:  { fly: "Terrestres en la estepa pehuenche; atardeceres de caddis.", fly_en: "Terrestrials on the pehuenche steppe; caddis evenings.",
+              spin: "Lures naturales al amanecer.", spin_en: "Natural lures at dawn." }
+        3:  { fly: "Streamers grandes; chinook errantes ocasionales en el curso medio.", fly_en: "Big streamers; occasional stray chinook in the middle river.",
+              spin: "Minnows XL.", spin_en: "XL minnows." }
+      notes: "El chinook tiene registros esporádicos aquí (población en expansión desde el sur); no es una corrida establecida."
+      notes_en: "Chinook records here are sporadic (population expanding from the south); not an established run."
+  laguna-del-laja:
+    - species: "Trucha arcoíris"
+      species_en: "Rainbow trout"
+      months:
+        10: { fly: "Apertura oct: streamers olive desde orilla en bocas y desagüe.", fly_en: "Oct opening: olive streamers from shore at the inlets and outlet.",
+              spin: "Cucharas 10-20 g a los veriles volcánicos.", spin_en: "10-20 g spoons to the volcanic drop-offs." }
+        1:  { fly: "Chironomidos e imitación de puyen; damseles en bahías con viento calmo.", fly_en: "Chironomids and baitfish patterns; damsels in calm-wind bays.",
+              spin: "Recogidas lentas y profundas al mediodía.", spin_en: "Slow deep retrieves at midday." }
+        3:  { fly: "Otoño: la mejor ventana; streamers y dragones.", fly_en: "Autumn: the best window; streamers and dragons.",
+              spin: "Cucharas cobre antes del cierre.", spin_en: "Copper spoons before closing." }
   # ── Metropolitana / O'Higgins ──
   rio-maipo:
     - species: "Trucha arcoíris (curso alto — Cajón del Maipo)"

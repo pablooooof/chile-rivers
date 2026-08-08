@@ -59,6 +59,9 @@
   .adv .now b { display: block; margin-bottom: 2px; }
   .adv table { border-collapse: collapse; font-size: 11.5px; margin: 4px 0; }
   .adv td, .adv th { border: 1px solid var(--line); padding: 3px 5px; vertical-align: top; text-align: left; }
+  .adv .chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
+  .adv .chip { border: 1px solid var(--line); border-radius: 12px; padding: 2px 9px; font-size: 11px; cursor: pointer; background: #fff; user-select: none; }
+  .adv .chip.on { background: #1c2430; color: #fff; border-color: #1c2430; }
 </style>
 </head>
 <body>
@@ -92,13 +95,24 @@ const map = new maplibregl.Map({
     version: 8,
     sources: {
       carto: { type: "raster",
-        tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-                "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-                "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"],
+        tiles: ["https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png",
+                "https://b.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png",
+                "https://c.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png"],
         tileSize: 256, attribution: "© OpenStreetMap contributors, © CARTO" },
+      carto_labels: { type: "raster",
+        tiles: ["https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png",
+                "https://b.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png",
+                "https://c.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}@2x.png"],
+        tileSize: 256 },
       esri: { type: "raster",
         tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
-        tileSize: 256, attribution: "Imagery © Esri, Maxar, Earthstar Geographics" }
+        tileSize: 256, attribution: "Imagery © Esri, Maxar, Earthstar Geographics" },
+      esri_transport: { type: "raster",
+        tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}"],
+        tileSize: 256 },
+      esri_places: { type: "raster",
+        tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"],
+        tileSize: 256 }
     },
     layers: [
       { id: "base", type: "raster", source: "carto" },
@@ -110,8 +124,11 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.NavigationControl(), "bottom-right");
 
 document.getElementById("btn-sat").addEventListener("click", ev => {
+  if (!map.getLayer("labels")) return;  // not loaded yet
   const on = map.getLayoutProperty("base-sat", "visibility") !== "visible";
-  map.setLayoutProperty("base-sat", "visibility", on ? "visible" : "none");
+  for (const id of ["base-sat", "sat-roads", "sat-places"])
+    map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
+  map.setLayoutProperty("labels", "visibility", on ? "none" : "visible");
   ev.currentTarget.classList.toggle("on", on);
   ev.currentTarget.textContent = on ? "🗺️ Mapa" : "🛰️ Satélite";
 });
@@ -154,6 +171,11 @@ map.on("load", async () => {
     layout: { "line-cap": "round", "line-join": "round" },
     paint: { "line-color": "#d81b60",
       "line-width": ["interpolate", ["linear"], ["zoom"], 5, 3, 10, 6] } });
+
+  // reference overlays: roads + place names above the water layers
+  map.addLayer({ id: "sat-roads", type: "raster", source: "esri_transport", layout: { visibility: "none" } });
+  map.addLayer({ id: "sat-places", type: "raster", source: "esri_places", layout: { visibility: "none" } });
+  map.addLayer({ id: "labels", type: "raster", source: "carto_labels" });
 
   // fit to data
   const b = new maplibregl.LngLatBounds();
@@ -246,28 +268,42 @@ function showPanel(props) {
 const MONTH_NAMES = ["enero","febrero","marzo","abril","mayo","junio","julio",
                      "agosto","septiembre","octubre","noviembre","diciembre"];
 
+const ADV_MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5];  // season order sep..may
+let advMonth = 0;   // 0 = show all months
+let advWb = null;
+
+function setAdvMonth(m) {
+  advMonth = m;
+  const el = document.getElementById("adv-root");
+  if (el) el.outerHTML = advisoryHtml(advWb);
+}
+
 function advisoryHtml(wbId) {
+  advWb = wbId;
   const entries = [...(ADV.waterbodies[wbId] || []), ...ADV.general];
   if (!entries.length) return "";
-  const mNow = new Date().getMonth() + 1;
+  const chips = `<div class="chips">
+      <span class="chip ${advMonth === 0 ? "on" : ""}" onclick="setAdvMonth(0)">Todos</span>` +
+    ADV_MONTHS.map(m => `<span class="chip ${advMonth === m ? "on" : ""}"
+      onclick="setAdvMonth(${m})">${MONTH_NAMES[m - 1].slice(0, 3)}</span>`).join("") + `</div>`;
   const blocks = entries.map(sp => {
-    const now = sp.months[mNow];
-    const nowHtml = now
-      ? `<div class="now"><b>${MONTH_NAMES[mNow - 1]}</b>
-           🪶 <em>Mosca:</em> ${now.fly}<br>🎣 <em>Spinning:</em> ${now.spin}</div>`
-      : `<div class="now">Sin recomendación para ${MONTH_NAMES[mNow - 1]} (temporada cerrada o especie ausente).</div>`;
-    const rows = Object.keys(sp.months)
-      .sort((a, b) => ((a + 3) % 12) - ((b + 3) % 12))  // season order: sep..may
-      .map(m => `<tr${+m === mNow ? ' style="background:#fff8e1"' : ""}>
+    let body;
+    if (advMonth === 0) {
+      const rows = ADV_MONTHS.filter(m => sp.months[m]).map(m => `<tr>
         <th>${MONTH_NAMES[m - 1].slice(0, 3)}</th>
         <td>${sp.months[m].fly}</td><td>${sp.months[m].spin}</td></tr>`).join("");
-    return `<h3>${sp.species}</h3>${nowHtml}
-      <details><summary>Todos los meses</summary>
-        <table><tr><th></th><th>🪶 Mosca</th><th>🎣 Spinning</th></tr>${rows}</table>
-      </details>`;
+      body = `<table><tr><th></th><th>🪶 Mosca</th><th>🎣 Spinning</th></tr>${rows}</table>`;
+    } else {
+      const sel = sp.months[advMonth];
+      body = sel
+        ? `<div class="now"><b>${MONTH_NAMES[advMonth - 1]}</b>
+             🪶 <em>Mosca:</em> ${sel.fly}<br>🎣 <em>Spinning:</em> ${sel.spin}</div>`
+        : `<div class="now">Sin recomendación para ${MONTH_NAMES[advMonth - 1]} (temporada cerrada o especie ausente).</div>`;
+    }
+    return `<h3>${sp.species}</h3>${body}`;
   }).join("");
-  return `<div class="adv"><h3>Con qué pescar <span class="tag">— guía editorial, no normativa;
-    priman las restricciones de aparejos de cada cuerpo de agua</span></h3>${blocks}</div>`;
+  return `<div class="adv" id="adv-root"><h3>Con qué pescar <span class="tag">— guía editorial, no normativa;
+    priman las restricciones de aparejos de cada cuerpo de agua</span></h3>${chips}${blocks}</div>`;
 }
 </script>
 </body>

@@ -29,12 +29,17 @@
   #panel {
     position: absolute; top: 12px; right: 12px; bottom: 12px; z-index: 5; width: 360px; max-width: calc(100vw - 24px);
     background: var(--panel-bg); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15);
-    padding: 16px; overflow-y: auto; display: none;
+    display: none; flex-direction: column; overflow: hidden;
   }
-  #panel.open { display: block; }
-  #panel h2 { margin: 0 0 2px; font-size: 18px; }
-  #panel .sub { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
-  #panel .close { position: absolute; top: 8px; right: 12px; border: 0; background: none; font-size: 20px; cursor: pointer; color: var(--muted); }
+  #panel.open { display: flex; }
+  #panel-head {
+    position: relative; padding: 16px 16px 10px; border-bottom: 1px solid var(--line);
+    flex-shrink: 0; background: var(--panel-bg); border-radius: 10px 10px 0 0;
+  }
+  #panel-content { flex: 1; overflow-y: auto; padding: 12px 16px 16px; }
+  #panel h2 { margin: 0 0 2px; font-size: 18px; padding-right: 30px; }
+  #panel .sub { color: var(--muted); font-size: 12px; margin: 0; }
+  #panel .close { position: absolute; top: 12px; right: 12px; border: 0; background: none; font-size: 20px; cursor: pointer; color: var(--muted); }
   .status { padding: 8px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
   .status.open-ret { background: #e3f1ff; color: #125da8; }
   .status.open-cr { background: #e6f4e7; color: #23662a; }
@@ -132,6 +137,26 @@
     user-select: none; font-family: inherit;
   }
   .sp-chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .filter-dd { position: relative; }
+  .dd-btn {
+    border: 1px solid var(--line); background: #fff; border-radius: 6px;
+    padding: 3px 8px; font-size: 11px; cursor: pointer; color: var(--muted);
+    font-weight: 600; font-family: inherit; white-space: nowrap;
+  }
+  .dd-btn.on { background: #1e88e5; color: #fff; border-color: #1e88e5; }
+  .dd-menu {
+    display: none; position: absolute; top: calc(100% + 4px); left: 0;
+    background: var(--panel-bg); border: 1px solid var(--line);
+    border-radius: 7px; box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    min-width: 150px; z-index: 20; padding: 4px 0;
+  }
+  .dd-menu.open { display: block; }
+  .dd-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 10px; font-size: 11.5px; cursor: pointer; user-select: none;
+  }
+  .dd-item:hover { background: #e3f1ff; }
+  .dd-item input[type="checkbox"] { margin: 0; pointer-events: none; }
 </style>
 </head>
 <body>
@@ -146,7 +171,7 @@
     <div class="search-results" id="search-results"></div>
   </div>
   <div class="legend" id="legend"></div>
-  <div class="filter-bar">
+  <div class="filter-bar" id="filter-bar">
     <button class="fbtn" id="btn-open-now" onclick="toggleOpenNow()"></button>
   </div>
   <div class="sp-chips" id="species-chips"></div>
@@ -156,7 +181,11 @@
   </div>
 </header>
 <div id="panel">
-  <button class="close" onclick="closePanel()">×</button>
+  <div id="panel-head">
+    <button class="close" onclick="closePanel()">×</button>
+    <h2 id="panel-title"></h2>
+    <div class="sub" id="panel-sub"></div>
+  </div>
   <div id="panel-content"></div>
 </div>
 <button id="btn-sat" title="Base map"></button>
@@ -176,7 +205,7 @@ const I18N = {
     lake: "Lago", river: "Río", regionOf: r => `Región de ${r}`, season: "Temporada",
     badges: { waterbody: "regla específica", region: "regla regional", national: "regla nacional" },
     openCr: "🟢 Abierta ahora — solo con devolución", openRet: "🔵 Abierta ahora — se permite retención",
-    closedUntil: d => `⚪ Cerrada — abre el ${d}`, closed: "⚪ Temporada cerrada",
+    closedUntil: (d, n) => `⚪ Cerrada — abre el ${d} (en ${n} ${n === 1 ? "día" : "días"})`, closed: "⚪ Temporada cerrada",
     seasonLbl: "Temporada:", veda: "Veda", gear: "Aparejos y modalidad", prohib: "Prohibiciones",
     sources: "Fuentes:", srcNote: "",
     tlCr: "solo devolución", tlRet: "retención", tlClosed: "cerrado", today: "HOY",
@@ -229,7 +258,7 @@ const I18N = {
     lake: "Lake", river: "River", regionOf: r => `${r} Region`, season: "Season",
     badges: { waterbody: "water-specific rule", region: "regional rule", national: "national rule" },
     openCr: "🟢 Open now — catch & release only", openRet: "🔵 Open now — harvest allowed",
-    closedUntil: d => `⚪ Closed — opens ${d}`, closed: "⚪ Season closed",
+    closedUntil: (d, n) => `⚪ Closed — opens ${d} (in ${n} ${n === 1 ? "day" : "days"})`, closed: "⚪ Season closed",
     seasonLbl: "Season:", veda: "Closure (veda)", gear: "Gear & method", prohib: "Prohibitions",
     sources: "Sources:", srcNote: " (regulatory texts quoted in Spanish)",
     tlCr: "C&R only", tlRet: "harvest", tlClosed: "closed", today: "TODAY",
@@ -348,6 +377,7 @@ document.getElementById("btn-sat").addEventListener("click", ev => {
   ev.currentTarget.classList.toggle("on", on);
   ev.currentTarget.dataset.on = on ? "1" : "";
   ev.currentTarget.textContent = on ? T().mapBtn : T().sat;
+  localStorage.setItem("sat", on ? "1" : "");
 });
 
 let ADV = { general: [], waterbodies: {}, presence: {}, species_names: {}, species_names_en: {} };
@@ -359,6 +389,7 @@ const tpState = { bus: false, airport: false };
 let FEATURES = [];
 let filterOpenNow = false;
 let filterSpecies = null;
+const filterAccess = { road: new Set(), transport: new Set(), wade: new Set(), size: new Set(), diff: new Set() };
 
 map.on("load", async () => {
   const [data, meta, adv, transportData] = await Promise.all([
@@ -379,6 +410,12 @@ map.on("load", async () => {
     f.properties._open = Array.isArray(ph) && ph.some(p => p.s <= today && today <= p.e);
     const pres = (ADV.presence || {})[f.properties.id] || [];
     f.properties._species = pres.length ? "|" + pres.join("|") + "|" : "";
+    const acc = (ADV.access || {})[f.properties.id];
+    f.properties._road = acc ? acc.road || "" : "";
+    f.properties._transport = acc ? acc.public_transport || "" : "";
+    f.properties._wade = acc ? acc.wadeability || "" : "";
+    f.properties._size = acc ? acc.size || "" : "";
+    f.properties._diff = acc ? acc.difficulty || "" : "";
   }
 
   map.addSource("wb", { type: "geojson", data, promoteId: "id" });
@@ -492,7 +529,9 @@ map.on("load", async () => {
   }
   initSearch();
   buildSpeciesChips();
+  buildAccessFilters();
   handleHash();
+  if (localStorage.getItem("sat") === "1") document.getElementById("btn-sat").click();
 });
 
 function selectFeature(id) {
@@ -605,10 +644,64 @@ function buildSpeciesChips() {
       onclick="setSpeciesFilter('${s}')">${speciesName(s)}</span>`).join("");
 }
 
+function buildAccessFilters() {
+  const t = T();
+  const bar = document.getElementById("filter-bar");
+  bar.querySelectorAll(".filter-dd").forEach(el => el.remove());
+  const cats = [
+    { key: "road", label: t.accRoad, vals: t.accRoadVals },
+    { key: "transport", label: t.accTransport, vals: t.accTransportVals },
+    { key: "wade", label: t.accWade, vals: t.accWadeVals },
+    { key: "size", label: t.accSize, vals: t.accSizeVals },
+    { key: "diff", label: t.accDifficulty, vals: t.accDiffVals },
+  ];
+  for (const cat of cats) {
+    const dd = document.createElement("div");
+    dd.className = "filter-dd";
+    const btn = document.createElement("button");
+    btn.className = "dd-btn" + (filterAccess[cat.key].size ? " on" : "");
+    btn.textContent = cat.label + " ▾";
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const menu = dd.querySelector(".dd-menu");
+      document.querySelectorAll(".dd-menu.open").forEach(m => { if (m !== menu) m.classList.remove("open"); });
+      menu.classList.toggle("open");
+    });
+    const menu = document.createElement("div");
+    menu.className = "dd-menu";
+    for (const [val, display] of Object.entries(cat.vals)) {
+      const item = document.createElement("label");
+      item.className = "dd-item";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = filterAccess[cat.key].has(val);
+      cb.addEventListener("change", () => {
+        if (cb.checked) filterAccess[cat.key].add(val);
+        else filterAccess[cat.key].delete(val);
+        btn.classList.toggle("on", filterAccess[cat.key].size > 0);
+        applyFilters();
+      });
+      item.append(cb, document.createTextNode(display));
+      menu.append(item);
+    }
+    dd.append(btn, menu);
+    bar.append(dd);
+  }
+}
+
+document.addEventListener("click", e => {
+  if (!e.target.closest(".filter-dd")) document.querySelectorAll(".dd-menu.open").forEach(m => m.classList.remove("open"));
+});
+
 function applyFilters() {
   const conditions = [];
   if (filterOpenNow) conditions.push(["==", ["get", "_open"], true]);
   if (filterSpecies) conditions.push(["in", "|" + filterSpecies + "|", ["get", "_species"]]);
+  const accMap = { road: "_road", transport: "_transport", wade: "_wade", size: "_size", diff: "_diff" };
+  for (const [k, prop] of Object.entries(accMap)) {
+    if (filterAccess[k].size)
+      conditions.push(["in", ["get", prop], ["literal", [...filterAccess[k]]]]);
+  }
   const polyFilter = conditions.length
     ? ["all", ["==", ["geometry-type"], "Polygon"], ...conditions]
     : ["==", ["geometry-type"], "Polygon"];
@@ -711,6 +804,7 @@ function applyLang() {
   document.getElementById("search-input").placeholder = t.searchPlaceholder;
   document.getElementById("btn-open-now").textContent = t.openNow;
   buildSpeciesChips();
+  buildAccessFilters();
   if (lastProps) showPanel(lastProps);
 }
 document.getElementById("btn-lang").addEventListener("click", () => {
@@ -776,7 +870,10 @@ function statusNow(phases) {
         ? { cls: "open-cr", txt: t.openCr } : { cls: "open-ret", txt: t.openRet };
   }
   const next = phases.find(p => p.s > today);
-  if (next) return { cls: "closed", txt: t.closedUntil(fmt(next.s)) };
+  if (next) {
+    const days = Math.round((Date.parse(next.s) - Date.parse(today)) / 86400000);
+    return { cls: "closed", txt: t.closedUntil(fmt(next.s), days) };
+  }
   return { cls: "closed", txt: t.closed };
 }
 
@@ -799,11 +896,13 @@ function showPanel(props) {
   try { accHtml = accessHtml(props.id); }
   catch (err) { console.error("access render failed:", err); }
 
-  document.getElementById("panel-content").innerHTML = `
-    <h2>${props.name}<span class="badge">${levelBadge}</span></h2>
-    <div class="sub">${props.type === "lake" ? t.lake : t.river} · ${
+  document.getElementById("panel-title").innerHTML =
+    `${props.name}<span class="badge">${levelBadge}</span>`;
+  document.getElementById("panel-sub").innerHTML =
+    `${props.type === "lake" ? t.lake : t.river} · ${
       t.regionOf(t.regions[props.region] || props.region)
-    } · ${t.season} ${props.season}</div>
+    } · ${t.season} ${props.season}`;
+  document.getElementById("panel-content").innerHTML = `
     ${timelineHtml(phases, props.season)}
     <div class="status ${st.cls}">${st.txt}</div>
     <div><strong>${t.seasonLbl}</strong> ${fmt(props.opens)} → ${fmt(props.closes)}</div>

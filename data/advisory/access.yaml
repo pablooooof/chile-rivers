@@ -686,8 +686,8 @@ waterbodies:
     wadeability: wadeable
     size: large
     difficulty: moderate
-    notes: "Acceso por el sector del Parque Nacional Torres del Paine. Desde Puerto Natales (~60 km), camino ripiado. Vadeable en tramos medios y bajos; bote útil en la zona del desagüe del Lago Toro. Se requiere entrada al parque nacional. Guías locales operan desde Puerto Natales."
-    notes_en: "Access through Torres del Paine National Park. From Puerto Natales (~60 km), gravel road. Wadeable in mid and lower sections; boat useful near the Lago Toro outlet. Park entrance fee required. Local guides operate from Puerto Natales."
+    notes: "Acceso por el sector del Parque Nacional Torres del Paine. Desde Puerto Natales (~60 km), camino ripiado. Vadeable en tramos medios y bajos; bote útil en la zona del desagüe del Lago Toro. Se requiere entrada al parque nacional. Desinfección obligatoria de equipos por Didymo en la entrada del parque. Corrida de chinook (dic–feb) es la atracción principal. Guías locales operan desde Puerto Natales."
+    notes_en: "Access through Torres del Paine National Park. From Puerto Natales (~60 km), gravel road. Wadeable in mid and lower sections; boat useful near the Lago Toro outlet. Park entrance fee required. Mandatory Didymo equipment disinfection at the park entrance. Chinook run (Dec–Feb) is the main draw. Local guides operate from Puerto Natales."
 
   lago-toro:
     nearest_town: Puerto Natales
@@ -725,14 +725,7 @@ waterbodies:
     notes: "Reserva Nacional Laguna Parrillar, a ~50 km de Punta Arenas. Camino ripiado en buen estado. Laguna chica, vadeable en partes. Sin bote disponible. Senderos bien marcados. Acceso sencillo; buena opción para salida de medio día."
     notes_en: "Laguna Parrillar National Reserve, ~50 km from Punta Arenas. Gravel road in good condition. Small lagoon, partly wadeable. No boat available. Well-marked trails. Easy access; good half-day option."
 
-  lago-pehoe:
-    nearest_town: Puerto Natales
-    road: gravel
-    public_transport: limited
-    wadeability: boat-recommended
-    difficulty: moderate
-    notes: "Dentro del Parque Torres del Paine. Acceso por camino del parque desde Puerto Natales. Lago icónico con vista a los Cuernos. Viento extremo; bote recomendado. Entrada al parque requerida. Alojamiento disponible en refugios y hoteles del parque."
-    notes_en: "Inside Torres del Paine National Park. Access via park road from Puerto Natales. Iconic lake with views of the Cuernos. Extreme wind; boat recommended. Park entrance required. Accommodation available at park refugios and hotels."
+  # lago-pehoe: Pesca no autorizada dentro del PN Torres del Paine.
 
   rio-rubens:
     nearest_town: Puerto Natales
@@ -751,8 +744,8 @@ waterbodies:
     wadeability: wadeable
     size: large
     difficulty: remote
-    notes: "Tierra del Fuego. Camino ripiado desde Porvenir hacia el sur. Río ancho de estepa. Vadeable con cuidado; profundo en pozones. Muy remoto, sin servicios. Clima extremo. Famoso en el lado argentino; el lado chileno es menos explorado."
-    notes_en: "Tierra del Fuego. Gravel road south from Porvenir. Wide steppe river. Wadeable with care; deep in pools. Very remote, no services. Extreme weather. Famous on the Argentine side; the Chilean side is less explored."
+    notes: "Tierra del Fuego. Ferry Punta Arenas–Porvenir (2,5 h), luego camino ripiado al sur por Cameron. Río ancho de estepa. Vadeable con cuidado; profundo en pozones. Solo devolución con anzuelo simple sin rebarba. Pesca nocturna permitida en el lado chileno (ventaja sobre el lado argentino). Acceso principal por Estancia Cameron (Cameron Lodge). Muy remoto, sin servicios."
+    notes_en: "Tierra del Fuego. Ferry Punta Arenas–Porvenir (2.5 h), then gravel road south via Cameron. Wide steppe river. Wadeable with care; deep in pools. Catch-and-release only with single barbless hooks. Night fishing permitted on the Chilean side (an advantage over the Argentine side). Main access through Estancia Cameron (Cameron Lodge). Very remote, no services."
 
   rio-penitente:
     nearest_town: Puerto Natales

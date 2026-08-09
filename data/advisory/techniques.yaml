@@ -147,13 +147,13 @@ presence:
   lago-riesco: [trucha-arcoiris, trucha-cafe]
   lago-rosselot: [trucha-arcoiris, trucha-cafe]
   lago-verde: [trucha-arcoiris, trucha-cafe, trucha-arroyo]
-  # Magallanes — truchas dominan; sin salmones de corrida establecida
-  rio-serrano: [trucha-cafe, trucha-arcoiris]
+  # Magallanes
+  rio-serrano: [trucha-cafe, trucha-arcoiris, salmon-chinook]
   lago-toro: [trucha-cafe, trucha-arcoiris]
   lago-sarmiento: [trucha-cafe, trucha-arcoiris]
   lago-fagnano: [trucha-cafe, trucha-arcoiris, trucha-arroyo]
   laguna-parrillar: [trucha-arroyo, trucha-arcoiris]
-  lago-pehoe: [trucha-cafe, trucha-arcoiris]
+  # lago-pehoe omitted — fishing not authorized inside PN Torres del Paine
   rio-rubens: [trucha-cafe]
   rio-grande-tdf: [trucha-cafe, trucha-arcoiris, trucha-arroyo]
   lago-deseado: [trucha-cafe, trucha-arcoiris]
@@ -626,12 +626,19 @@ waterbodies:
       months:
         10: { fly: "Apertura: streamers grandes (Wooly Bugger, Zonker) con sink-tip; agua fría y alta de deshielo.", fly_en: "Opening: big streamers (Wooly Bugger, Zonker) on sink-tips; cold high snowmelt water.",
               spin: "Cucharas 14-21 g plateadas; recogida lenta en pozones profundos.", spin_en: "14-21 g silver spoons; slow retrieve in the deep pools." }
-        12: { fly: "Secas grandes (#8-12): tábanos y chernobyl ants; viento patagónico obliga a líderes cortos y potentes.", fly_en: "Big dries (#8-12): horseflies and chernobyl ants; Patagonian wind demands short powerful leaders.",
-              spin: "Giratorias #3-4 en correderas. Viento constante — equipo de 7-9 pies medio-pesado.", spin_en: "#3-4 spinners in the riffles. Constant wind — 7-9 ft medium-heavy gear." }
         1:  { fly: "Terrestres y mouse patterns al atardecer en el río bajo; truchas cafés grandes.", fly_en: "Terrestrials and mouse patterns at dusk on the lower river; big browns.",
               spin: "Minnows 7-10 cm; recogida errática.", spin_en: "7-10 cm minnows; erratic retrieve." }
         3:  { fly: "Otoño patagónico: streamers oscuros, café agresiva; swing clásico.", fly_en: "Patagonian autumn: dark streamers, aggressive browns; classic swing.",
               spin: "Spoons cobre/naranja 14-21 g.", spin_en: "14-21 g copper/orange spoons." }
+    - species: "Salmón chinook (dic–feb)"
+      species_en: "Chinook salmon (Dec–Feb)"
+      months:
+        12: { fly: "Primeros chinook desde el Seno Última Esperanza; two-hand 8-9 con Intruders negro/azul, sink-tips.", fly_en: "First chinook from Última Esperanza Sound; two-hand 8-9 with black/blue Intruders, sink-tips.",
+              spin: "Spoons 30-40 g flúor/UV en pozones profundos.", spin_en: "30-40 g fluoro/UV spoons in deep pools." }
+        1:  { fly: "Corrida principal; peces frescos 10-20 kg. Swing profundo con tube flies y rabbit leeches.", fly_en: "Peak run; fresh 10-20 kg fish. Deep swing with tube flies and rabbit leeches.",
+              spin: "Spoons pesados peinando los pozones; primeras horas.", spin_en: "Heavy spoons combing the pools; early hours." }
+        2:  { fly: "Corrida continúa; chinook acumulándose en pozones. Intruders chartreuse/negro.", fly_en: "Run continues; chinook stacking in pools. Chartreuse/black Intruders.",
+              spin: "Spoons 30-40 g cobre/naranja.", spin_en: "30-40 g copper/orange spoons." }
   lago-toro:
     - species: "Trucha café y arcoíris"
       species_en: "Brown & rainbow trout"
@@ -672,16 +679,8 @@ waterbodies:
               spin: "Micro-spoons 3-5 g.", spin_en: "3-5 g micro-spoons." }
         2:  { fly: "Cierre temprano (28 feb) — aprovechar las últimas semanas con terrestres y ninfas.", fly_en: "Early closure (Feb 28) — make the most of the last weeks with terrestrials and nymphs.",
               spin: "Micro-lures en pozones sombreados.", spin_en: "Micro-lures in shaded pools." }
-  lago-pehoe:
-    - species: "Trucha café y arcoíris"
-      species_en: "Brown & rainbow trout"
-      months:
-        11: { fly: "Streamers en las orillas; el lago es escénico pero el viento es brutal — líderes cortos y moscas pesadas.", fly_en: "Streamers along the shores; the lake is scenic but the wind is brutal — short leaders and heavy flies.",
-              spin: "Cucharas 14-21 g; difícil pescar de orilla por el viento.", spin_en: "14-21 g spoons; tough shore fishing due to the wind." }
-        1:  { fly: "Dry-dropper en calmas (raras); ninfas de scud.", fly_en: "Dry-dropper in calm spells (rare); scud nymphs.",
-              spin: "Minnows al amanecer antes de que suba el viento.", spin_en: "Minnows at dawn before the wind picks up." }
-        3:  { fly: "Streamers al atardecer; agua turquesa glacial.", fly_en: "Streamers at dusk; glacial turquoise water.",
-              spin: "Spoons cobre.", spin_en: "Copper spoons." }
+  # lago-pehoe: Pesca NO autorizada dentro del PN Torres del Paine (solo Río Serrano y Lago Toro).
+  # lago-pehoe: Fishing NOT permitted inside Torres del Paine NP (only Río Serrano and Lago Toro authorized).
   rio-rubens:
     - species: "Trucha café"
       species_en: "Brown trout"

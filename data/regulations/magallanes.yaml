@@ -1,0 +1,85 @@
+# Región de Magallanes — recreational fishing rules (salmonids focus).
+# Magallanes uses fixed calendar dates (Oct 16 – Apr 14), set by D.S. 320/1981.
+# Specific water-body rules from Res. Ex. 1840/2024 and Res. Ex. 1675/2025
+# (DZ Pesca y Acuicultura, Magallanes).
+
+rules:
+  - id: magallanes-general
+    scope: region
+    region: magallanes
+    species: salmonids
+    seasons: all
+    priority: 10
+    windows:
+      - start: { month: 10, day: 16 }
+        end: { month: 4, day: 14 }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos de salmónidos o percatrucha"
+    gear: >
+      Uso exclusivo de señuelo artificial con un anzuelo simple o un anzuelo triple
+      ("araña"). Peso máximo de la plomada 100 gramos. Una sola caña a la vez.
+      Chinguillo de longitud máxima 100 cm y diámetro no superior a 70 cm.
+    prohibitions: >
+      Prohibida la pesca nocturna (21:00 a 06:00) a menos de 500 m de desembocaduras.
+      En áreas de desembocadura de ríos (hasta 5 km hacia el interior): temporada más
+      corta del 16 de octubre al 28 de febrero. Prohibida la comercialización de
+      salmónidos de aguas continentales (salvo de cultivo).
+    source:
+      doc: "Decreto Supremo N° 320, de 12 de agosto de 1981 (mod. D.S. 425 y 149 de 1986), Ministerio de Economía"
+      table_row: 69
+
+  - id: lago-fagnano-year-round
+    scope: waterbodies
+    region: magallanes
+    waterbodies: [lago-fagnano]
+    species: salmonids
+    seasons: all
+    priority: 20
+    windows:
+      - start: { month: 1, day: 1 }
+        end: { month: 12, day: 31 }
+        mode: retention
+        bag: "3 ejemplares o hasta 15 kilos de salmónidos o percatrucha"
+    gear: >
+      Uso exclusivo de señuelo artificial con un anzuelo simple o un anzuelo triple
+      ("araña"). Peso máximo de la plomada 100 gramos. Una sola caña a la vez.
+      Chinguillo de longitud máxima 100 cm y diámetro no superior a 70 cm.
+    source:
+      doc: "Decreto Supremo N° 320, de 12 de agosto de 1981 (mod. D.S. 425 y 149 de 1986), Ministerio de Economía"
+      table_row: 71
+
+  - id: tierra-del-fuego-cr
+    scope: waterbodies
+    region: magallanes
+    waterbodies: [lago-deseado, lago-despreciado, rio-grande-tdf, rio-blanco-tdf, rio-garcia]
+    species: salmonids
+    seasons: all
+    priority: 20
+    windows:
+      - start: { month: 10, day: 16 }
+        end: { month: 4, day: 14 }
+        mode: catch_and_release
+    gear: "Uso de señuelo artificial simple con anzuelo sin rebarba."
+    prohibitions: >
+      Todos los ejemplares capturados deberán ser devueltos inmediatamente, vivos y en
+      buenas condiciones, al mismo lugar de extracción.
+    source:
+      doc: "Resolución Exenta N° 1675, de 04 de julio de 2025, DZ Pesca y Acuicultura, Magallanes"
+      table_row: 68
+
+  - id: laguna-parrillar-brook-trout
+    scope: waterbodies
+    region: magallanes
+    waterbodies: [laguna-parrillar]
+    species: [trucha-arroyo]
+    seasons: ["2025-2026", "2026-2027", "2027-2028"]
+    priority: 20
+    windows:
+      - start: { month: 10, day: 16 }
+        end: { month: 2, day: 28 }
+        mode: catch_and_release
+    veda: "Veda biológica trucha de arroyo: 01 de marzo al 15 de octubre (años 2025-2028)."
+    gear: "Pesca de lanzamiento y pesca con mosca. Uso de un solo anzuelo y sin rebarba."
+    source:
+      doc: "Resolución Exenta N° 1840, de 14 de agosto de 2024, DZ Pesca y Acuicultura, Magallanes"
+      table_row: 67

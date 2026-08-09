@@ -1,0 +1,679 @@
+# ACCESS & LOGISTICS — editorial layer. Practical info for planning a trip.
+# Only entries where reliable information is available. Bilingual.
+#
+# Fields:
+#   nearest_town    — closest base town or city
+#   road            — paved | gravel | 4x4 | trail
+#   public_transport — yes | limited | no
+#   wadeability     — wadeable | mixed | not-wadeable | boat-recommended
+#                     (lakes always boat-recommended unless shore-fishing is the norm)
+#   size            — small | medium | large  (rivers only; omit for lakes)
+#   difficulty      — easy | moderate | remote | very-remote
+#   notes / notes_en — free text with specifics
+
+waterbodies:
+
+  # ── Metropolitana ───────────────────────────────────────────────────────────
+  rio-maipo:
+    nearest_town: San José de Maipo
+    road: paved
+    public_transport: yes
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Acceso por Ruta G-25 desde Puente Alto. Solo el curso alto (Cajón del Maipo) tiene trucha. Vadeable en brazos y canales laterales en verano; el curso principal es grande y con caudal fuerte en deshielo (nov-dic). Buses frecuentes Santiago–San José de Maipo."
+    notes_en: "Access via Ruta G-25 from Puente Alto. Only the upper river (Cajón del Maipo) holds trout. Wadeable in side channels and braids in summer; the main channel runs big and strong during snowmelt (Nov-Dec). Frequent buses Santiago–San José de Maipo."
+
+  rio-mapocho:
+    nearest_town: Santiago
+    road: paved
+    public_transport: yes
+    wadeability: wadeable
+    size: medium
+    difficulty: easy
+    notes: "Trucha sólo en el curso alto (sector Lo Barnechea / Farellones). Acceso por carretera pavimentada. Río chico, vadeable. Baja calidad de agua en el curso medio-bajo (urbano)."
+    notes_en: "Trout only in the upper river (Lo Barnechea / Farellones area). Paved road access. Small wadeable river. Poor water quality in the mid-to-lower urban reaches."
+
+  rio-colorado-maipo:
+    nearest_town: San José de Maipo
+    road: gravel
+    public_transport: limited
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Acceso por camino ripiado desde San José de Maipo hacia el cajón del Colorado. Río de montaña, vadeable con cuidado. Caudal alto en deshielo."
+    notes_en: "Gravel road from San José de Maipo into the Colorado canyon. Mountain river, wadeable with care. High flows during snowmelt."
+
+  rio-yeso:
+    nearest_town: San José de Maipo
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: small
+    difficulty: moderate
+    notes: "Camino ripiado hacia Embalse El Yeso. Río de montaña pequeño y claro, fácil de vadear. Altitud ~2.000-2.500 msnm; revisar clima y nieve en primavera temprana."
+    notes_en: "Gravel road toward Embalse El Yeso. Small clear mountain stream, easy to wade. Altitude ~2,000-2,500 m; check weather and snow in early spring."
+
+  rio-volcan-maipo:
+    nearest_town: San José de Maipo
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: small
+    difficulty: moderate
+    notes: "Camino ripiado hacia Baños Morales / El Volcán. Río de montaña pequeño. Tramos estrechos y bolonosos."
+    notes_en: "Gravel road toward Baños Morales / El Volcán. Small mountain stream. Narrow and boulder-strewn reaches."
+
+  embalse-el-yeso:
+    nearest_town: San José de Maipo
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "A 2.500 msnm. Camino ripiado (a veces cortado en invierno). Pesca desde orilla en bocas de esteros. Se puede pescar sin bote, pero un float tube o pontón mejora mucho. Revisar acceso: a veces la empresa sanitaria restringe el paso."
+    notes_en: "At 2,500 m altitude. Gravel road (sometimes closed in winter). Shore fishing at the inlet mouths. Fishable without a boat, but a float tube or pontoon helps a lot. Check access: the water utility sometimes restricts entry."
+
+  # ── O'Higgins ───────────────────────────────────────────────────────────────
+  rio-cachapoal:
+    nearest_town: Rancagua / Coya
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Ruta pavimentada hasta Coya; luego ripio hacia el cajón. Sólo el curso alto (sector Coya arriba) tiene pesquería de trucha. Río grande, vadeable con cuidado en sectores laterales; no vadeable en el curso principal con deshielo."
+    notes_en: "Paved road to Coya; then gravel into the canyon. Only the upper river (above Coya) is trout water. Large river, wadeable with care in side reaches; not wadeable in the main channel during snowmelt."
+
+  rio-tinguiririca:
+    nearest_town: San Fernando
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: medium
+    difficulty: moderate
+    notes: "Ruta pavimentada hacia Termas del Flaco. Río de precordillera, vadeable en verano en el curso alto. Caudal puede subir rápido con deshielo."
+    notes_en: "Paved road toward Termas del Flaco. Foothill river, wadeable in summer on the upper reaches. Flows can rise quickly with snowmelt."
+
+  lago-rapel:
+    nearest_town: Rapel / Las Cabras
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Embalse grande de agua templada. Acceso pavimentado. Botes de arriendo disponibles. Pesca de orilla posible en bahías, pero bote recomendado. Sin salmónidos — pejerrey y carpa."
+    notes_en: "Large warm-water reservoir. Paved access. Rental boats available. Shore fishing possible in bays, but a boat is recommended. No salmonids — silverside and carp."
+
+  # ── Maule ───────────────────────────────────────────────────────────────────
+  rio-maule:
+    nearest_town: Talca / Constitución
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: moderate
+    notes: "Río grande; el curso alto (sector precordillerano, hacia la Laguna del Maule) es la zona de pesca. Ruta pavimentada hasta el Paso Pehuenche. Bote o pontón recomendado en el curso principal; brazos laterales vadeables."
+    notes_en: "Large river; the upper course (foothill sector toward Laguna del Maule) is the fishing zone. Paved road to Paso Pehuenche. Boat or pontoon recommended on the main channel; side braids wadeable."
+
+  rio-melado:
+    nearest_town: Linares
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: remote
+    notes: "Cajón remoto. Camino ripiado largo desde Linares. Planificar el día completo. Río vadeable en la mayoría de los tramos. Poca presión de pesca."
+    notes_en: "Remote canyon. Long gravel road from Linares. Plan a full day. Wadeable on most reaches. Low fishing pressure."
+
+  rio-achibueno:
+    nearest_town: Linares
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Valle precordillerano. Camino ripiado desde Linares. Río claro y vadeable en verano. Sector Los Hualles arriba es más remoto pero con mejor pesca."
+    notes_en: "Foothill valley. Gravel road from Linares. Clear and wadeable in summer. The Los Hualles sector upstream is more remote but better fishing."
+
+  laguna-del-maule:
+    nearest_town: Talca
+    road: paved
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "A 2.200 msnm en la frontera. Ruta pavimentada (Paso Pehuenche). Pesca desde orilla viable en bocas de esteros; float tube o pontón muy recomendado. Revisar estado del paso; nieve cierra el acceso en invierno. Viento fuerte frecuente."
+    notes_en: "At 2,200 m on the border. Paved road (Paso Pehuenche). Shore fishing viable at inlet mouths; float tube or pontoon highly recommended. Check pass conditions; snow closes access in winter. Strong wind is frequent."
+
+  embalse-colbun:
+    nearest_town: Colbún
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Embalse de fácil acceso. Ruta pavimentada. Botes de arriendo disponibles. Pesca de orilla posible pero bote facilita encontrar la trucha. Agua templada en verano."
+    notes_en: "Easy-access reservoir. Paved road. Rental boats available. Shore fishing possible but a boat helps find the trout. Warm water in summer."
+
+  # ── Ñuble ───────────────────────────────────────────────────────────────────
+  rio-nuble:
+    nearest_town: San Fabián de Alico
+    road: gravel
+    public_transport: limited
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Valle de San Fabián. Ripio desde Chillán. Río vadeable en la mayoría de los tramos en verano. Caudal alto en deshielo (oct-nov)."
+    notes_en: "San Fabián valley. Gravel from Chillán. Wadeable on most reaches in summer. High flows during snowmelt (Oct-Nov)."
+
+  rio-itata:
+    nearest_town: Chillán
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Río grande. Acceso pavimentado a múltiples puntos. Vadeable sólo en brazos laterales y sectores altos; el curso principal es grande."
+    notes_en: "Large river. Paved access to multiple points. Wadeable only in side braids and upper sectors; the main channel is big."
+
+  # ── Biobío ──────────────────────────────────────────────────────────────────
+  rio-biobio:
+    nearest_town: Santa Bárbara / Ralco
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: moderate
+    notes: "Sólo el Alto Biobío (Ralco arriba) tiene pesquería de trucha. Ruta pavimentada hasta Ralco. Río de gran volumen: no vadeable en el curso principal. Bote o flotada recomendados. El curso bajo (Concepción) no es agua de trucha."
+    notes_en: "Only the Alto Biobío (above Ralco) is trout water. Paved road to Ralco. High-volume river: not wadeable on the main channel. Boat or float trip recommended. The lower river (Concepción) is not trout water."
+
+  rio-laja:
+    nearest_town: Los Ángeles
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Acceso pavimentado (camino a Parque Nacional Laguna del Laja). Río grande con tramos rápidos; vadeable con cuidado en sectores laterales. Algunos tramos requieren bote."
+    notes_en: "Paved access (road to Laguna del Laja National Park). Large river with fast sections; wadeable with care in side reaches. Some sections require a boat."
+
+  laguna-del-laja:
+    nearest_town: Los Ángeles
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "En Parque Nacional. Ruta pavimentada. Pesca desde orilla en bocas y desagüe. Float tube o pontón recomendado. Paisaje volcánico."
+    notes_en: "In the National Park. Paved road. Shore fishing at the inlets and outlet. Float tube or pontoon recommended. Volcanic landscape."
+
+  # ── La Araucanía ────────────────────────────────────────────────────────────
+  lago-villarrica:
+    nearest_town: Pucón / Villarrica
+    road: paved
+    public_transport: yes
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Pucón es el principal hub turístico de la zona. Buses frecuentes desde Temuco y Santiago. Lanchas y guías fácilmente disponibles. Pesca de orilla posible en puntas y rinconadas, pero bote (trolling/harling) es lo habitual."
+    notes_en: "Pucón is the area's main tourist hub. Frequent buses from Temuco and Santiago. Boats and guides readily available. Shore fishing possible at points and coves, but boat fishing (trolling/harling) is the norm."
+
+  lago-caburgua:
+    nearest_town: Pucón
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Cerca de Pucón. Camino pavimentado. Agua muy clara y profunda — bote o trolling recomendado. Algunos accesos públicos a la orilla."
+    notes_en: "Near Pucón. Paved road. Very clear deep water — boat or trolling recommended. Some public shore access."
+
+  lago-colico:
+    nearest_town: Cunco
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Acceso pavimentado. Menos turístico que Villarrica. Bote recomendado; orilla accesible en algunos puntos."
+    notes_en: "Paved access. Less touristy than Villarrica. Boat recommended; shore accessible at some points."
+
+  rio-tolten:
+    nearest_town: Villarrica / Pitrufquén
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Río grande que sale del lago Villarrica. Acceso pavimentado. No vadeable — pesca desde orilla en pozones o con bote (drift). Corrida de chinook más al norte establecida en Chile."
+    notes_en: "Large river draining Lago Villarrica. Paved access. Not wadeable — fish from shore at the pools or by drift boat. Chile's northernmost established chinook run."
+
+  rio-trancura:
+    nearest_town: Pucón
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: medium
+    difficulty: easy
+    notes: "Acceso fácil desde Pucón. Ruta pavimentada (camino a Huife). Tramos altos vadeables; tramos bajos con rápidos compartidos con rafting. Río de gradiente variable."
+    notes_en: "Easy access from Pucón. Paved road (Huife road). Upper reaches wadeable; lower reaches with rapids shared with rafting. Variable gradient."
+
+  rio-liucura:
+    nearest_town: Pucón
+    road: paved
+    public_transport: no
+    wadeability: wadeable
+    size: small
+    difficulty: easy
+    notes: "Río técnico y claro, tributario del Trancura. Acceso por camino pavimentado desde Pucón. Vadeable en toda su extensión. Peces educados — requiere aproximación sigilosa."
+    notes_en: "Technical clear river, tributary of the Trancura. Paved road access from Pucón. Wadeable throughout. Educated fish — requires a stealthy approach."
+
+  rio-allipen:
+    nearest_town: Cunco / Melipeuco
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: moderate
+    notes: "Río grande. Acceso pavimentado por la ruta a Melipeuco. Vadeable en algunos brazos laterales; el curso principal es grande y con corriente fuerte."
+    notes_en: "Large river. Paved access via the Melipeuco road. Wadeable in some side braids; the main channel is big with strong current."
+
+  rio-cautin:
+    nearest_town: Temuco
+    road: paved
+    public_transport: yes
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Pasa por Temuco. Acceso pavimentado. Río grande; vadeable en sectores altos hacia la precordillera; el curso bajo es demasiado grande."
+    notes_en: "Runs through Temuco. Paved access. Large river; wadeable in upper sectors toward the foothills; the lower course is too big."
+
+  # ── Los Ríos ────────────────────────────────────────────────────────────────
+  lago-calafquen:
+    nearest_town: Lican Ray / Coñaripe
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Acceso pavimentado. Pueblos turísticos en la orilla. Bote o kayak recomendado; pesca de orilla posible en puntas."
+    notes_en: "Paved access. Tourist towns on the shore. Boat or kayak recommended; shore fishing possible at points."
+
+  lago-panguipulli:
+    nearest_town: Panguipulli
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Acceso pavimentado. Pueblo de Panguipulli tiene servicios completos. Bote recomendado."
+    notes_en: "Paved access. The town of Panguipulli has full services. Boat recommended."
+
+  lago-rinihue:
+    nearest_town: Riñihue
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Acceso pavimentado. Comunidad pequeña. Bote recomendado; orilla accesible en algunos sectores."
+    notes_en: "Paved access. Small community. Boat recommended; shore accessible in some sectors."
+
+  lago-ranco:
+    nearest_town: Lago Ranco / Futrono / Llifén
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Lago grande con varios accesos pavimentados. Llifén es base para el Calcurrupe. Bote recomendado para trucha y chinook."
+    notes_en: "Large lake with several paved access points. Llifén is the base for the Calcurrupe. Boat recommended for trout and chinook."
+
+  lago-pirihueico:
+    nearest_town: Neltume
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Lago remoto en la frontera. Camino de ripio desde Neltume. Conecta con Huilo-Huilo. Bote necesario. Ferry cruza al lado argentino (San Martín de los Andes)."
+    notes_en: "Remote border lake. Gravel road from Neltume. Connected to Huilo-Huilo. Boat needed. A ferry crosses to the Argentine side (San Martín de los Andes)."
+
+  lago-maihue:
+    nearest_town: Futrono
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Lago remoto. Camino ripiado desde Futrono. Pocos servicios. Bote recomendado."
+    notes_en: "Remote lake. Gravel road from Futrono. Few services. Boat recommended."
+
+  rio-san-pedro:
+    nearest_town: Los Lagos
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Sale del lago Riñihue. Ruta pavimentada. Río grande, no vadeable en el curso principal; orillas y remansos accesibles. El tramo alto (nacimiento a confluencia Malihue) es sólo mosca y C&R. Flotadas (drift boat) son la modalidad principal."
+    notes_en: "Drains Lago Riñihue. Paved road. Large river, not wadeable on the main channel; banks and slackwater accessible. The upper reach (outlet to Malihue confluence) is fly-only C&R. Drift-boat floats are the main approach."
+
+  rio-calle-calle:
+    nearest_town: Valdivia
+    road: paved
+    public_transport: yes
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Río grande que pasa por Valdivia. Acceso fácil, rutas pavimentadas. No vadeable — pesca desde orilla o bote."
+    notes_en: "Large river running through Valdivia. Easy access, paved roads. Not wadeable — fish from shore or boat."
+
+  rio-valdivia:
+    nearest_town: Valdivia
+    road: paved
+    public_transport: yes
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Río grande y navegable. Acceso fácil desde Valdivia. No vadeable. Pesca desde orilla o bote."
+    notes_en: "Large navigable river. Easy access from Valdivia. Not wadeable. Fish from shore or boat."
+
+  rio-bueno:
+    nearest_town: Río Bueno / La Unión
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Río grande. Acceso pavimentado. No vadeable en el curso principal. Bote o pesca de orilla en pozones."
+    notes_en: "Large river. Paved access. Not wadeable on the main channel. Boat or shore fishing at the pools."
+
+  rio-calcurrupe:
+    nearest_town: Llifén
+    road: paved
+    public_transport: no
+    wadeability: mixed
+    size: medium
+    difficulty: moderate
+    notes: "Conecta el lago Maihue con el Ranco. Acceso desde Llifén (pavimentado). Tramos vadeables en el curso medio; el curso bajo cerca de la barra es más grande. Flotadas populares."
+    notes_en: "Connects Lago Maihue to Lago Ranco. Access from Llifén (paved). Wadeable reaches in the mid-section; the lower river near the bar is bigger. Float trips popular."
+
+  rio-fuy:
+    nearest_town: Neltume
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Río de montaña en bosque valdiviano. Camino ripiado desde Neltume / Huilo-Huilo. Vadeable en pozones entre bolones. Agua muy clara."
+    notes_en: "Mountain river in Valdivian forest. Gravel road from Neltume / Huilo-Huilo. Wadeable in the boulder pools. Very clear water."
+
+  rio-cruces:
+    nearest_town: San José de la Mariquina
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: medium
+    difficulty: easy
+    notes: "Río de llanura. Acceso pavimentado. Tramos vadeables en el curso alto; el curso bajo es ancho y lento (humedal)."
+    notes_en: "Lowland river. Paved access. Wadeable reaches upstream; the lower river is wide and slow (wetland)."
+
+  # ── Los Lagos ───────────────────────────────────────────────────────────────
+  lago-llanquihue:
+    nearest_town: Puerto Varas / Puerto Montt / Frutillar
+    road: paved
+    public_transport: yes
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Segundo lago más grande de Chile. Acceso fácil, rutas pavimentadas, buses frecuentes. Puerto Varas es el principal hub turístico. Botes y guías fácilmente disponibles. Pesca de orilla posible en puntas rocosas (Ensenada, Llanquihue), pero harling/trolling es lo habitual."
+    notes_en: "Chile's second-largest lake. Easy access, paved roads, frequent buses. Puerto Varas is the main tourist hub. Boats and guides readily available. Shore fishing possible at rocky points (Ensenada, Llanquihue), but harling/trolling is the norm."
+
+  lago-rupanco:
+    nearest_town: Osorno
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Camino ripiado desde Osorno. Menos turístico que Llanquihue. Bote recomendado. Pocos servicios alrededor del lago."
+    notes_en: "Gravel road from Osorno. Less touristy than Llanquihue. Boat recommended. Few services around the lake."
+
+  lago-puyehue:
+    nearest_town: Entre Lagos
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Ruta pavimentada (camino a Argentina, Paso Samoré). Entre Lagos tiene servicios. Bote recomendado."
+    notes_en: "Paved road (road to Argentina, Paso Samoré). Entre Lagos has services. Boat recommended."
+
+  lago-todos-los-santos:
+    nearest_town: Petrohué
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Dentro de Parque Nacional. Acceso por Petrohué (pavimentado). Rodeado de bosque y volcanes. Bote necesario para acceder a la mayoría de las orillas; catamarán cruza el lago."
+    notes_en: "Inside the National Park. Access via Petrohué (paved). Surrounded by forest and volcanoes. Boat needed to reach most shores; a catamaran crosses the lake."
+
+  lago-yelcho:
+    nearest_town: Chaitén
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Carretera Austral pavimentada pasa por la orilla norte. Bote necesario para pescar bien (trolling, acceso a bahías). Famoso por la caída de tábanos (ene-feb) con secas grandes."
+    notes_en: "Paved Carretera Austral passes along the north shore. Boat needed to fish properly (trolling, bay access). Famous for the horsefly fall (Jan-Feb) with big dries."
+
+  rio-maullin:
+    nearest_town: Maullín
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Río de llanura que nace del lago Llanquihue. Acceso pavimentado. Tipo spring creek — lento y profundo, no vadeable. Bote o pesca de orilla en pozones. Prohibida la pesca desde puentes."
+    notes_en: "Lowland river draining Lago Llanquihue. Paved access. Spring-creek type — slow and deep, not wadeable. Boat or shore fishing at the pools. Fishing from bridges is banned."
+
+  rio-petrohue:
+    nearest_town: Petrohué / Ensenada
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: easy
+    notes: "Dentro de Parque Nacional. Ruta pavimentada (camino a Petrohué desde Ensenada). Río grande con caudal fuerte y constante (glaciar). Vadeable en orillas y remansos; el curso principal es poderoso. Canaletas de lava dan estructura. Sector Los Patos cerrado."
+    notes_en: "Inside the National Park. Paved road (Ensenada to Petrohué). Large river with strong constant glacial flow. Wadeable along edges and slackwater; the main channel is powerful. Lava channels provide structure. Los Patos sector closed."
+
+  rio-puelo:
+    nearest_town: Cochamó / Puelo
+    road: gravel
+    public_transport: no
+    wadeability: not-wadeable
+    size: large
+    difficulty: remote
+    notes: "Acceso principal por camino ripiado desde Cochamó. Río grande y turquesa (glaciar). No vadeable — flotadas con drift boat son la modalidad. Algunos tramos requieren bote motorizado. Zona remota; planificar logística con anticipación."
+    notes_en: "Main access via gravel road from Cochamó. Large turquoise glacial river. Not wadeable — drift boat floats are the method. Some reaches need a motorboat. Remote area; plan logistics ahead."
+
+  rio-manso:
+    nearest_town: Cochamó
+    road: gravel
+    public_transport: no
+    wadeability: mixed
+    size: medium
+    difficulty: remote
+    notes: "Acceso por camino ripiado hacia el valle de Cochamó. Río de montaña en bosque denso. Tramos vadeables; caudal variable. Zona remota."
+    notes_en: "Access via gravel road into the Cochamó valley. Mountain river in dense forest. Wadeable reaches; variable flows. Remote area."
+
+  rio-rahue:
+    nearest_town: Osorno
+    road: paved
+    public_transport: yes
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Pasa por Osorno. Río grande, no vadeable. Pesca desde orilla o con bote."
+    notes_en: "Runs through Osorno. Large river, not wadeable. Shore or boat fishing."
+
+  rio-pilmaiquen:
+    nearest_town: Osorno
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: medium
+    difficulty: easy
+    notes: "Sale del lago Puyehue. Acceso pavimentado. Tramos altos vadeables; se ensancha aguas abajo."
+    notes_en: "Drains Lago Puyehue. Paved access. Upper reaches wadeable; widens downstream."
+
+  rio-futaleufu:
+    nearest_town: Futaleufú
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: remote
+    notes: "Pueblo de Futaleufú accesible por ruta pavimentada (Carretera Austral sur) o desde Argentina (Esquel). Río de clase V en algunos tramos — NO vadeable en el curso principal. Pesca con guía y bote obligatorio en la mayoría de los tramos. Agua turquesa poderosa. Tramo superior (límite a Sofía) es C&R."
+    notes_en: "Futaleufú town accessible via paved road (southern Carretera Austral) or from Argentina (Esquel). Class-V river in places — NOT wadeable on the main channel. Guided boat fishing on most reaches. Powerful turquoise water. Upper reach (border to Sofía) is C&R."
+
+  rio-palena:
+    nearest_town: La Junta
+    road: gravel
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: remote
+    notes: "Carretera Austral. Flotadas largas con drift boat son la modalidad principal. Tramos laterales vadeables. Zona remota, pocos servicios. La Junta es la base."
+    notes_en: "Carretera Austral. Long drift-boat floats are the main method. Side channels wadeable. Remote area, few services. La Junta is the base."
+
+  rio-yelcho:
+    nearest_town: Chaitén
+    road: paved
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: moderate
+    notes: "Sale del lago Yelcho hacia el mar. Carretera Austral pavimentada. Tramos altos vadeables; el curso bajo hacia la desembocadura es grande. Corrida de chinook (dic-feb)."
+    notes_en: "Drains Lago Yelcho to the sea. Paved Carretera Austral. Upper reaches wadeable; the lower river toward the mouth is big. Chinook run (Dec-Feb)."
+
+  # ── Aysén ───────────────────────────────────────────────────────────────────
+  rio-simpson:
+    nearest_town: Coyhaique
+    road: paved
+    public_transport: yes
+    wadeability: wadeable
+    size: medium
+    difficulty: easy
+    notes: "Pasa junto a Coyhaique. Ruta pavimentada. Vadeable en la mayoría de los tramos. Uno de los ríos más accesibles de Aysén. Buses desde el aeropuerto de Balmaceda."
+    notes_en: "Runs alongside Coyhaique. Paved road. Wadeable on most reaches. One of the most accessible rivers in Aysén. Buses from Balmaceda airport."
+
+  rio-aysen:
+    nearest_town: Puerto Aysén / Coyhaique
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: easy
+    notes: "Río grande. Ruta pavimentada Coyhaique–Puerto Aysén. Pesca desde orilla en pozones (sector La Barra) o con bote. No vadeable. Principal río para chinook en Aysén."
+    notes_en: "Large river. Paved road Coyhaique–Puerto Aysén. Shore fishing at the pools (La Barra sector) or by boat. Not wadeable. Main chinook river in Aysén."
+
+  rio-manihuales:
+    nearest_town: Mañihuales / Coyhaique
+    road: paved
+    public_transport: limited
+    wadeability: wadeable
+    size: medium
+    difficulty: easy
+    notes: "Carretera Austral pavimentada. Vadeable en la mayoría de los tramos. Pueblo de Mañihuales es la base. Sector El Toqui es zona de protección de desove."
+    notes_en: "Paved Carretera Austral. Wadeable on most reaches. Mañihuales town is the base. El Toqui sector is a spawning protection zone."
+
+  rio-nirehuao:
+    nearest_town: Ñirehuao / Coyhaique
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: small
+    difficulty: moderate
+    notes: "Río de pampa/estepa. Camino ripiado desde Coyhaique. Vadeable pero con barrancas y viento constante. Pocas referencias en el terreno; llevar GPS."
+    notes_en: "Steppe/pampa river. Gravel road from Coyhaique. Wadeable but with cutbanks and constant wind. Few landmarks; bring GPS."
+
+  rio-cisnes:
+    nearest_town: La Tapera / Puerto Cisnes
+    road: gravel
+    public_transport: limited
+    wadeability: mixed
+    size: large
+    difficulty: remote
+    notes: "Río largo (160+ km). Parte alta en estepa, cañón medio remoto, curso bajo hacia Puerto Cisnes. Ripio en la mayor parte. Tramos altos vadeables; el cañón y curso bajo son grandes y requieren bote."
+    notes_en: "Long river (160+ km). Upper section on steppe, remote mid-canyon, lower course toward Puerto Cisnes. Gravel most of the way. Upper reaches wadeable; the canyon and lower course are big and need a boat."
+
+  rio-baker:
+    nearest_town: Cochrane
+    road: paved
+    public_transport: limited
+    wadeability: not-wadeable
+    size: large
+    difficulty: remote
+    notes: "El río más caudaloso de Chile. Carretera Austral pavimentada. NO vadeable — volumen enorme y turquesa. Pesca desde orilla en contracorrientes o con bote. Flotadas con drift boat son la modalidad principal. Cochrane es la base logística; también acceso desde la confluencia del Chacabuco."
+    notes_en: "Chile's highest-volume river. Paved Carretera Austral. NOT wadeable — huge turquoise flows. Shore fishing in back-eddies or by boat. Drift-boat floats are the main method. Cochrane is the logistics base; also access from the Chacabuco confluence."
+
+  rio-ibanez:
+    nearest_town: Puerto Ibáñez
+    road: gravel
+    public_transport: limited
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Camino ripiado desde la Carretera Austral hacia Puerto Ibáñez. Río vadeable en la mayor parte. Desemboca en el lago General Carrera."
+    notes_en: "Gravel road from the Carretera Austral to Puerto Ibáñez. Wadeable on most reaches. Flows into Lago General Carrera."
+
+  rio-cochrane:
+    nearest_town: Cochrane
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Conecta el lago Cochrane con el Baker. Camino ripiado desde Cochrane. Río vadeable, agua cristalina."
+    notes_en: "Connects Lago Cochrane to the Baker. Gravel road from Cochrane. Wadeable river, crystal-clear water."
+
+  rio-jeinimeni:
+    nearest_town: Chile Chico
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: small
+    difficulty: remote
+    notes: "Acceso por la Reserva Nacional Jeinimeni (camino de tierra/4x4 desde Chile Chico). Río de frontera — pescar sólo del lado chileno. Agua muy clara, microclima seco de estepa. Vadeable en toda su extensión."
+    notes_en: "Access via the Jeinimeni National Reserve (dirt/4x4 road from Chile Chico). Border river — fish the Chilean side only. Very clear water, dry steppe microclimate. Wadeable throughout."
+
+  lago-general-carrera:
+    nearest_town: Chile Chico / Puerto Guadal / Puerto Tranquilo
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Lago más grande de Chile. Ruta pavimentada (Carretera Austral) por la orilla norte. Orilla sur (Chile Chico) accesible por ferry desde Puerto Ibáñez o por ruta larga. Bote necesario; viento fuerte frecuente. Múltiples bases según el sector."
+    notes_en: "Chile's largest lake. Paved road (Carretera Austral) along the north shore. South shore (Chile Chico) accessible by ferry from Puerto Ibáñez or a long drive. Boat needed; strong wind is frequent. Multiple bases depending on the sector."
+
+  lago-cochrane:
+    nearest_town: Cochrane
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: remote
+    notes: "Lago remoto. Camino ripiado desde Cochrane. Pocos servicios. Bote necesario."
+    notes_en: "Remote lake. Gravel road from Cochrane. Few services. Boat needed."
+
+  lago-bertrand:
+    nearest_town: Puerto Bertrand
+    road: paved
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Pequeño pueblo de Puerto Bertrand en la Carretera Austral. Desagüe al río Baker. Bote recomendado; pesca de orilla posible en el desagüe."
+    notes_en: "Small town of Puerto Bertrand on the Carretera Austral. Outlet to the Baker. Boat recommended; shore fishing possible at the outlet."
+
+  lago-elizalde:
+    nearest_town: Coyhaique
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: easy
+    notes: "Cerca de Coyhaique (~30 km). Camino ripiado pero en buen estado. Bote recomendado; pesca de orilla viable en bocas."
+    notes_en: "Near Coyhaique (~30 km). Gravel road but in good condition. Boat recommended; shore fishing viable at the inlets."
+
+  lago-rosselot:
+    nearest_town: La Junta
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Camino ripiado desde La Junta. Lago remoto y tranquilo. Bote necesario."
+    notes_en: "Gravel road from La Junta. Remote and quiet lake. Boat needed."

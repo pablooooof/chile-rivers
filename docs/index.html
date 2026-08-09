@@ -158,6 +158,19 @@ const I18N = {
     tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
     tpPriceFmt: (min, max) => min === 0 ? "—" : `$${(min/1000).toFixed(0)}k – $${(max/1000).toFixed(0)}k CLP`,
     tpOrigin: "Santiago",
+    accTitle: "Acceso y logística",
+    accTag: "— guía editorial",
+    accTown: "Pueblo base",
+    accRoad: "Camino",
+    accTransport: "Transporte público",
+    accWade: "Vadeo",
+    accSize: "Tamaño",
+    accDifficulty: "Dificultad",
+    accRoadVals: { paved: "Pavimentado", gravel: "Ripio", "4x4": "4x4", trail: "Sendero" },
+    accTransportVals: { yes: "Sí", limited: "Limitado", no: "No" },
+    accWadeVals: { wadeable: "Vadeable", mixed: "Mixto (tramos vadeables)", "not-wadeable": "No vadeable", "boat-recommended": "Se recomienda bote" },
+    accSizeVals: { small: "Pequeño", medium: "Mediano", large: "Grande" },
+    accDiffVals: { easy: "Fácil", moderate: "Moderado", remote: "Remoto", "very-remote": "Muy remoto" },
   },
   en: {
     title: "🎣 Recreational fishing — Chile",
@@ -196,6 +209,19 @@ const I18N = {
     tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
     tpPriceFmt: (min, max) => min === 0 ? "—" : `$${(min/1000).toFixed(0)}k – $${(max/1000).toFixed(0)}k CLP`,
     tpOrigin: "Santiago",
+    accTitle: "Access & logistics",
+    accTag: "— editorial guide",
+    accTown: "Base town",
+    accRoad: "Road",
+    accTransport: "Public transport",
+    accWade: "Wadeability",
+    accSize: "Size",
+    accDifficulty: "Difficulty",
+    accRoadVals: { paved: "Paved", gravel: "Gravel", "4x4": "4x4", trail: "Trail" },
+    accTransportVals: { yes: "Yes", limited: "Limited", no: "No" },
+    accWadeVals: { wadeable: "Wadeable", mixed: "Mixed (some wadeable)", "not-wadeable": "Not wadeable", "boat-recommended": "Boat recommended" },
+    accSizeVals: { small: "Small", medium: "Medium", large: "Large" },
+    accDiffVals: { easy: "Easy", moderate: "Moderate", remote: "Remote", "very-remote": "Very remote" },
   }
 };
 let lang = localStorage.getItem("lang") || "es";
@@ -572,6 +598,9 @@ function showPanel(props) {
   let advHtml = "";
   try { advHtml = advisoryHtml(props.id); }
   catch (err) { console.error("advisory render failed:", err); }
+  let accHtml = "";
+  try { accHtml = accessHtml(props.id); }
+  catch (err) { console.error("access render failed:", err); }
 
   document.getElementById("panel-content").innerHTML = `
     <h2>${props.name}<span class="badge">${levelBadge}</span></h2>
@@ -590,10 +619,36 @@ function showPanel(props) {
     ${gear.length ? `<details><summary>${t.gear}</summary>${gear.map(g => `<p>${g}</p>`).join("")}</details>` : ""}
     ${prohib.length ? `<details><summary>${t.prohib}</summary>${prohib.map(p => `<p>${p}</p>`).join("")}</details>` : ""}
     ${advHtml}
+    ${accHtml}
     <div class="sources"><strong>${t.sources}</strong>${t.srcNote}<br>${
       sources.map(s => s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.doc}</a>` : s.doc).join("<br>")
     }</div>`;
   document.getElementById("panel").classList.add("open");
+}
+
+// ── access ──────────────────────────────────────────────────────────────────
+function accessHtml(wbId) {
+  const t = T();
+  const acc = (ADV.access || {})[wbId];
+  if (!acc) return "";
+  const row = (label, val) => val ? `<tr><td style="font-weight:600;white-space:nowrap;padding:2px 8px 2px 0;vertical-align:top">${label}</td><td style="padding:2px 0">${val}</td></tr>` : "";
+  const roadLabel = t.accRoadVals[acc.road] || acc.road || "";
+  const transportLabel = t.accTransportVals[acc.public_transport] || acc.public_transport || "";
+  const wadeLabel = t.accWadeVals[acc.wadeability] || acc.wadeability || "";
+  const sizeLabel = acc.size ? (t.accSizeVals[acc.size] || acc.size) : "";
+  const diffLabel = t.accDiffVals[acc.difficulty] || acc.difficulty || "";
+  const notes = loc(acc, "notes") || "";
+  return `<div class="adv" style="border-left-color:#5b8c6e"><h3>${t.accTitle} <span class="tag">${t.accTag}</span></h3>
+    <table style="font-size:12.5px;border-collapse:collapse;margin:4px 0 6px">
+      ${row(t.accTown, acc.nearest_town)}
+      ${row(t.accRoad, roadLabel)}
+      ${row(t.accTransport, transportLabel)}
+      ${row(t.accWade, wadeLabel)}
+      ${row(t.accSize, sizeLabel)}
+      ${row(t.accDifficulty, diffLabel)}
+    </table>
+    ${notes ? `<p style="font-size:12px;margin:4px 0;color:var(--muted)">${notes}</p>` : ""}
+  </div>`;
 }
 
 // ── advisory ────────────────────────────────────────────────────────────────

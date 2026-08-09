@@ -222,8 +222,12 @@ def main():
             names.update(e.get("alt_names", []))
         return "|".join(sorted(n.replace("(", r"\(").replace(")", r"\)") for n in names))
 
-    lakes = [e for e in entries if e["type"] == "lake"]
-    rivers = [e for e in entries if e["type"] == "river"]
+    manual = [e for e in entries if e.get("manual_geometry")]
+    if manual:
+        print(f"skipping {len(manual)} entries with manual_geometry: "
+              + ", ".join(e["id"] for e in manual))
+    lakes = [e for e in entries if e["type"] == "lake" and not e.get("manual_geometry")]
+    rivers = [e for e in entries if e["type"] == "river" and not e.get("manual_geometry")]
 
     print(f"querying {len(lakes)} lakes, {len(rivers)} rivers via Overpass...")
 
@@ -272,6 +276,9 @@ out geom;"""
 
     written, missing = [], []
     for e in entries:
+        if e.get("manual_geometry"):
+            written.append(e["id"])
+            continue
         b = buckets.get(e["id"])
         geom = None
         if e["type"] == "lake" and b and b["lake"]:

@@ -114,6 +114,10 @@ waterbodies:
   - { id: rio-aysen,             name: "Río Aysén",        type: river, region: aysen, osm_name: "Río Aysén", alt_names: ["Río Aisén"] }
   - { id: rio-simpson,           name: "Río Simpson",      type: river, region: aysen, osm_name: "Río Simpson" }
   - { id: rio-manihuales,        name: "Río Mañihuales",   type: river, region: aysen, osm_name: "Río Mañihuales", alt_names: ["Río Mañiguales"] }
+  - { id: rio-riesco,            name: "Río Riesco",       type: river, region: aysen, osm_name: "Río Riesco", bbox: [-45.60, -72.80, -45.35, -72.45], optional: true }
+  - { id: rio-condor-coyhaique,  name: "Río Cóndor (Coyhaique)", type: river, region: aysen, osm_name: "Río Cóndor", alt_names: ["Río Condor"], bbox: [-45.75, -72.15, -45.35, -71.65], optional: true }
+  - { id: rio-blanco-coyhaique,  name: "Río Blanco (Coyhaique)", type: river, region: aysen, osm_name: "Río Blanco", bbox: [-45.90, -72.00, -45.75, -71.75], optional: true }
+  - { id: rio-emperador-guillermo, name: "Río Emperador Guillermo", type: river, region: aysen, osm_name: "Río Emperador Guillermo", bbox: [-45.65, -72.10, -45.25, -71.30], optional: true }
   - { id: rio-nirehuao,          name: "Río Ñirehuao",     type: river, region: aysen, osm_name: "Río Ñirehuao", optional: true }
   - { id: rio-cisnes,            name: "Río Cisnes",       type: river, region: aysen, osm_name: "Río Cisnes" }
   - { id: rio-baker,             name: "Río Baker",        type: river, region: aysen, osm_name: "Río Baker" }
@@ -126,6 +130,7 @@ waterbodies:
   - { id: lago-bertrand,         name: "Lago Bertrand",    type: lake, region: aysen, osm_name: "Lago Bertrand" }
   - { id: lago-elizalde,         name: "Lago Elizalde",    type: lake, region: aysen, osm_name: "Lago Elizalde" }
   - { id: lago-la-paloma,        name: "Lago La Paloma",   type: lake, region: aysen, osm_name: "Lago La Paloma", bbox: [-45.90, -72.60, -45.45, -72.00], optional: true }
+  - { id: lago-castor,           name: "Lago Castor",      type: lake, region: aysen, osm_name: "Lago Cástor", bbox: [-45.65, -71.85, -45.55, -71.70], optional: true }
   - { id: lago-pollux,           name: "Lago Pollux",      type: lake, region: aysen, osm_name: "Lago Pollux", bbox: [-45.90, -72.25, -45.55, -71.80], optional: true }
   - { id: lago-frio,             name: "Lago Frío",        type: lake, region: aysen, osm_name: "Lago Frío", bbox: [-45.90, -72.25, -45.55, -71.80], optional: true }
   - { id: lago-riesco,           name: "Lago Riesco",      type: lake, region: aysen, osm_name: "Lago Riesco", bbox: [-45.60, -72.95, -45.15, -72.35], optional: true }

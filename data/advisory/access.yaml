@@ -677,3 +677,89 @@ waterbodies:
     difficulty: moderate
     notes: "Camino ripiado desde La Junta. Lago remoto y tranquilo. Bote necesario."
     notes_en: "Gravel road from La Junta. Remote and quiet lake. Boat needed."
+
+  # ── Magallanes ──────────────────────────────────────────────────────────────
+  rio-serrano:
+    nearest_town: Puerto Natales
+    road: gravel
+    public_transport: limited
+    wadeability: wadeable
+    size: large
+    difficulty: moderate
+    notes: "Acceso por el sector del Parque Nacional Torres del Paine. Desde Puerto Natales (~60 km), camino ripiado. Vadeable en tramos medios y bajos; bote útil en la zona del desagüe del Lago Toro. Se requiere entrada al parque nacional. Guías locales operan desde Puerto Natales."
+    notes_en: "Access through Torres del Paine National Park. From Puerto Natales (~60 km), gravel road. Wadeable in mid and lower sections; boat useful near the Lago Toro outlet. Park entrance fee required. Local guides operate from Puerto Natales."
+
+  lago-toro:
+    nearest_town: Puerto Natales
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Lago grande dentro del Parque Torres del Paine. Camino ripiado desde Puerto Natales. Bote recomendado; pesca de orilla posible en las bahías del norte. Viento fuerte — planificar salidas temprano. Entrada al parque requerida."
+    notes_en: "Large lake inside Torres del Paine National Park. Gravel road from Puerto Natales. Boat recommended; shore fishing possible on the northern bays. Strong wind — plan early outings. Park entrance required."
+
+  lago-sarmiento:
+    nearest_town: Puerto Natales
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Fuera del perímetro del parque. Camino ripiado desde Puerto Natales (~80 km). Orillas con formaciones de trombolitos (patrimonio geológico). Bote recomendado pero pesca de orilla viable. Viento extremo; agua cristalina."
+    notes_en: "Outside the national park perimeter. Gravel road from Puerto Natales (~80 km). Shores feature thrombolite formations (geological heritage). Boat recommended but shore fishing viable. Extreme wind; crystal-clear water."
+
+  lago-fagnano:
+    nearest_town: Porvenir
+    road: gravel
+    public_transport: no
+    wadeability: boat-recommended
+    difficulty: remote
+    notes: "Tierra del Fuego. Desde Porvenir, camino ripiado largo hacia el sur (~150 km). Sin servicios en el lago. Bote necesario. Clima impredecible; muy remoto del lado chileno. El acceso argentino (Tolhuin) es más desarrollado."
+    notes_en: "Tierra del Fuego. From Porvenir, long gravel road south (~150 km). No services at the lake. Boat needed. Unpredictable weather; very remote on the Chilean side. The Argentine access (Tolhuin) is more developed."
+
+  laguna-parrillar:
+    nearest_town: Punta Arenas
+    road: gravel
+    public_transport: no
+    wadeability: mixed
+    difficulty: easy
+    notes: "Reserva Nacional Laguna Parrillar, a ~50 km de Punta Arenas. Camino ripiado en buen estado. Laguna chica, vadeable en partes. Sin bote disponible. Senderos bien marcados. Acceso sencillo; buena opción para salida de medio día."
+    notes_en: "Laguna Parrillar National Reserve, ~50 km from Punta Arenas. Gravel road in good condition. Small lagoon, partly wadeable. No boat available. Well-marked trails. Easy access; good half-day option."
+
+  lago-pehoe:
+    nearest_town: Puerto Natales
+    road: gravel
+    public_transport: limited
+    wadeability: boat-recommended
+    difficulty: moderate
+    notes: "Dentro del Parque Torres del Paine. Acceso por camino del parque desde Puerto Natales. Lago icónico con vista a los Cuernos. Viento extremo; bote recomendado. Entrada al parque requerida. Alojamiento disponible en refugios y hoteles del parque."
+    notes_en: "Inside Torres del Paine National Park. Access via park road from Puerto Natales. Iconic lake with views of the Cuernos. Extreme wind; boat recommended. Park entrance required. Accommodation available at park refugios and hotels."
+
+  rio-rubens:
+    nearest_town: Puerto Natales
+    road: paved
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: easy
+    notes: "Cruza la Ruta 9 entre Puerto Natales y Punta Arenas. Acceso fácil desde el puente. Río de estepa, abierto y sin bosque — viento fuerte. Vadeable en toda su extensión. Sin servicios en el río; base en Puerto Natales o en estancias cercanas."
+    notes_en: "Crosses Ruta 9 between Puerto Natales and Punta Arenas. Easy access from the bridge. Steppe river, open and treeless — strong wind. Wadeable throughout. No services at the river; base in Puerto Natales or nearby estancias."
+
+  rio-grande-tdf:
+    nearest_town: Porvenir
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: large
+    difficulty: remote
+    notes: "Tierra del Fuego. Camino ripiado desde Porvenir hacia el sur. Río ancho de estepa. Vadeable con cuidado; profundo en pozones. Muy remoto, sin servicios. Clima extremo. Famoso en el lado argentino; el lado chileno es menos explorado."
+    notes_en: "Tierra del Fuego. Gravel road south from Porvenir. Wide steppe river. Wadeable with care; deep in pools. Very remote, no services. Extreme weather. Famous on the Argentine side; the Chilean side is less explored."
+
+  rio-penitente:
+    nearest_town: Puerto Natales
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Afluente del sistema Torres del Paine. Camino ripiado. Vadeable. Sin servicios; base en Puerto Natales."
+    notes_en: "Tributary of the Torres del Paine system. Gravel road. Wadeable. No services; base in Puerto Natales."

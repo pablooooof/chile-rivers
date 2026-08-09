@@ -16,7 +16,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 REGULATION_FILES = ["baseline.yaml", "metropolitana.yaml", "nuble-biobio.yaml",
-                    "araucania.yaml", "los-rios.yaml", "los-lagos.yaml", "aysen.yaml"]
+                    "araucania.yaml", "los-rios.yaml", "los-lagos.yaml", "aysen.yaml",
+                    "magallanes.yaml"]
 
 # A water-body rule that covers trout (resident species) defines the water's whole
 # regime; one that covers only migratory salmon merely supplements the general rule.
@@ -254,7 +255,7 @@ def main():
     (outdir / "meta.json").write_text(json.dumps({
         "season": season, "built": dt.date.today().isoformat(),
         "waterbodies": len(features),
-        "consolidated_source": "Sernapesca, Medidas de administración de pesca recreativa en Chile 2025-2026 (v20260522); Res. Ex. 2075/2025 DZ Los Lagos (D.O. 04-09-2025); Res. Ex. 3004/2024 DZ Aysén y modificaciones; Res. Ex. 04/2024 DZ La Araucanía-Los Ríos.",
+        "consolidated_source": "Sernapesca, Medidas de administración de pesca recreativa en Chile 2025-2026 (v20260522); Res. Ex. 2075/2025 DZ Los Lagos (D.O. 04-09-2025); Res. Ex. 3004/2024 DZ Aysén y modificaciones; Res. Ex. 04/2024 DZ La Araucanía-Los Ríos; Res. Ex. 1840/2024 y 1675/2025 DZ Magallanes.",
     }, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\nbuilt docs/data/waterbodies.geojson: {len(features)} features, season {season}")
     return 1 if errors else 0

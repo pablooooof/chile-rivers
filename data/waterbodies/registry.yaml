@@ -136,3 +136,18 @@ waterbodies:
   - { id: lago-riesco,           name: "Lago Riesco",      type: lake, region: aysen, osm_name: "Lago Riesco", bbox: [-45.60, -72.95, -45.15, -72.35], optional: true }
   - { id: lago-rosselot,         name: "Lago Rosselot",    type: lake, region: aysen, osm_name: "Lago Rosselot", optional: true }
   - { id: lago-verde,            name: "Lago Verde",       type: lake, region: aysen, osm_name: "Lago Verde", bbox: [-44.50, -72.15, -44.00, -71.55], optional: true }
+
+  # ── Magallanes ──────────────────────────────────────────────────────────────
+  - { id: rio-serrano,           name: "Río Serrano",      type: river, region: magallanes, osm_name: "Río Serrano", bbox: [-51.55, -73.35, -51.00, -72.70] }
+  - { id: lago-toro,             name: "Lago Toro",        type: lake,  region: magallanes, osm_name: "Lago del Toro", alt_names: ["Lago Toro"], bbox: [-51.60, -73.30, -51.05, -72.50] }
+  - { id: lago-sarmiento,        name: "Lago Sarmiento",   type: lake,  region: magallanes, osm_name: "Lago Sarmiento", alt_names: ["Lago Sarmiento de Gamboa", "Laguna Sarmiento"], bbox: [-51.15, -73.10, -50.90, -72.60] }
+  - { id: rio-rubens,            name: "Río Rubens",       type: river, region: magallanes, osm_name: "Río Rubens", bbox: [-52.30, -72.00, -51.80, -71.20], optional: true }
+  - { id: lago-fagnano,          name: "Lago Fagnano",     type: lake,  region: magallanes, osm_name: "Lago Fagnano", alt_names: ["Lago Cami", "Lago Kami"], bbox: [-54.75, -70.00, -54.35, -68.50] }
+  - { id: laguna-parrillar,      name: "Laguna Parrillar",  type: lake,  region: magallanes, osm_name: "Laguna El Parrillar", alt_names: ["Laguna Parrillar"], bbox: [-53.65, -71.35, -53.35, -70.85] }
+  - { id: lago-deseado,          name: "Lago Deseado",     type: lake,  region: magallanes, osm_name: "Lago Deseado", bbox: [-54.20, -69.70, -53.85, -69.20], optional: true }
+  - { id: lago-despreciado,      name: "Lago Despreciado", type: lake,  region: magallanes, osm_name: "Lago Despreciado", bbox: [-54.25, -69.80, -53.90, -69.30], optional: true }
+  - { id: rio-grande-tdf,        name: "Río Grande (Tierra del Fuego)", type: river, region: magallanes, osm_name: "Río Grande", bbox: [-54.30, -70.20, -53.60, -69.20], optional: true }
+  - { id: rio-blanco-tdf,        name: "Río Blanco (Tierra del Fuego)", type: river, region: magallanes, osm_name: "Río Blanco", bbox: [-54.30, -70.10, -53.80, -69.30], optional: true }
+  - { id: rio-garcia,            name: "Río García",       type: river, region: magallanes, osm_name: "Río García", bbox: [-54.30, -69.90, -53.90, -69.30], optional: true }
+  - { id: rio-penitente,         name: "Río Penitente",    type: river, region: magallanes, osm_name: "Río Penitente", bbox: [-51.50, -73.20, -51.10, -72.60], optional: true }
+  - { id: lago-pehoe,            name: "Lago Pehoé",       type: lake,  region: magallanes, osm_name: "Lago Pehoé", alt_names: ["Lago Pehoe"], bbox: [-51.15, -73.20, -50.90, -72.85], optional: true }

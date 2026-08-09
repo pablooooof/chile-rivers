@@ -233,15 +233,29 @@ def main():
 
     # NB: (area:...) misses large multipolygon lake relations — use a bbox over
     # central+southern Chile (south,west,north,east) instead; catches border lakes too.
+    # Split into two queries to avoid timeout: main Chile + Magallanes/Tierra del Fuego.
+    mag_lakes = [e for e in lakes if e["region"] == "magallanes"]
+    main_lakes = [e for e in lakes if e["region"] != "magallanes"]
     q_lakes = f"""[out:json][timeout:300][bbox:-49.7,-76.0,-32.8,-69.6];
 (
-  way["natural"="water"]["name"~"^({name_regex(lakes)})$"];
-  relation["natural"="water"]["name"~"^({name_regex(lakes)})$"];
+  way["natural"="water"]["name"~"^({name_regex(main_lakes)})$"];
+  relation["natural"="water"]["name"~"^({name_regex(main_lakes)})$"];
 );
 out geom;"""
     lakes_res = overpass(q_lakes)
-    print(f"  lakes: {len(lakes_res['elements'])} elements")
+    print(f"  lakes (main): {len(lakes_res['elements'])} elements")
     time.sleep(5)
+    if mag_lakes:
+        q_mag = f"""[out:json][timeout:300][bbox:-56.0,-76.0,-49.5,-68.0];
+(
+  way["natural"="water"]["name"~"^({name_regex(mag_lakes)})$"];
+  relation["natural"="water"]["name"~"^({name_regex(mag_lakes)})$"];
+);
+out geom;"""
+        mag_res = overpass(q_mag)
+        lakes_res["elements"] += mag_res["elements"]
+        print(f"  lakes (Magallanes): {len(mag_res['elements'])} elements")
+        time.sleep(5)
 
     q_waterways = f"""[out:json][timeout:300];
 (

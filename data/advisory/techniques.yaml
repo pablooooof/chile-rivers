@@ -147,6 +147,20 @@ presence:
   lago-riesco: [trucha-arcoiris, trucha-cafe]
   lago-rosselot: [trucha-arcoiris, trucha-cafe]
   lago-verde: [trucha-arcoiris, trucha-cafe, trucha-arroyo]
+  # Magallanes
+  rio-serrano: [trucha-cafe, trucha-arcoiris, salmon-chinook]
+  lago-toro: [trucha-cafe, trucha-arcoiris]
+  lago-sarmiento: [trucha-cafe, trucha-arcoiris]
+  lago-fagnano: [trucha-cafe, trucha-arcoiris, trucha-arroyo]
+  laguna-parrillar: [trucha-arroyo, trucha-arcoiris]
+  # lago-pehoe omitted — fishing not authorized inside PN Torres del Paine
+  rio-rubens: [trucha-cafe]
+  rio-grande-tdf: [trucha-cafe, trucha-arcoiris, trucha-arroyo]
+  lago-deseado: [trucha-cafe, trucha-arcoiris]
+  lago-despreciado: [trucha-cafe, trucha-arcoiris]
+  rio-blanco-tdf: [trucha-cafe, trucha-arcoiris]
+  rio-garcia: [trucha-cafe, trucha-arcoiris]
+  rio-penitente: [trucha-cafe, trucha-arcoiris]
 
 waterbodies:
   rio-petrohue:
@@ -604,6 +618,89 @@ waterbodies:
               spin: "Pejerrey al amanecer en bocas; carpa con masa/choclo.", spin_en: "Silverside at dawn at the inlets; carp on dough/corn." }
         3:  { fly: "Últimos carpeos del año con agua aún tibia.", fly_en: "Last carp outings while the water stays warm.",
               spin: "Pejerrey mejor con frío inicial de otoño.", spin_en: "Silverside picks up with the first autumn chill." }
+
+  # ── Magallanes ──────────────────────────────────────────────────────────────
+  rio-serrano:
+    - species: "Trucha café y arcoíris"
+      species_en: "Brown & rainbow trout"
+      months:
+        10: { fly: "Apertura: streamers grandes (Wooly Bugger, Zonker) con sink-tip; agua fría y alta de deshielo.", fly_en: "Opening: big streamers (Wooly Bugger, Zonker) on sink-tips; cold high snowmelt water.",
+              spin: "Cucharas 14-21 g plateadas; recogida lenta en pozones profundos.", spin_en: "14-21 g silver spoons; slow retrieve in the deep pools." }
+        1:  { fly: "Terrestres y mouse patterns al atardecer en el río bajo; truchas cafés grandes.", fly_en: "Terrestrials and mouse patterns at dusk on the lower river; big browns.",
+              spin: "Minnows 7-10 cm; recogida errática.", spin_en: "7-10 cm minnows; erratic retrieve." }
+        3:  { fly: "Otoño patagónico: streamers oscuros, café agresiva; swing clásico.", fly_en: "Patagonian autumn: dark streamers, aggressive browns; classic swing.",
+              spin: "Spoons cobre/naranja 14-21 g.", spin_en: "14-21 g copper/orange spoons." }
+    - species: "Salmón chinook (dic–feb)"
+      species_en: "Chinook salmon (Dec–Feb)"
+      months:
+        12: { fly: "Primeros chinook desde el Seno Última Esperanza; two-hand 8-9 con Intruders negro/azul, sink-tips.", fly_en: "First chinook from Última Esperanza Sound; two-hand 8-9 with black/blue Intruders, sink-tips.",
+              spin: "Spoons 30-40 g flúor/UV en pozones profundos.", spin_en: "30-40 g fluoro/UV spoons in deep pools." }
+        1:  { fly: "Corrida principal; peces frescos 10-20 kg. Swing profundo con tube flies y rabbit leeches.", fly_en: "Peak run; fresh 10-20 kg fish. Deep swing with tube flies and rabbit leeches.",
+              spin: "Spoons pesados peinando los pozones; primeras horas.", spin_en: "Heavy spoons combing the pools; early hours." }
+        2:  { fly: "Corrida continúa; chinook acumulándose en pozones. Intruders chartreuse/negro.", fly_en: "Run continues; chinook stacking in pools. Chartreuse/black Intruders.",
+              spin: "Spoons 30-40 g cobre/naranja.", spin_en: "30-40 g copper/orange spoons." }
+  lago-toro:
+    - species: "Trucha café y arcoíris"
+      species_en: "Brown & rainbow trout"
+      months:
+        11: { fly: "Orilla: streamers con línea hundida sobre veriles de piedra; truchas grandes patrullan las bahías.", fly_en: "Shore: streamers on sinking lines over rocky drop-offs; big trout patrol the bays.",
+              spin: "Cucharas 14-21 g lanzadas desde la orilla; bote recomendado.", spin_en: "14-21 g spoons cast from shore; boat recommended." }
+        1:  { fly: "Damseles y dragones bajo indicador en bahías protegidas del viento.", fly_en: "Damsels and dragons under an indicator in wind-sheltered bays.",
+              spin: "Minnows suspending cerca de bocas de esteros.", spin_en: "Suspending minnows near creek mouths." }
+        3:  { fly: "Streamers grandes al atardecer; cafés grandes en fondos de piedra.", fly_en: "Big streamers at dusk; big browns over rocky bottoms.",
+              spin: "Spoons pesados peinando las orillas.", spin_en: "Heavy spoons working the shoreline." }
+  lago-sarmiento:
+    - species: "Trucha café y arcoíris"
+      species_en: "Brown & rainbow trout"
+      months:
+        11: { fly: "Ninfas y scuds (#12-16) sobre formaciones de trombolitos; truchas alimentándose en bajos únicos.", fly_en: "Nymphs and scuds (#12-16) over thrombolite formations; trout feeding on unique shallows.",
+              spin: "Giratorias #2-3 desde orilla; el lago tiene formaciones rocosas únicas (trombolitos).", spin_en: "#2-3 spinners from shore; the lake has unique rock formations (thrombolites)." }
+        1:  { fly: "Secas y dry-dropper en calmas de mañana; agua cristalina — tippet fino.", fly_en: "Dries and dry-dropper on calm mornings; crystal-clear water — fine tippet.",
+              spin: "Lures chicos colores naturales; el agua clara exige presentación sutil.", spin_en: "Small natural-color lures; clear water demands subtle presentation." }
+        3:  { fly: "Streamers olive/blanco imitando pejerrey; línea intermedia.", fly_en: "Olive/white streamers imitating silverside; intermediate line.",
+              spin: "Minnows plateados 5-7 cm.", spin_en: "5-7 cm silver minnows." }
+  lago-fagnano:
+    - species: "Trucha café, arcoíris y de arroyo"
+      species_en: "Brown, rainbow & brook trout"
+      months:
+        11: { fly: "Streamers con sink-tip en los bordes; truchas grandes; viento de oeste constante.", fly_en: "Streamers on sink-tips along the edges; big trout; constant westerly wind.",
+              spin: "Cucharas 14-21 g; orilla norte más accesible del lado chileno.", spin_en: "14-21 g spoons; north shore more accessible on the Chilean side." }
+        1:  { fly: "Damseles y chironomidos; bahías resguardadas del viento.", fly_en: "Damsels and chironomids; wind-sheltered bays.",
+              spin: "Minnows suspending al amanecer.", spin_en: "Suspending minnows at dawn." }
+        3:  { fly: "Streamers grandes: el lago produce truchas cafés de trofeo.", fly_en: "Big streamers: the lake produces trophy browns.",
+              spin: "Spoons pesados plateados/cobre.", spin_en: "Heavy silver/copper spoons." }
+  laguna-parrillar:
+    - species: "Trucha de arroyo y arcoíris"
+      species_en: "Brook & rainbow trout"
+      months:
+        10: { fly: "Apertura: ninfas chicas (#14-18) bajo indicador; truchas de arroyo en la orilla entre lenga.", fly_en: "Opening: small nymphs (#14-18) under an indicator; brookies along the lenga-forested shore.",
+              spin: "Micro-giratorias #1-2; peces chicos pero abundantes.", spin_en: "Micro-spinners #1-2; small but plentiful fish." }
+        12: { fly: "Secas atractoras (Royal Wulff, Elk-hair Caddis); la brookies pelean con explosividad.", fly_en: "Attractor dries (Royal Wulff, Elk-hair Caddis); brookies fight explosively.",
+              spin: "Micro-spoons 3-5 g.", spin_en: "3-5 g micro-spoons." }
+        2:  { fly: "Cierre temprano (28 feb) — aprovechar las últimas semanas con terrestres y ninfas.", fly_en: "Early closure (Feb 28) — make the most of the last weeks with terrestrials and nymphs.",
+              spin: "Micro-lures en pozones sombreados.", spin_en: "Micro-lures in shaded pools." }
+  # lago-pehoe: Pesca NO autorizada dentro del PN Torres del Paine (solo Río Serrano y Lago Toro).
+  # lago-pehoe: Fishing NOT permitted inside Torres del Paine NP (only Río Serrano and Lago Toro authorized).
+  rio-rubens:
+    - species: "Trucha café"
+      species_en: "Brown trout"
+      months:
+        10: { fly: "Ninfas pesadas en los pozones de la estepa; río lento y abierto, mucho viento.", fly_en: "Heavy nymphs in the steppe pools; slow open river, very windy.",
+              spin: "Giratorias #2-3; acceso fácil desde la ruta.", spin_en: "#2-3 spinners; easy road access." }
+        12: { fly: "Secas y terrestres en las correderas; truchas cafés selectivas.", fly_en: "Dries and terrestrials in the riffles; selective browns.",
+              spin: "Lures colores naturales; recogida lenta.", spin_en: "Natural-color lures; slow retrieve." }
+        3:  { fly: "Streamers olive/negro; cafés grandes pre-desove.", fly_en: "Olive/black streamers; big pre-spawn browns.",
+              spin: "Spoons cobre peinando pozones profundos.", spin_en: "Copper spoons working deep pools." }
+  rio-grande-tdf:
+    - species: "Trucha café y arcoíris"
+      species_en: "Brown & rainbow trout"
+      months:
+        10: { fly: "Streamers grandes y ninfas pesadas; río ancho de estepa fueguina.", fly_en: "Big streamers and heavy nymphs; wide Fuegian steppe river.",
+              spin: "Cucharas 14-21 g en los pozones; truchas cafés grandes.", spin_en: "14-21 g spoons in the pools; big browns." }
+        12: { fly: "Secas y mouse patterns al atardecer — la espera vale la pena para cafés trofeo.", fly_en: "Dries and mouse patterns at dusk — worth the wait for trophy browns.",
+              spin: "Minnows 7-10 cm; recogida errática.", spin_en: "7-10 cm minnows; erratic retrieve." }
+        3:  { fly: "Streamers de otoño; swing profundo en las curvas.", fly_en: "Autumn streamers; deep swings through the bends.",
+              spin: "Spoons pesados cobre/naranja.", spin_en: "Heavy copper/orange spoons." }
 
 general:
   - species: "Trucha arcoíris y trucha café"

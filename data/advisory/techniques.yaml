@@ -13,6 +13,9 @@ species_names:
   perca-trucha: "Percatrucha"
   pejerrey-argentino: "Pejerrey argentino"
   carpa: "Carpa"
+  trucha-arroyo: "Trucha de arroyo"
+  pejerrey-chileno: "Pejerrey chileno"
+  pez-gato: "Pez gato americano"
 
 species_names_en:
   trucha-arcoiris: "Rainbow trout"
@@ -24,11 +27,14 @@ species_names_en:
   perca-trucha: "Creole perch"
   pejerrey-argentino: "Argentine silverside"
   carpa: "Carp"
+  trucha-arroyo: "Brook trout"
+  pejerrey-chileno: "Chilean silverside"
+  pez-gato: "Brown bullhead catfish"
 
 presence:
   # Metropolitana
-  rio-maipo: [trucha-arcoiris, trucha-cafe, carpa]
-  rio-mapocho: [trucha-arcoiris]
+  rio-maipo: [trucha-arcoiris, trucha-cafe, carpa, pejerrey-chileno]
+  rio-mapocho: [trucha-arcoiris, pejerrey-chileno]
   rio-colorado-maipo: [trucha-arcoiris]
   rio-yeso: [trucha-arcoiris]
   rio-volcan-maipo: [trucha-arcoiris]
@@ -40,32 +46,32 @@ presence:
   rio-cachapoal: [trucha-arcoiris, trucha-cafe]
   rio-tinguiririca: [trucha-arcoiris, trucha-cafe]
   rio-pangal: [trucha-arcoiris]
-  lago-rapel: [pejerrey-argentino, carpa]
+  lago-rapel: [pejerrey-argentino, carpa, pez-gato]
   # Maule — trucha en la precordillera; sin salmones (fuera de rango)
-  rio-maule: [trucha-arcoiris, trucha-cafe]
+  rio-maule: [trucha-arcoiris, trucha-cafe, pejerrey-chileno, perca-trucha]
   rio-melado: [trucha-arcoiris, trucha-cafe]
   rio-achibueno: [trucha-arcoiris, trucha-cafe]
   rio-ancoa: [trucha-arcoiris]
   rio-longavi: [trucha-arcoiris, trucha-cafe]
   rio-claro-maule: [trucha-arcoiris]
   laguna-del-maule: [trucha-arcoiris]
-  embalse-colbun: [trucha-arcoiris, pejerrey-argentino]
+  embalse-colbun: [trucha-arcoiris, pejerrey-argentino, pez-gato, perca-trucha]
   # Ñuble — trucha precordillerana; sin salmones establecidos
-  rio-nuble: [trucha-arcoiris, trucha-cafe]
-  rio-itata: [trucha-arcoiris, trucha-cafe]
+  rio-nuble: [trucha-arcoiris, trucha-cafe, pejerrey-chileno]
+  rio-itata: [trucha-arcoiris, trucha-cafe, pejerrey-chileno]
   rio-diguillin: [trucha-arcoiris, trucha-cafe]
   # Biobío — chinook con registros (vagrantes) en el Biobío; trucha en el resto
-  rio-biobio: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-biobio: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha, pejerrey-chileno]
   rio-laja: [trucha-arcoiris, trucha-cafe]
   laguna-del-laja: [trucha-arcoiris, trucha-cafe]
   rio-duqueco: [trucha-arcoiris, trucha-cafe]
   rio-queuco: [trucha-arcoiris, trucha-cafe]
   lago-lleulleu: [pejerrey-argentino, trucha-arcoiris]
   # La Araucanía
-  lago-villarrica: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  lago-villarrica: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
   lago-caburgua: [trucha-arcoiris, trucha-cafe]
   lago-colico: [trucha-arcoiris, trucha-cafe]
-  rio-tolten: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-tolten: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
   rio-trancura: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-liucura: [trucha-arcoiris, trucha-cafe]
   rio-allipen: [trucha-arcoiris, trucha-cafe, salmon-chinook]
@@ -74,49 +80,49 @@ presence:
   rio-cautin: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-quepe: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   # Los Ríos
-  lago-calafquen: [trucha-arcoiris, trucha-cafe]
-  lago-panguipulli: [trucha-arcoiris, trucha-cafe]
-  lago-rinihue: [trucha-arcoiris, trucha-cafe]
+  lago-calafquen: [trucha-arcoiris, trucha-cafe, perca-trucha]
+  lago-panguipulli: [trucha-arcoiris, trucha-cafe, perca-trucha]
+  lago-rinihue: [trucha-arcoiris, trucha-cafe, perca-trucha]
   lago-pellaifa: [trucha-arcoiris, trucha-cafe]
   lago-neltume: [trucha-arcoiris, trucha-cafe]
   lago-pirihueico: [trucha-arcoiris, trucha-cafe]
-  lago-ranco: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  lago-ranco: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
   lago-maihue: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   lago-huishue: [trucha-arcoiris, trucha-cafe]
   lago-gris: [trucha-arcoiris, trucha-cafe]
   rio-calcurrupe: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-conaripe: [trucha-arcoiris, trucha-cafe, salmon-coho, salmon-salar, salmon-chinook]
   rio-llanquihue-los-rios: [trucha-arcoiris, trucha-cafe, salmon-coho, salmon-salar, salmon-chinook]
-  rio-san-pedro: [trucha-arcoiris, trucha-cafe, salmon-chinook]
-  rio-calle-calle: [trucha-arcoiris, trucha-cafe, salmon-chinook]
-  rio-valdivia: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-san-pedro: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
+  rio-calle-calle: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
+  rio-valdivia: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
   rio-cruces: [trucha-arcoiris, trucha-cafe]
-  rio-bueno: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-bueno: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
   rio-fuy: [trucha-arcoiris, trucha-cafe]
   rio-enco: [trucha-arcoiris, trucha-cafe]
   rio-cholchol-ranco: [trucha-arcoiris, trucha-cafe]
   rio-blanco-ranco: [trucha-arcoiris, trucha-cafe]
   # Los Lagos
-  lago-llanquihue: [trucha-arcoiris, trucha-cafe, salmon-salar, salmon-coho, salmon-chinook]
-  lago-rupanco: [trucha-arcoiris, trucha-cafe, salmon-salar, salmon-coho]
-  lago-puyehue: [trucha-arcoiris, trucha-cafe, salmon-salar, salmon-coho]
-  lago-todos-los-santos: [trucha-arcoiris, trucha-cafe]
+  lago-llanquihue: [trucha-arcoiris, trucha-cafe, salmon-salar, salmon-coho, salmon-chinook, perca-trucha]
+  lago-rupanco: [trucha-arcoiris, trucha-cafe, salmon-salar, salmon-coho, perca-trucha]
+  lago-puyehue: [trucha-arcoiris, trucha-cafe, salmon-salar, salmon-coho, perca-trucha]
+  lago-todos-los-santos: [trucha-arcoiris, trucha-cafe, perca-trucha, trucha-arroyo]
   lago-chapo: [trucha-arcoiris, trucha-cafe]
   lago-yelcho: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   lago-tagua-tagua: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-maullin: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho]
   rio-rahue: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-pilmaiquen: [trucha-arcoiris, trucha-cafe, salmon-chinook]
-  rio-puelo: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho, salmon-salar]
+  rio-puelo: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho, salmon-salar, trucha-arroyo]
   rio-ventisquero: [trucha-arcoiris, trucha-cafe]
-  rio-manso: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-manso: [trucha-arcoiris, trucha-cafe, salmon-chinook, perca-trucha]
   rio-traidor: [trucha-arcoiris, trucha-cafe]
   rio-puelo-chico: [trucha-arcoiris, trucha-cafe]
   rio-petrohue: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho, salmon-salar]
   rio-pescado: [trucha-arcoiris, trucha-cafe, salmon-coho]
   rio-sur: [trucha-arcoiris, trucha-cafe, salmon-coho]
-  rio-futaleufu: [trucha-arcoiris, trucha-cafe, salmon-chinook]
-  rio-palena: [trucha-arcoiris, trucha-cafe, salmon-chinook]
+  rio-futaleufu: [trucha-arcoiris, trucha-cafe, salmon-chinook, trucha-arroyo]
+  rio-palena: [trucha-arcoiris, trucha-cafe, salmon-chinook, trucha-arroyo]
   rio-yelcho: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho]
   rio-espolon: [trucha-arcoiris, trucha-cafe]
   laguna-candelaria: [trucha-arcoiris, trucha-cafe]
@@ -126,12 +132,12 @@ presence:
   rio-manihuales: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-nirehuao: [trucha-cafe, salmon-chinook]
   rio-cisnes: [trucha-arcoiris, trucha-cafe, salmon-chinook]
-  rio-baker: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-japones]
+  rio-baker: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-japones, perca-trucha]
   rio-ibanez: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-cochrane: [trucha-arcoiris, trucha-cafe]
   rio-jeinimeni: [trucha-arcoiris, trucha-cafe]
-  lago-general-carrera: [trucha-arcoiris, trucha-cafe, salmon-japones]
-  lago-cochrane: [trucha-arcoiris, trucha-cafe]
+  lago-general-carrera: [trucha-arcoiris, trucha-cafe, salmon-japones, perca-trucha]
+  lago-cochrane: [trucha-arcoiris, trucha-cafe, perca-trucha]
   lago-bertrand: [trucha-arcoiris, trucha-cafe]
   lago-elizalde: [trucha-arcoiris, trucha-cafe]
   lago-la-paloma: [trucha-arcoiris, trucha-cafe]
@@ -139,7 +145,7 @@ presence:
   lago-frio: [trucha-arcoiris]
   lago-riesco: [trucha-arcoiris, trucha-cafe]
   lago-rosselot: [trucha-arcoiris, trucha-cafe]
-  lago-verde: [trucha-arcoiris, trucha-cafe]
+  lago-verde: [trucha-arcoiris, trucha-cafe, trucha-arroyo]
 
 waterbodies:
   rio-petrohue:
@@ -649,3 +655,55 @@ general:
             spin: "Giratorias con pluma naranja; spoons cobre.", spin_en: "Orange-feather spinners; copper spoons." }
       4:  { fly: "Última ventana; estuarios.", fly_en: "Last window; the estuaries.",
             spin: "Spoons pesados en agua salobre.", spin_en: "Heavy spoons in brackish water." }
+  - species: "Trucha de arroyo"
+    species_en: "Brook trout"
+    applies: [trucha-arroyo]
+    months:
+      11: { fly: "Arroyos remotos post-deshielo: ninfas chicas (#14-18) en pocket water; agua muy pura y fría.", fly_en: "Remote post-snowmelt streams: small nymphs (#14-18) in pocket water; very pure cold water.",
+            spin: "Micro-giratorias #1-2; la especie vive en arroyos pequeños de difícil acceso.", spin_en: "Micro-spinners #1-2; the species inhabits small hard-to-reach streams." }
+      12: { fly: "Secas atractoras chicas (Royal Wulff, Elk-hair Caddis); pelean con explosividad.", fly_en: "Small attractor dries (Royal Wulff, Elk-hair Caddis); explosive fighters.",
+            spin: "Micro-spoons 3-7 g; lances cortos río arriba.", spin_en: "3-7 g micro-spoons; short upstream casts." }
+      1:  { fly: "Terrestres chicos (hormiga, escarabajo #14-16); los ejemplares rara vez superan 1 kg.", fly_en: "Small terrestrials (ant, beetle #14-16); fish rarely exceed 1 kg.",
+            spin: "Lures ultralivianos en pozones de sombra.", spin_en: "Ultra-light lures in shaded pools." }
+      2:  { fly: "Dry-dropper fino; buscar sombra de bosque nativo (troncos sumergidos).", fly_en: "Fine dry-dropper; look for native-forest shade (submerged logs).",
+            spin: "Giratorias #1 cobre; recogida lenta.", spin_en: "#1 copper spinners; slow retrieve." }
+      3:  { fly: "Streamers chicos olive/negro: las arroyo se ponen agresivas en otoño.", fly_en: "Small olive/black streamers: brookies turn aggressive in autumn.",
+            spin: "Micro-minnows; colores otoño.", spin_en: "Micro-minnows; autumn colors." }
+  - species: "Percatrucha (nativa)"
+    species_en: "Creole perch (native)"
+    applies: [perca-trucha]
+    months:
+      10: { fly: "Ninfas de fondo (stonefly, scud) con línea hundida en lagos; fondo pedregoso.", fly_en: "Bottom nymphs (stonefly, scud) on sinking lines in lakes; rocky bottoms.",
+            spin: "Lures ultralivianos tipo vinyl jig; recogida lenta cerca del fondo.", spin_en: "Ultra-light vinyl jig lures; slow retrieves near the bottom." }
+      11: { fly: "Streamers chicos olive/natural imitando crustáceos (Aegla) en orillas de lagos.", fly_en: "Small olive/natural streamers imitating crustaceans (Aegla) along lake shores.",
+            spin: "Micro-spoons 3-7 g en bahías con fondo de piedras.", spin_en: "3-7 g micro-spoons in rocky-bottom bays." }
+      12: { fly: "Damseles y dragones en zonas litorales; tippet fino — boca chica.", fly_en: "Damsels and dragon nymphs in the littoral zone; fine tippet — small mouth.",
+            spin: "Giratorias #1-2 desde orilla; peces solitarios cerca de estructura.", spin_en: "#1-2 spinners from shore; solitary fish near structure." }
+      1:  { fly: "Ninfas de crustáceo bajo indicador en bahías calmas.", fly_en: "Crustacean nymphs under an indicator in calm bays.",
+            spin: "Jigs chicos con pausa larga.", spin_en: "Small jigs with long pauses." }
+      2:  { fly: "Atardecer en lagos: damseles y chironomidos sobre fondos limpios.", fly_en: "Dusk on lakes: damsels and chironomids over clean bottoms.",
+            spin: "Recogida ultra-lenta; la perca no persigue presas rápidas.", spin_en: "Ultra-slow retrieve; perch don't chase fast prey." }
+      3:  { fly: "Streamers de crustáceo con strip lento; cafés otoñales.", fly_en: "Crustacean streamers with slow strips; autumn colors.",
+            spin: "Micro-jigs cobre/oliva.", spin_en: "Copper/olive micro-jigs." }
+  - species: "Pejerrey chileno (nativo)"
+    species_en: "Chilean silverside (native)"
+    applies: [pejerrey-chileno]
+    months:
+      12: { fly: "Ninfas chicas (#16-20) en cardúmenes de pozones y remansos; presentación sutil.", fly_en: "Small nymphs (#16-20) drifted through the schools in pools and backwaters; subtle presentation.",
+            spin: "Micro-giratorias #0-1; aparejos livianos (tippet 5-6X).", spin_en: "Micro-spinners #0-1; light tackle (5-6X tippet)." }
+      1:  { fly: "Terrestres chicos (hormiga #18-20) al atardecer; cardúmenes en correderas.", fly_en: "Small terrestrials (ant #18-20) at dusk; schools in the riffles.",
+            spin: "Micro-spoons 1-3 g; lances aguas arriba.", spin_en: "1-3 g micro-spoons; upstream casts." }
+      2:  { fly: "Secas paracaídas #18-20 en remansos sombreados; cardúmenes selectivos.", fly_en: "#18-20 parachute dries in shaded backwaters; selective schools.",
+            spin: "Lures ultralivianos; amanecer y atardecer.", spin_en: "Ultra-light lures; dawn and dusk." }
+      3:  { fly: "Ninfas y streamers chicos; otoño es buena época antes de la veda (15 ago).", fly_en: "Nymphs and small streamers; autumn is prime before the closed season (Aug 15).",
+            spin: "Giratorias #0-1 con recogida media.", spin_en: "#0-1 spinners with medium retrieve." }
+  - species: "Pez gato americano"
+    species_en: "Brown bullhead catfish"
+    applies: [pez-gato]
+    months:
+      9:  { fly: "Ninfas pesadas y streamers de fondo en embalses templados; línea hundida, strip lento.", fly_en: "Heavy bottom nymphs and streamers in warm reservoirs; sinking line, slow strip.",
+            spin: "Aparejos de fondo con carnada natural (lombriz, maíz); embalses y ríos de llanura.", spin_en: "Bottom rigs with natural bait (worm, corn); reservoirs and lowland rivers." }
+      12: { fly: "Woolly Bugger negro/olive al fondo en bahías fangosas; actividad nocturna.", fly_en: "Black/olive Woolly Bugger on the bottom in muddy bays; nocturnal activity.",
+            spin: "Carnada de fondo al atardecer/noche; prefiere aguas tibias y lentas.", spin_en: "Bottom bait at dusk/night; prefers warm slow water." }
+      2:  { fly: "Streamers oscuros con ojos de plomo; fondos blandos de embalses.", fly_en: "Dark streamers with lead eyes; soft reservoir bottoms.",
+            spin: "Aparejos de fondo; la especie tolera aguas poco oxigenadas.", spin_en: "Bottom rigs; the species tolerates poorly oxygenated water." }

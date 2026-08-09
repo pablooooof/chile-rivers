@@ -98,6 +98,40 @@
   .tp-popup .tp-book { display: inline-block; margin-top: 8px; background: var(--ink); color: #fff; border-radius: 6px; padding: 5px 12px; font-size: 12px; text-decoration: none; font-weight: 600; }
   .tp-popup .tp-book:hover { opacity: .85; }
   .tp-popup .tp-airlines { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .search-wrap { position: relative; margin-top: 8px; }
+  .search-wrap input {
+    width: 100%; padding: 6px 10px 6px 26px; border: 1px solid var(--line);
+    border-radius: 7px; font-size: 13px; background: #fff; color: var(--ink);
+    outline: none; font-family: inherit;
+  }
+  .search-wrap input:focus { border-color: #1e88e5; box-shadow: 0 0 0 2px rgba(30,136,229,.15); }
+  .search-wrap .si { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--muted); pointer-events: none; }
+  .search-results {
+    position: absolute; top: calc(100% + 2px); left: 0; right: 0; z-index: 10;
+    background: var(--panel-bg); border: 1px solid var(--line);
+    border-radius: 7px; box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    max-height: 220px; overflow-y: auto; display: none;
+  }
+  .search-results.open { display: block; }
+  .sr-item { padding: 6px 10px; cursor: pointer; font-size: 12.5px; border-bottom: 1px solid var(--line); }
+  .sr-item:last-child { border-bottom: 0; }
+  .sr-item:hover, .sr-item.active { background: #e3f1ff; }
+  .sr-name { font-weight: 600; color: var(--ink); }
+  .sr-sub { color: var(--muted); font-size: 11px; }
+  .filter-bar { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .fbtn {
+    border: 1px solid var(--line); background: #fff; border-radius: 6px;
+    padding: 3px 8px; font-size: 11px; cursor: pointer; color: var(--muted);
+    font-weight: 600; font-family: inherit;
+  }
+  .fbtn.on { background: #1e88e5; color: #fff; border-color: #1e88e5; }
+  .sp-chips { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 3px; }
+  .sp-chip {
+    border: 1px solid var(--line); border-radius: 10px; padding: 2px 8px;
+    font-size: 10.5px; cursor: pointer; background: #fff; color: var(--muted);
+    user-select: none; font-family: inherit;
+  }
+  .sp-chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 </style>
 </head>
 <body>
@@ -106,7 +140,16 @@
   <button id="btn-lang"></button>
   <h1 id="hdr-title"></h1>
   <p id="season-line"></p>
+  <div class="search-wrap">
+    <span class="si">&#128269;</span>
+    <input type="text" id="search-input" autocomplete="off">
+    <div class="search-results" id="search-results"></div>
+  </div>
   <div class="legend" id="legend"></div>
+  <div class="filter-bar">
+    <button class="fbtn" id="btn-open-now" onclick="toggleOpenNow()"></button>
+  </div>
+  <div class="sp-chips" id="species-chips"></div>
   <div class="transport-toggles">
     <button id="btn-bus" onclick="toggleTransport('bus')"><span class="dot" style="background:#e65100"></span><span id="lbl-bus"></span></button>
     <button id="btn-air" onclick="toggleTransport('airport')"><span class="dot" style="background:#6a1b9a"></span><span id="lbl-air"></span></button>
@@ -158,6 +201,8 @@ const I18N = {
     tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
     tpPriceFmt: (min, max) => min === 0 ? "—" : `$${(min/1000).toFixed(0)}k – $${(max/1000).toFixed(0)}k CLP`,
     tpOrigin: "Santiago",
+    searchPlaceholder: "Buscar río o lago...",
+    openNow: "Abiertos ahora",
   },
   en: {
     title: "🎣 Recreational fishing — Chile",
@@ -196,6 +241,8 @@ const I18N = {
     tpHours: h => h === 0 ? "—" : h < 1 ? `${Math.round(h * 60)} min` : `~${h}h`,
     tpPriceFmt: (min, max) => min === 0 ? "—" : `$${(min/1000).toFixed(0)}k – $${(max/1000).toFixed(0)}k CLP`,
     tpOrigin: "Santiago",
+    searchPlaceholder: "Search river or lake...",
+    openNow: "Open now",
   }
 };
 let lang = localStorage.getItem("lang") || "es";
@@ -283,6 +330,9 @@ let lastProps = null;
 let TRANSPORT = null;
 let tpPopup = null;
 const tpState = { bus: false, airport: false };
+let FEATURES = [];
+let filterOpenNow = false;
+let filterSpecies = null;
 
 map.on("load", async () => {
   const [data, meta, adv, transportData] = await Promise.all([
@@ -294,6 +344,16 @@ map.on("load", async () => {
   if (adv) ADV = Object.assign({ general: [], waterbodies: {}, presence: {}, species_names: {}, species_names_en: {} }, adv);
   META = meta;
   applyLang();
+
+  const today = new Date().toISOString().slice(0, 10);
+  FEATURES = data.features;
+  for (const f of FEATURES) {
+    const ph = typeof f.properties.phases === "string"
+      ? JSON.parse(f.properties.phases) : f.properties.phases;
+    f.properties._open = Array.isArray(ph) && ph.some(p => p.s <= today && today <= p.e);
+    const pres = (ADV.presence || {})[f.properties.id] || [];
+    f.properties._species = pres.length ? "|" + pres.join("|") + "|" : "";
+  }
 
   map.addSource("wb", { type: "geojson", data, promoteId: "id" });
   map.addLayer({ id: "wb-fill", type: "fill", source: "wb",
@@ -401,8 +461,12 @@ map.on("load", async () => {
     map.on("click", layer, e => {
       selectFeature(e.features[0].properties.id);
       showPanel(e.features[0].properties);
+      updateHash(e.features[0].properties.id);
     });
   }
+  initSearch();
+  buildSpeciesChips();
+  handleHash();
 });
 
 function selectFeature(id) {
@@ -416,6 +480,134 @@ function closePanel() {
   map.setFilter("sel-casing", NONE);
   map.setFilter("sel-line", NONE);
   lastProps = null;
+  history.replaceState(null, "", location.pathname + location.search);
+}
+
+// ── search & filters ───────────────────────────────────────────────────────
+const normalize = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+function initSearch() {
+  const input = document.getElementById("search-input");
+  const results = document.getElementById("search-results");
+
+  input.addEventListener("input", () => {
+    const q = normalize(input.value.trim());
+    if (q.length < 2) { results.classList.remove("open"); return; }
+    const t = T();
+    const matches = FEATURES
+      .filter(f => normalize(f.properties.name).includes(q))
+      .slice(0, 8);
+    if (!matches.length) { results.classList.remove("open"); return; }
+    results.innerHTML = matches.map((f, i) => {
+      const p = f.properties;
+      const type = p.type === "lake" ? t.lake : t.river;
+      const region = t.regions[p.region] || p.region;
+      return `<div class="sr-item${i === 0 ? " active" : ""}" data-id="${p.id}">
+        <div class="sr-name">${p.name}</div>
+        <div class="sr-sub">${type} &middot; ${region}</div></div>`;
+    }).join("");
+    results.classList.add("open");
+  });
+
+  input.addEventListener("keydown", e => {
+    const items = results.querySelectorAll(".sr-item");
+    if (!items.length) return;
+    const active = results.querySelector(".sr-item.active");
+    let idx = Array.from(items).indexOf(active);
+    if (e.key === "ArrowDown") { e.preventDefault(); idx = Math.min(idx + 1, items.length - 1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); idx = Math.max(idx - 1, 0); }
+    else if (e.key === "Enter" && active) { e.preventDefault(); pickSearchResult(active.dataset.id); return; }
+    else if (e.key === "Escape") { results.classList.remove("open"); input.blur(); return; }
+    else return;
+    items.forEach(i => i.classList.remove("active"));
+    items[idx].classList.add("active");
+    items[idx].scrollIntoView({ block: "nearest" });
+  });
+
+  results.addEventListener("click", e => {
+    const item = e.target.closest(".sr-item");
+    if (item) pickSearchResult(item.dataset.id);
+  });
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".search-wrap")) results.classList.remove("open");
+  });
+}
+
+function pickSearchResult(id) {
+  document.getElementById("search-results").classList.remove("open");
+  document.getElementById("search-input").value = "";
+  const feature = FEATURES.find(f => f.properties.id === id);
+  if (!feature) return;
+  flyToFeature(feature);
+  selectFeature(id);
+  updateHash(id);
+  showPanel(feature.properties);
+}
+
+function flyToFeature(feature) {
+  const bounds = new maplibregl.LngLatBounds();
+  const extend = c => { if (typeof c[0] === "number") bounds.extend(c); else c.forEach(extend); };
+  extend(feature.geometry.coordinates);
+  map.fitBounds(bounds, { padding: 100, maxZoom: 12 });
+}
+
+function toggleOpenNow() {
+  filterOpenNow = !filterOpenNow;
+  document.getElementById("btn-open-now").classList.toggle("on", filterOpenNow);
+  applyFilters();
+}
+
+function setSpeciesFilter(species) {
+  filterSpecies = filterSpecies === species ? null : species;
+  buildSpeciesChips();
+  applyFilters();
+}
+
+function buildSpeciesChips() {
+  const t = T();
+  const allSpecies = new Set();
+  for (const sp of Object.values(ADV.presence || {}))
+    for (const s of sp) allSpecies.add(s);
+  const container = document.getElementById("species-chips");
+  if (!allSpecies.size) { container.style.display = "none"; return; }
+  container.style.display = "";
+  const sorted = [...allSpecies].sort();
+  container.innerHTML =
+    `<span class="sp-chip${!filterSpecies ? " on" : ""}" onclick="setSpeciesFilter(null)">${t.all}</span>` +
+    sorted.map(s => `<span class="sp-chip${filterSpecies === s ? " on" : ""}"
+      onclick="setSpeciesFilter('${s}')">${speciesName(s)}</span>`).join("");
+}
+
+function applyFilters() {
+  const conditions = [];
+  if (filterOpenNow) conditions.push(["==", ["get", "_open"], true]);
+  if (filterSpecies) conditions.push(["in", "|" + filterSpecies + "|", ["get", "_species"]]);
+  const polyFilter = conditions.length
+    ? ["all", ["==", ["geometry-type"], "Polygon"], ...conditions]
+    : ["==", ["geometry-type"], "Polygon"];
+  const lineFilter = conditions.length
+    ? ["all", ["==", ["geometry-type"], "LineString"], ...conditions]
+    : ["==", ["geometry-type"], "LineString"];
+  map.setFilter("wb-fill", polyFilter);
+  map.setFilter("wb-outline", polyFilter);
+  map.setFilter("wb-river", lineFilter);
+}
+
+function updateHash(id) {
+  history.replaceState(null, "", "#" + id);
+}
+
+function handleHash() {
+  const hash = location.hash.slice(1);
+  if (!hash) return;
+  const feature = FEATURES.find(f => f.properties.id === hash);
+  if (!feature) return;
+  setTimeout(() => {
+    flyToFeature(feature);
+    selectFeature(hash);
+    showPanel(feature.properties);
+  }, 300);
 }
 
 // ── transport layer ────────────────────────────────────────────────────────
@@ -490,6 +682,9 @@ function applyLang() {
   sat.textContent = sat.dataset.on ? t.mapBtn : t.sat;
   document.getElementById("lbl-bus").textContent = t.busBtn;
   document.getElementById("lbl-air").textContent = t.airBtn;
+  document.getElementById("search-input").placeholder = t.searchPlaceholder;
+  document.getElementById("btn-open-now").textContent = t.openNow;
+  buildSpeciesChips();
   if (lastProps) showPanel(lastProps);
 }
 document.getElementById("btn-lang").addEventListener("click", () => {
@@ -559,14 +754,16 @@ function statusNow(phases) {
   return { cls: "closed", txt: t.closed };
 }
 
+const jp = v => typeof v === "string" ? JSON.parse(v) : (v || []);
+
 function showPanel(props) {
   const t = T();
   lastProps = props;
-  const phases = JSON.parse(props.phases);
-  const sources = JSON.parse(props.sources);
-  const veda = JSON.parse(props.veda || "[]");
-  const gear = JSON.parse(props.gear || "[]");
-  const prohib = JSON.parse(props.prohibitions || "[]");
+  const phases = jp(props.phases);
+  const sources = jp(props.sources);
+  const veda = jp(props.veda);
+  const gear = jp(props.gear);
+  const prohib = jp(props.prohibitions);
   const st = statusNow(phases);
   const levelBadge = t.badges[props.rule_level] || "";
   let advHtml = "";

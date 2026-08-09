@@ -9,7 +9,7 @@
 <style>
   :root {
     --panel-bg: #ffffff; --ink: #1c2430; --muted: #5b6774; --line: #e3e8ee;
-    --sep: #00c853; --oct: #7cb342; --nov-early: #f9a825; --nov: #1e88e5; --other: #9e9e9e;
+    --sep: #e91e90; --oct: #7cb342; --nov-early: #f9a825; --nov: #1e88e5; --other: #9e9e9e;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); }
@@ -299,7 +299,7 @@ function trLabel(label) {
 }
 
 // ── map ─────────────────────────────────────────────────────────────────────
-const COLORS = { "sep": "#00c853", "oct": "#7cb342", "nov-early": "#f9a825", "nov": "#1e88e5", "other": "#9e9e9e" };
+const COLORS = { "sep": "#e91e90", "oct": "#7cb342", "nov-early": "#f9a825", "nov": "#1e88e5", "other": "#9e9e9e" };
 const colorExpr = ["match", ["get", "cat"],
   "sep", COLORS["sep"], "oct", COLORS["oct"], "nov-early", COLORS["nov-early"], "nov", COLORS["nov"],
   COLORS["other"]];

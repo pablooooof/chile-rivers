@@ -97,6 +97,8 @@ def main():
     rules = load_rules()
     reg_ids = {e["id"] for e in registry}
     adv = yaml.safe_load((ROOT / "data/advisory/techniques.yaml").read_text(encoding="utf-8")) or {}
+    access_path = ROOT / "data/advisory/access.yaml"
+    access = (yaml.safe_load(access_path.read_text(encoding="utf-8")) or {}).get("waterbodies", {}) if access_path.exists() else {}
     presence = adv.get("presence") or {}
     sp_names = adv.get("species_names") or {}
 
@@ -240,10 +242,14 @@ def main():
     unknown = set(presence) - reg_ids
     if unknown:
         print("advisory presence for unknown waterbodies:", ", ".join(sorted(unknown)))
+    unknown_access = set(access) - reg_ids
+    if unknown_access:
+        print("access info for unknown waterbodies:", ", ".join(sorted(unknown_access)))
     (outdir / "advisory.json").write_text(json.dumps(
         {"general": adv.get("general") or [], "waterbodies": adv.get("waterbodies") or {},
          "presence": adv.get("presence") or {}, "species_names": adv.get("species_names") or {},
-         "species_names_en": adv.get("species_names_en") or {}},
+         "species_names_en": adv.get("species_names_en") or {},
+         "access": access},
         ensure_ascii=False), encoding="utf-8")
     (outdir / "meta.json").write_text(json.dumps({
         "season": season, "built": dt.date.today().isoformat(),

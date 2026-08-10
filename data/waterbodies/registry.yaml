@@ -116,6 +116,7 @@ waterbodies:
   - { id: laguna-candelaria,     name: "Laguna Candelaria", type: lake, region: los-lagos, osm_name: "Laguna Candelaria", bbox: [-42.25, -72.45, -41.65, -71.75], optional: true }
   - { id: laguna-sin-nombre,     name: "Laguna Sin Nombre (cuenca Puelo)", type: lake, region: los-lagos, osm_name: "Laguna Sin Nombre", bbox: [-42.25, -72.45, -41.65, -71.75], optional: true }
   - { id: lago-inferior-puelo,   name: "Lago Inferior (Puelo)", type: lake, region: los-lagos, osm_name: "Lago Inferior", bbox: [-41.70, -71.85, -41.55, -71.60], optional: true }
+  - { id: rio-cochamo,            name: "Río Cochamó",      type: river, region: los-lagos, osm_name: "Río Cochamó", bbox: [-41.65, -72.45, -41.25, -71.90] }
   - { id: rio-blanco-hornopiren, name: "Río Blanco (Hornopirén)", type: river, region: los-lagos, osm_name: "Río Blanco", bbox: [-42.05, -72.55, -41.85, -72.30], optional: true }
   - { id: rio-frio-palena,       name: "Río Frío (Villa Santa Lucía)", type: river, region: los-lagos, osm_name: "Río Frío", bbox: [-43.55, -72.50, -43.30, -72.20], optional: true }
 
@@ -145,6 +146,7 @@ waterbodies:
   - { id: lago-riesco,           name: "Lago Riesco",      type: lake, region: aysen, osm_name: "Lago Riesco", bbox: [-45.60, -72.95, -45.15, -72.35], optional: true }
   - { id: lago-rosselot,         name: "Lago Rosselot",    type: lake, region: aysen, osm_name: "Lago Rosselot", optional: true }
   - { id: lago-verde,            name: "Lago Verde",       type: lake, region: aysen, osm_name: "Lago Verde", bbox: [-44.50, -72.15, -44.00, -71.55], optional: true }
+  - { id: rio-murta,              name: "Río Murta",        type: river, region: aysen, osm_name: "Río Murta", bbox: [-46.65, -72.85, -46.30, -72.50] }
   - { id: rio-claro-la-junta,    name: "Río Claro (La Junta)", type: river, region: aysen, osm_name: "Río Claro", bbox: [-44.20, -72.60, -43.80, -72.20], optional: true }
   - { id: rio-mayer,             name: "Río Mayer",       type: river, region: aysen, osm_name: "Río Mayer", bbox: [-48.80, -72.80, -48.20, -72.00], optional: true }
 

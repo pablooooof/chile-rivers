@@ -157,6 +157,29 @@
   }
   .dd-item:hover { background: #e3f1ff; }
   .dd-item input[type="checkbox"] { margin: 0; pointer-events: none; }
+  .ctx-menu {
+    position: absolute; z-index: 50; background: var(--panel-bg); border: 1px solid var(--line);
+    border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.18); padding: 4px 0;
+    font-size: 12.5px; min-width: 180px;
+  }
+  .ctx-menu div {
+    padding: 6px 12px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  }
+  .ctx-menu div:hover { background: #e3f1ff; }
+  .panel-actions { display: flex; gap: 4px; position: absolute; top: 12px; right: 38px; }
+  .panel-actions button {
+    border: 1px solid var(--line); background: #fff; border-radius: 6px;
+    padding: 3px 7px; font-size: 12px; cursor: pointer; color: var(--muted);
+    line-height: 1;
+  }
+  .panel-actions button:hover { background: #f0f4f8; }
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #1c2430; color: #fff; padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; z-index: 100; opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
@@ -182,6 +205,10 @@
 </header>
 <div id="panel">
   <div id="panel-head">
+    <div class="panel-actions">
+      <button id="btn-copy-llm" title="Copy for LLM">📋</button>
+      <button id="btn-share" title="Share link">🔗</button>
+    </div>
     <button class="close" onclick="closePanel()">×</button>
     <h2 id="panel-title"></h2>
     <div class="sub" id="panel-sub"></div>
@@ -190,6 +217,7 @@
 </div>
 <button id="btn-sat" title="Base map"></button>
 <footer id="footer"></footer>
+<div class="toast" id="toast"></div>
 <script>
 // ── i18n ────────────────────────────────────────────────────────────────────
 const I18N = {
@@ -246,6 +274,12 @@ const I18N = {
     accWadeVals: { wadeable: "Vadeable", mixed: "Mixto (tramos vadeables)", "not-wadeable": "No vadeable", "boat-recommended": "Se recomienda bote" },
     accSizeVals: { small: "Pequeño", medium: "Mediano", large: "Grande" },
     accDiffVals: { easy: "Fácil", moderate: "Moderado", remote: "Remoto", "very-remote": "Muy remoto" },
+    copied: "Copiado al portapapeles",
+    linkCopied: "Enlace copiado al portapapeles",
+    ctxCoords: "Copiar coordenadas",
+    ctxGmaps: "Abrir en Google Maps",
+    copyLlm: "Copiar para LLM",
+    shareLink: "Copiar enlace",
   },
   en: {
     title: "🎣 Recreational fishing — Chile",
@@ -300,6 +334,12 @@ const I18N = {
     accWadeVals: { wadeable: "Wadeable", mixed: "Mixed (some wadeable)", "not-wadeable": "Not wadeable", "boat-recommended": "Boat recommended" },
     accSizeVals: { small: "Small", medium: "Medium", large: "Large" },
     accDiffVals: { easy: "Easy", moderate: "Moderate", remote: "Remote", "very-remote": "Very remote" },
+    copied: "Copied to clipboard",
+    linkCopied: "Link copied to clipboard",
+    ctxCoords: "Copy coordinates",
+    ctxGmaps: "Open in Google Maps",
+    copyLlm: "Copy for LLM",
+    shareLink: "Copy link",
   }
 };
 let lang = localStorage.getItem("lang") || "es";
@@ -805,6 +845,8 @@ function applyLang() {
   document.getElementById("lbl-air").textContent = t.airBtn;
   document.getElementById("search-input").placeholder = t.searchPlaceholder;
   document.getElementById("btn-open-now").textContent = t.openNow;
+  document.getElementById("btn-copy-llm").title = t.copyLlm;
+  document.getElementById("btn-share").title = t.shareLink;
   buildSpeciesChips();
   buildAccessFilters();
   if (lastProps) showPanel(lastProps);
@@ -1022,6 +1064,184 @@ function advisoryHtml(wbId) {
   return `<div class="adv" id="adv-root"><h3>${t.advTitle} <span class="tag">${t.advTag}</span></h3>
     ${presenceHtml}${chips}${specificHtml}${generalHtml}</div>`;
 }
+// ── toast helper ────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove("show"), 2000);
+}
+
+// ── 1. persist filters across reload ────────────────────────────────────────
+function saveFilters() {
+  const state = {
+    openNow: filterOpenNow,
+    species: filterSpecies,
+    access: {}
+  };
+  for (const [k, s] of Object.entries(filterAccess))
+    if (s.size) state.access[k] = [...s];
+  localStorage.setItem("filters", JSON.stringify(state));
+}
+function restoreFilters() {
+  try {
+    const raw = localStorage.getItem("filters");
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    if (s.openNow) { filterOpenNow = true; document.getElementById("btn-open-now").classList.add("on"); }
+    if (s.species) { filterSpecies = s.species; buildSpeciesChips(); }
+    if (s.access) {
+      for (const [k, arr] of Object.entries(s.access))
+        if (filterAccess[k]) for (const v of arr) filterAccess[k].add(v);
+      buildAccessFilters();
+    }
+    applyFilters();
+  } catch (e) {}
+}
+
+const _origToggleOpenNow = toggleOpenNow;
+toggleOpenNow = function() { _origToggleOpenNow(); saveFilters(); };
+const _origSetSpeciesFilter = setSpeciesFilter;
+setSpeciesFilter = function(s) { _origSetSpeciesFilter(s); saveFilters(); };
+const _origApplyFilters = applyFilters;
+applyFilters = function() { _origApplyFilters(); saveFilters(); };
+
+let ctxMenu = null;
+function removeCtxMenu() { if (ctxMenu) { ctxMenu.remove(); ctxMenu = null; } }
+
+// ── 2. ESC closes context menu first, then panel ───────────────────────────
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    if (ctxMenu) { removeCtxMenu(); e.preventDefault(); return; }
+    const panel = document.getElementById("panel");
+    if (panel.classList.contains("open")) { closePanel(); e.preventDefault(); }
+  }
+});
+
+// ── 3. share link (copy URL with filters + selected waterbody) ─────────────
+document.getElementById("btn-share").addEventListener("click", () => {
+  const params = new URLSearchParams();
+  if (filterOpenNow) params.set("open", "1");
+  if (filterSpecies) params.set("sp", filterSpecies);
+  for (const [k, s] of Object.entries(filterAccess))
+    if (s.size) params.set("f_" + k, [...s].join(","));
+  if (lang !== "es") params.set("lang", lang);
+  const hash = location.hash || "";
+  const qs = params.toString();
+  const url = location.origin + location.pathname + (qs ? "?" + qs : "") + hash;
+  navigator.clipboard.writeText(url).then(() => showToast(T().linkCopied));
+});
+
+function restoreUrlFilters() {
+  const params = new URLSearchParams(location.search);
+  if (params.get("open") === "1") {
+    filterOpenNow = true;
+    document.getElementById("btn-open-now").classList.add("on");
+  }
+  if (params.get("sp")) { filterSpecies = params.get("sp"); buildSpeciesChips(); }
+  const accKeys = ["road", "transport", "wade", "size", "diff"];
+  for (const k of accKeys) {
+    const v = params.get("f_" + k);
+    if (v) for (const val of v.split(",")) filterAccess[k].add(val);
+  }
+  if (params.get("lang") && params.get("lang") !== lang) {
+    lang = params.get("lang");
+    localStorage.setItem("lang", lang);
+  }
+  buildAccessFilters();
+  applyFilters();
+}
+
+// ── 4. copy panel content for LLM ──────────────────────────────────────────
+document.getElementById("btn-copy-llm").addEventListener("click", () => {
+  const content = document.getElementById("panel-content");
+  const title = document.getElementById("panel-title").textContent;
+  const sub = document.getElementById("panel-sub").textContent;
+  const lines = [title, sub, "---"];
+
+  const statusEl = content.querySelector(".status");
+  if (statusEl) lines.push(statusEl.textContent.trim());
+
+  content.querySelectorAll(".phase").forEach(ph => {
+    const dates = ph.querySelector(".dates");
+    const lbl = ph.querySelector(".lbl");
+    lines.push((dates ? dates.textContent : "") + " — " + (lbl ? lbl.textContent : ""));
+  });
+
+  content.querySelectorAll("details").forEach(d => {
+    const sum = d.querySelector("summary");
+    if (sum) lines.push("\n" + sum.textContent + ":");
+    d.querySelectorAll("p").forEach(p => lines.push("  " + p.textContent));
+  });
+
+  const advRoot = content.querySelector("#adv-root");
+  if (advRoot) {
+    lines.push("\n" + advRoot.querySelector("h3")?.textContent || "");
+    advRoot.querySelectorAll("table").forEach(tbl => {
+      const rows = tbl.querySelectorAll("tr");
+      rows.forEach(r => {
+        const cells = r.querySelectorAll("th, td");
+        lines.push(Array.from(cells).map(c => c.textContent.trim()).join(" | "));
+      });
+    });
+    advRoot.querySelectorAll(".now").forEach(n => lines.push(n.textContent.trim()));
+  }
+
+  const accSection = content.querySelectorAll(".adv");
+  accSection.forEach(sec => {
+    if (sec.id === "adv-root") return;
+    const h3 = sec.querySelector("h3");
+    if (h3) lines.push("\n" + h3.textContent);
+    sec.querySelectorAll("table tr").forEach(r => {
+      const cells = r.querySelectorAll("td");
+      if (cells.length >= 2) lines.push(cells[0].textContent.trim() + ": " + cells[1].textContent.trim());
+    });
+    sec.querySelectorAll("p").forEach(p => lines.push(p.textContent.trim()));
+  });
+
+  const srcs = content.querySelector(".sources");
+  if (srcs) lines.push("\n" + srcs.textContent.trim());
+
+  navigator.clipboard.writeText(lines.join("\n")).then(() => showToast(T().copied));
+});
+
+// ── 5. right-click context menu on map ─────────────────────────────────────
+map.on("contextmenu", e => {
+  e.preventDefault();
+  removeCtxMenu();
+  const { lng, lat } = e.lngLat;
+  const t = T();
+  const coordStr = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  const gmapsUrl = `https://www.google.com/maps?q=${lat.toFixed(6)},${lng.toFixed(6)}`;
+  const el = document.createElement("div");
+  el.className = "ctx-menu";
+  el.innerHTML = `
+    <div data-action="coords">📋 ${t.ctxCoords}<br><small style="color:var(--muted)">${coordStr}</small></div>
+    <div data-action="gmaps">🗺️ ${t.ctxGmaps}</div>`;
+  el.style.left = e.point.x + "px";
+  el.style.top = e.point.y + "px";
+  el.querySelector('[data-action="coords"]').addEventListener("click", () => {
+    navigator.clipboard.writeText(coordStr).then(() => showToast(T().copied));
+    removeCtxMenu();
+  });
+  el.querySelector('[data-action="gmaps"]').addEventListener("click", () => {
+    window.open(gmapsUrl, "_blank", "noopener");
+    removeCtxMenu();
+  });
+  map.getContainer().appendChild(el);
+  ctxMenu = el;
+});
+map.on("click", removeCtxMenu);
+
+// ── hook: restore filters from URL or localStorage on load ──────────────────
+const _origHandleHash = handleHash;
+handleHash = function() {
+  if (location.search) restoreUrlFilters();
+  else restoreFilters();
+  _origHandleHash();
+};
+
 applyLang();
 </script>
 </body>

@@ -562,6 +562,16 @@ waterbodies:
     notes: "Acceso por camino ripiado hacia el valle de Cochamó. Río de montaña en bosque denso. Tramos vadeables; caudal variable. Zona remota."
     notes_en: "Access via gravel road into the Cochamó valley. Mountain river in dense forest. Wadeable reaches; variable flows. Remote area."
 
+  rio-cochamo:
+    nearest_town: Cochamó
+    road: gravel
+    public_transport: limited
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Desde Puerto Varas tomar Ruta 225 bordeando el lago Llanquihue hasta Ensenada, luego Ruta V-69 por Ralún hacia Cochamó (~2 h). También buses desde Puerto Montt (Buses Río Puelo / Transhar, ~2,5 h, mínimo 4 salidas diarias). Desde el pueblo, 3 km más hasta el puente del Cochamó; tomar el camino a la izquierda y seguir río arriba 6 km hasta el final del camino vehicular (ripio). Río de agua cristalina sobre granito, vadeable con cuidado — piedras muy resbalosas (botas con fieltro o clavos). El valle alto (La Junta, sector de trekking/escalada) no es pesquería; la pesca es en el tramo bajo y medio. Caña #4-5; roll casting por bosque cerrado."
+    notes_en: "From Puerto Varas take Ruta 225 around Lago Llanquihue to Ensenada, then Ruta V-69 via Ralún to Cochamó (~2 h). Also buses from Puerto Montt (Buses Río Puelo / Transhar, ~2.5 h, at least 4 daily departures). From the village, 3 km more to the Cochamó bridge; take the left fork and follow the river upstream 6 km to the end of the vehicle road (gravel). Crystal-clear water over granite, wadeable with care — very slippery rocks (felt or studded boots). The upper valley (La Junta, the trekking/climbing zone) is not a fishery; fishing is in the lower and mid reaches. #4-5 rod; roll casting in thick forest."
+
   rio-rahue:
     nearest_town: Osorno
     road: paved
@@ -682,6 +692,16 @@ waterbodies:
     difficulty: moderate
     notes: "Camino ripiado desde la Carretera Austral hacia Puerto Ibáñez. Río vadeable en la mayor parte. Desemboca en el lago General Carrera."
     notes_en: "Gravel road from the Carretera Austral to Puerto Ibáñez. Wadeable on most reaches. Flows into Lago General Carrera."
+
+  rio-murta:
+    nearest_town: Bahía Murta / Puerto Murta
+    road: gravel
+    public_transport: limited
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Desde Coyhaique, 180 km por la Carretera Austral (pavimento y ripio) pasando Villa Cerro Castillo. En el cruce tomar la Ruta X-731 hacia Bahía Murta (~4 km). Bus Coyhaique–Cochrane para en el cruce (servicio diario). El pueblo tiene alojamiento básico, restaurantes, muelle y bencina. El río desemboca en el lago General Carrera por la orilla norte. Vadeable en la mayor parte; tramos bajos más anchos. Mucho menos presión de pesca que el Ibáñez. También accesible por vuelo chárter al aeródromo de Bahía Murta."
+    notes_en: "From Coyhaique, 180 km on the Carretera Austral (paved and gravel) past Villa Cerro Castillo. At the junction take Ruta X-731 to Bahía Murta (~4 km). The Coyhaique–Cochrane bus stops at the junction (daily service). The village has basic lodging, restaurants, a pier, and fuel. The river flows into Lago General Carrera on the north shore. Wadeable on most reaches; lower stretches wider. Far less fishing pressure than the Ibáñez. Also accessible by charter flight to the Bahía Murta airstrip."
 
   rio-cochrane:
     nearest_town: Cochrane

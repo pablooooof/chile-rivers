@@ -132,6 +132,7 @@ presence:
   rio-yelcho: [trucha-arcoiris, trucha-cafe, salmon-chinook, salmon-coho]
   rio-espolon: [trucha-arcoiris, trucha-cafe]
   laguna-candelaria: [trucha-arcoiris, trucha-cafe]
+  rio-cochamo: [trucha-arcoiris, trucha-cafe]
   # Aysén — General Carrera/Baker: única población naturalizada de masu en América
   rio-aysen: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-simpson: [trucha-arcoiris, trucha-cafe, salmon-chinook]
@@ -143,6 +144,7 @@ presence:
   rio-ibanez: [trucha-arcoiris, trucha-cafe, salmon-chinook]
   rio-cochrane: [trucha-arcoiris, trucha-cafe]
   rio-jeinimeni: [trucha-arcoiris, trucha-cafe]
+  rio-murta: [trucha-arcoiris, trucha-cafe]
   lago-general-carrera: [trucha-arcoiris, trucha-cafe, salmon-japones, perca-trucha]
   lago-cochrane: [trucha-arcoiris, trucha-cafe, perca-trucha]
   lago-bertrand: [trucha-arcoiris, trucha-cafe]
@@ -285,6 +287,20 @@ waterbodies:
               spin: "Spoons grandes para chinook, giratorias para trucha.", spin_en: "Big spoons for chinook, spinners for trout." }
         3:  { fly: "Cafés migratorias grandes con streamers articulados; chinook coloreado.", fly_en: "Big migratory browns on articulated streamers; colored chinook.",
               spin: "Minnows XL, colores otoño.", spin_en: "XL minnows in autumn colors." }
+  rio-cochamo:
+    - species: "Trucha arcoíris y café"
+      species_en: "Rainbow & brown trout"
+      months:
+        11: { fly: "Ninfas pesadas (Prince, Hare's Ear, Pheasant Tail) con indicador; agua cristalina — líderes largos y aproximación sigilosa.", fly_en: "Heavy nymphs (Prince, Hare's Ear, Pheasant Tail) under indicator; crystal-clear water — long leaders and stealthy approach.",
+              spin: "Giratorias #2-3 en pozones de bolones; roll casting por vegetación cerrada.", spin_en: "#2-3 spinners in the boulder pools; roll casting in tight vegetation." }
+        12: { fly: "Secas atractoras (Elk Hair Caddis, Royal Wulff) al atardecer; emergentes de caddis (Deep Sparkle Pupa).", fly_en: "Attractor dries (Elk Hair Caddis, Royal Wulff) at dusk; caddis emergers (Deep Sparkle Pupa).",
+              spin: "Minnows hundidos 5-7 cm; la transparencia exige colores naturales.", spin_en: "5-7 cm sinking minnows; the clarity demands natural colors." }
+        1:  { fly: "Dry-dropper en canaletas; terrestres (hormigas negras) en orillas con bosque.", fly_en: "Dry-dropper in the channels; terrestrials (black ants) along forested banks.",
+              spin: "Lures chicos, primeras horas; río de granito — piedras resbalosas.", spin_en: "Small lures, early hours; granite river — slippery rocks." }
+        3:  { fly: "Streamers olive/negro (Woolly Bugger, Mini Leech) para cafés pre-desove; la mejor época del año.", fly_en: "Olive/black streamers (Woolly Bugger, Mini Leech) for pre-spawn browns; the best time of year.",
+              spin: "Minnows 7-9 cm colores otoño; pozones profundos bajo troncos.", spin_en: "7-9 cm autumn-color minnows; deep pools under logs." }
+      notes: "Agua cristalina todo el año; roll casting esencial (vegetación cerrada). Piedras de granito muy resbalosas — usar botas con fieltro o clavos. Caña #4-5. No confundir con el valle alto de trekking (La Junta) — la pesca es en el tramo bajo y medio."
+      notes_en: "Crystal-clear water year-round; roll casting essential (tight vegetation). Granite rocks are very slippery — use felt or studded boots. #4-5 rod. Don't confuse with the upper trekking valley (La Junta) — fishing is in the lower and mid reaches."
   rio-yelcho:
     - species: "Chinook + trucha"
       species_en: "Chinook + trout"
@@ -456,6 +472,20 @@ waterbodies:
               spin: "Cucharas cobre; recordar C&R desde el 1 de marzo (regla de ríos Aysén).", spin_en: "Copper spoons; remember C&R from March 1 (Aysén river rule)." }
       notes: "Desemboca en el lago General Carrera junto a Chile Chico; tramos son límite internacional — pescar sólo del lado chileno."
       notes_en: "Flows into Lago General Carrera at Chile Chico; some reaches are the international border — fish the Chilean side only."
+  rio-murta:
+    - species: "Trucha arcoíris y café"
+      species_en: "Rainbow & brown trout"
+      months:
+        11: { fly: "Ninfas pesadas y streamers en pozones tras el deshielo; agua turquesa de glaciar.", fly_en: "Heavy nymphs and streamers in the pools after snowmelt; turquoise glacial water.",
+              spin: "Giratorias #3 en pozones; agua con color — colores vivos rinden.", spin_en: "#3 spinners in the pools; tinted water — bright colors work." }
+        12: { fly: "Secas caddis al atardecer; dry-dropper en correderas del tramo medio.", fly_en: "Caddis dries at dusk; dry-dropper in the mid-reach riffles.",
+              spin: "Minnows hundidos; agua aclarando.", spin_en: "Sinking minnows; water clearing." }
+        1:  { fly: "Terrestres y secas en orillas con bosque de lenga; peces menos presionados que en ríos cercanos.", fly_en: "Terrestrials and dries along lenga-forested banks; fish less pressured than on nearby rivers.",
+              spin: "Lures chicos naturales, primeras horas.", spin_en: "Small natural lures, early hours." }
+        3:  { fly: "Streamers olive/negro para cafés pre-desove; C&R obligatorio desde el 1 de marzo.", fly_en: "Olive/black streamers for pre-spawn browns; mandatory C&R from March 1.",
+              spin: "Cucharas cobre en pozones profundos; C&R.", spin_en: "Copper spoons in deep pools; C&R." }
+      notes: "Tributario norte del lago General Carrera. Río tranquilo y poco presionado — buena alternativa al Ibáñez. C&R desde el 1 de marzo (regla de ríos Aysén)."
+      notes_en: "North tributary of Lago General Carrera. Quiet and lightly pressured river — a good alternative to the Ibáñez. C&R from March 1 (Aysén river rule)."
   rio-cisnes:
     - species: "Trucha café y arcoíris"
       species_en: "Brown & rainbow trout"

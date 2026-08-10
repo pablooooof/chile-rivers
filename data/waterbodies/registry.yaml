@@ -22,6 +22,12 @@ waterbodies:
   - { id: rio-cachapoal,         name: "Río Cachapoal",    type: river, region: ohiggins, osm_name: "Río Cachapoal" }
   - { id: rio-tinguiririca,      name: "Río Tinguiririca", type: river, region: ohiggins, osm_name: "Río Tinguiririca" }
   - { id: rio-pangal,            name: "Río Pangal",       type: river, region: ohiggins, osm_name: "Río Pangal", bbox: [-34.40, -70.65, -34.05, -70.15], optional: true }
+  - { id: rio-paredones,         name: "Río Paredones",    type: river, region: ohiggins, osm_name: "Río Paredones", bbox: [-34.30, -70.40, -34.15, -70.15], optional: true }
+  - { id: rio-blanco-ohiggins,   name: "Río Blanco (O'Higgins)", type: river, region: ohiggins, osm_name: "Río Blanco", bbox: [-34.35, -70.45, -34.15, -70.20], optional: true }
+  - { id: estero-flores,         name: "Estero Flores",    type: river, region: ohiggins, osm_name: "Estero Flores", bbox: [-34.30, -70.35, -34.15, -70.20], optional: true }
+  - { id: rio-cortaderal,        name: "Río Cortaderal",   type: river, region: ohiggins, osm_name: "Río Cortaderal", bbox: [-34.45, -70.45, -34.25, -70.20], optional: true }
+  - { id: rio-las-lenas,         name: "Río Las Leñas",    type: river, region: ohiggins, osm_name: "Río Las Leñas", bbox: [-34.45, -70.40, -34.25, -70.20], optional: true }
+  - { id: rio-cipreses,          name: "Río de Los Cipreses", type: river, region: ohiggins, osm_name: "Río de Los Cipreses", bbox: [-34.35, -70.65, -34.00, -70.30], optional: true }
   - { id: lago-rapel,            name: "Lago Rapel",       type: lake,  region: ohiggins, osm_name: "Lago Rapel", alt_names: ["Embalse Rapel"] }
 
   # ── Maule ───────────────────────────────────────────────────────────────────

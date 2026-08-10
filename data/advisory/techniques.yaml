@@ -46,6 +46,12 @@ presence:
   rio-cachapoal: [trucha-arcoiris, trucha-cafe]
   rio-tinguiririca: [trucha-arcoiris, trucha-cafe]
   rio-pangal: [trucha-arcoiris]
+  rio-paredones: [trucha-arcoiris]
+  rio-blanco-ohiggins: [trucha-arcoiris]
+  estero-flores: [trucha-arcoiris]
+  rio-cortaderal: [trucha-arcoiris]
+  rio-las-lenas: [trucha-arcoiris]
+  rio-cipreses: [trucha-arcoiris]
   lago-rapel: [pejerrey-argentino, carpa, pez-gato]
   # Maule — trucha en la precordillera; sin salmones (fuera de rango)
   rio-maule: [trucha-arcoiris, trucha-cafe, pejerrey-chileno, perca-trucha]
@@ -618,6 +624,80 @@ waterbodies:
               spin: "Pejerrey al amanecer en bocas; carpa con masa/choclo.", spin_en: "Silverside at dawn at the inlets; carp on dough/corn." }
         3:  { fly: "Últimos carpeos del año con agua aún tibia.", fly_en: "Last carp outings while the water stays warm.",
               spin: "Pejerrey mejor con frío inicial de otoño.", spin_en: "Silverside picks up with the first autumn chill." }
+  rio-pangal:
+    - species: "Trucha arcoíris (agua de glaciar)"
+      species_en: "Rainbow trout (glacier water)"
+      months:
+        9:  { fly: "Apertura temprana: ninfas pesadas (Pheasant Tail, perdigones) en agua de deshielo; indicador neozelandés.", fly_en: "Early opening: heavy nymphs (Pheasant Tail, perdigons) in snowmelt; NZ indicator.",
+              spin: "Giratorias #2-3 en pozones; agua fría y turbia de glaciar.", spin_en: "#2-3 spinners in the pools; cold turbid glacier water." }
+        10: { fly: "Buen mes: ninfas pesadas con indicador; agua aclarando. Viento fuerte después de las 14-15 h — líder corto.", fly_en: "Good month: heavy nymphs under indicator; water clearing. Strong wind after 2-3 pm — short leader.",
+              spin: "Giratorias en pozones; pescar temprano antes del viento.", spin_en: "Spinners in the pools; fish early before the wind." }
+        11: { fly: "Último mes bueno antes del deshielo fuerte; Pheasant Tail y perdigones.", fly_en: "Last good month before heavy snowmelt; Pheasant Tail and perdigons.",
+              spin: "Giratorias; arcoíris de buen tamaño.", spin_en: "Spinners; decent-sized rainbows." }
+        3:  { fly: "Deshielo se calma: ninfas pesadas otra vez; la mejor pesca del otoño.", fly_en: "Snowmelt calms down: heavy nymphs again; the best autumn fishing.",
+              spin: "Giratorias cobre en pozones.", spin_en: "Copper spinners in the pools." }
+        4:  { fly: "Agua clara y fría de otoño: ninfas finas y Pheasant Tail.", fly_en: "Clear cold autumn water: fine nymphs and Pheasant Tail.",
+              spin: "Micro-spoons.", spin_en: "Micro-spoons." }
+      notes: "Agua de glaciar — el verano (dic-feb) es muy difícil por el deshielo (agua turbia y turbulenta). Los mejores meses son sep-nov y mar-abr. Viento fuerte después de las 14-15 h."
+      notes_en: "Glacier water — summer (Dec-Feb) is very tough due to melt (turbid, turbulent water). Best months are Sep-Nov and Mar-Apr. Strong wind after 2-3 pm."
+  rio-paredones:
+    - species: "Trucha arcoíris (agua de glaciar)"
+      species_en: "Rainbow trout (glacier water)"
+      months:
+        9:  { fly: "Ninfas pesadas (Pheasant Tail) con indicador neozelandés; agua fría y turbia.", fly_en: "Heavy nymphs (Pheasant Tail) under NZ indicator; cold turbid water.",
+              spin: "Giratorias en pozones.", spin_en: "Spinners in the pools." }
+        10: { fly: "Buen mes; viento después de las 14-15 h — líder corto y ninfas pesadas.", fly_en: "Good month; wind after 2-3 pm — short leader and heavy nymphs.",
+              spin: "Giratorias; pescar temprano.", spin_en: "Spinners; fish early." }
+        3:  { fly: "Post-deshielo: ninfas pesadas; arcoíris de buen porte.", fly_en: "Post-melt: heavy nymphs; decent-sized rainbows.",
+              spin: "Giratorias cobre.", spin_en: "Copper spinners." }
+      notes: "Misma condición glaciar del Pangal — evitar verano (agua turbia). Sep-nov y mar-abr son los mejores meses."
+      notes_en: "Same glacier conditions as the Pangal — avoid summer (turbid water). Sep-Nov and Mar-Apr are the best months."
+  rio-blanco-ohiggins:
+    - species: "Trucha arcoíris (agua de glaciar)"
+      species_en: "Rainbow trout (glacier water)"
+      months:
+        9:  { fly: "Ninfas pesadas con indicador neozelandés.", fly_en: "Heavy nymphs under NZ indicator.",
+              spin: "Giratorias en pozones.", spin_en: "Spinners in the pools." }
+        10: { fly: "Ninfas pesadas; viento fuerte después de las 14-15 h.", fly_en: "Heavy nymphs; strong wind after 2-3 pm.",
+              spin: "Giratorias; temprano.", spin_en: "Spinners; early." }
+        3:  { fly: "Ninfas pesadas post-deshielo.", fly_en: "Heavy nymphs post-melt.",
+              spin: "Giratorias cobre.", spin_en: "Copper spinners." }
+      notes: "Confluye con el Paredones para formar el Pangal. Agua de glaciar — verano muy difícil."
+      notes_en: "Merges with the Paredones to form the Pangal. Glacier water — very tough in summer."
+  estero-flores:
+    - species: "Trucha arcoíris"
+      species_en: "Rainbow trout"
+      months:
+        10: { fly: "Estero chico: ninfas cortas de tirada; Pheasant Tail.", fly_en: "Small stream: short-line nymphing; Pheasant Tail.",
+              spin: "Giratorias #1-2.", spin_en: "#1-2 spinners." }
+        3:  { fly: "Agua clara de otoño; ninfas finas.", fly_en: "Clear autumn water; fine nymphs.",
+              spin: "Micro-spoons.", spin_en: "Micro-spoons." }
+      notes: "Afluente del Paredones. Estero chico pero con arcoíris."
+      notes_en: "Tributary of the Paredones. Small stream but holds rainbows."
+  rio-cortaderal:
+    - species: "Trucha arcoíris (agua de glaciar)"
+      species_en: "Rainbow trout (glacier water)"
+      months:
+        9:  { fly: "Ninfas pesadas (Pheasant Tail, perdigones) con indicador neozelandés.", fly_en: "Heavy nymphs (Pheasant Tail, perdigons) under NZ indicator.",
+              spin: "Giratorias en pozones.", spin_en: "Spinners in the pools." }
+        10: { fly: "Buen mes; viento fuerte después de las 14-15 h.", fly_en: "Good month; strong wind after 2-3 pm.",
+              spin: "Giratorias; pescar temprano.", spin_en: "Spinners; fish early." }
+        3:  { fly: "Deshielo se calma; ninfas pesadas y Pheasant Tail.", fly_en: "Snowmelt calms; heavy nymphs and Pheasant Tail.",
+              spin: "Giratorias cobre.", spin_en: "Copper spinners." }
+      notes: "Agua de glaciar — verano muy difícil. Sep-nov y mar-abr son los mejores meses."
+      notes_en: "Glacier water — very tough in summer. Sep-Nov and Mar-Apr are the best months."
+  rio-las-lenas:
+    - species: "Trucha arcoíris (agua de glaciar)"
+      species_en: "Rainbow trout (glacier water)"
+      months:
+        9:  { fly: "Ninfas pesadas con indicador neozelandés.", fly_en: "Heavy nymphs under NZ indicator.",
+              spin: "Giratorias en pozones.", spin_en: "Spinners in the pools." }
+        10: { fly: "Ninfas pesadas; viento después de las 14-15 h — líder corto.", fly_en: "Heavy nymphs; wind after 2-3 pm — short leader.",
+              spin: "Giratorias.", spin_en: "Spinners." }
+        3:  { fly: "Ninfas pesadas post-deshielo.", fly_en: "Heavy nymphs post-melt.",
+              spin: "Giratorias cobre.", spin_en: "Copper spinners." }
+      notes: "Confluye con el Cortaderal. Agua de glaciar — evitar verano."
+      notes_en: "Merges with the Cortaderal. Glacier water — avoid summer."
 
   # ── Magallanes ──────────────────────────────────────────────────────────────
   rio-serrano:

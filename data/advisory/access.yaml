@@ -94,6 +94,76 @@ waterbodies:
     notes: "Ruta pavimentada hacia Termas del Flaco. Río de precordillera, vadeable en verano en el curso alto. Caudal puede subir rápido con deshielo."
     notes_en: "Paved road toward Termas del Flaco. Foothill river, wadeable in summer on the upper reaches. Flows can rise quickly with snowmelt."
 
+  rio-pangal:
+    nearest_town: Rancagua / Coya
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Acceso por el camino del cajón del Cachapoal, pasando Coya. Después del punto ~-34.239, -70.445 se requiere vehículo 4x4 o AWD (tipo Subaru Crosstrek; no permiten pasar sin tracción). Obligatorio registrarse en el retén de Carabineros con cédula de identidad. Río de agua de glaciar, vadeable. Viento fuerte después de las 14-15 h."
+    notes_en: "Access via the Cachapoal canyon road past Coya. Beyond ~-34.239, -70.445 a 4x4 or AWD vehicle is required (like a Subaru Crosstrek; they won't let you through without AWD). You must register at the Carabineros checkpoint (retén) with your ID. Glacier-fed river, wadeable. Strong wind after 2-3 pm."
+
+  rio-paredones:
+    nearest_town: Rancagua / Coya
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Misma ruta que el Pangal — requiere 4x4/AWD y registro en retén de Carabineros. Confluye con el Río Blanco para formar el Pangal. Agua de glaciar. Viento fuerte después de las 14-15 h."
+    notes_en: "Same route as the Pangal — requires 4x4/AWD and registration at the Carabineros checkpoint. Merges with Río Blanco to form the Pangal. Glacier water. Strong wind after 2-3 pm."
+
+  rio-blanco-ohiggins:
+    nearest_town: Rancagua / Coya
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Acceso por el cajón del Cachapoal. Requiere 4x4/AWD y registro en retén de Carabineros. Confluye con el Paredones. Agua de glaciar."
+    notes_en: "Access via the Cachapoal canyon. Requires 4x4/AWD and registration at the Carabineros checkpoint. Merges with the Paredones. Glacier water."
+
+  estero-flores:
+    nearest_town: Rancagua / Coya
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: small
+    difficulty: moderate
+    notes: "Afluente del Paredones. Misma ruta de acceso — requiere 4x4/AWD y registro en retén de Carabineros. Estero chico, fácil de vadear."
+    notes_en: "Tributary of the Paredones. Same access route — requires 4x4/AWD and registration at the Carabineros checkpoint. Small stream, easy to wade."
+
+  rio-cortaderal:
+    nearest_town: Rancagua / Coya
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Acceso por el cajón del Cachapoal más al sur. Requiere 4x4/AWD y registro en retén de Carabineros. Confluye con el Río Las Leñas. Agua de glaciar."
+    notes_en: "Access via the Cachapoal canyon further south. Requires 4x4/AWD and registration at the Carabineros checkpoint. Merges with Río Las Leñas. Glacier water."
+
+  rio-las-lenas:
+    nearest_town: Rancagua / Coya
+    road: 4x4
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Acceso por el cajón del Cachapoal. Requiere 4x4/AWD y registro en retén de Carabineros. Confluye con el Cortaderal. Agua de glaciar."
+    notes_en: "Access via the Cachapoal canyon. Requires 4x4/AWD and registration at the Carabineros checkpoint. Merges with the Cortaderal. Glacier water."
+
+  rio-cipreses:
+    nearest_town: Rancagua / Machalí
+    road: gravel
+    public_transport: no
+    wadeability: wadeable
+    size: medium
+    difficulty: moderate
+    notes: "Acceso por la Reserva Nacional Río de Los Cipreses (~50 km al este de Rancagua). Camino ripiado desde Machalí. La pesca dentro de la reserva probablemente NO está permitida (CONAF no la lista como actividad autorizada y prohíbe extraer recursos naturales). Consultar con CONAF antes de pescar dentro del perímetro de la reserva (reserva.cipreses@conaf.cl, +56 9 40299687). Fuera de la reserva, aplica la regla nacional."
+    notes_en: "Access via the Reserva Nacional Río de Los Cipreses (~50 km east of Rancagua). Gravel road from Machalí. Fishing inside the reserve is likely NOT permitted (CONAF does not list it as an authorized activity and prohibits extracting natural resources). Check with CONAF before fishing inside the reserve perimeter (reserva.cipreses@conaf.cl, +56 9 40299687). Outside the reserve, national baseline rules apply."
+
   lago-rapel:
     nearest_town: Rapel / Las Cabras
     road: paved

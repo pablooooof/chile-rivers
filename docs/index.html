@@ -16,7 +16,7 @@
   #map { position: absolute; inset: 0; }
   header {
     position: absolute; top: 12px; left: 12px; z-index: 5; background: var(--panel-bg);
-    padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); max-width: 330px;
+    padding: 10px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); max-width: 360px;
   }
   header h1 { margin: 0; font-size: 15px; padding-right: 34px; }
   header p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
@@ -126,44 +126,78 @@
   .filter-bar { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .fbtn {
     border: 1px solid var(--line); background: #fff; border-radius: 6px;
-    padding: 3px 8px; font-size: 11px; cursor: pointer; color: var(--muted);
-    font-weight: 600; font-family: inherit;
+    padding: 4px 10px; font-size: 11.5px; cursor: pointer; color: var(--muted);
+    font-weight: 600; font-family: inherit; display: inline-flex; align-items: center; gap: 4px;
   }
   .fbtn.on { background: #1e88e5; color: #fff; border-color: #1e88e5; }
-  .sp-chips { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 3px; }
-  .sp-chip {
-    border: 1px solid var(--line); border-radius: 10px; padding: 2px 8px;
-    font-size: 10.5px; cursor: pointer; background: #fff; color: var(--muted);
-    user-select: none; font-family: inherit;
+  .fbtn .f-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 16px; height: 16px; border-radius: 8px;
+    font-size: 10px; font-weight: 700; padding: 0 4px;
+    background: rgba(0,0,0,.12); color: var(--muted);
   }
+  .fbtn.on .f-badge { background: rgba(255,255,255,.3); color: #fff; }
+  .filter-count { font-size: 11px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+  .filter-clear {
+    border: none; background: none; font-size: 11px; color: #e53935; cursor: pointer;
+    font-family: inherit; font-weight: 600; padding: 2px 4px; white-space: nowrap;
+  }
+  .filter-clear:hover { text-decoration: underline; }
+
+  .active-chips { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+  .active-chip {
+    display: inline-flex; align-items: center; gap: 3px;
+    border: 1px solid var(--line); border-radius: 10px; padding: 2px 6px 2px 8px;
+    font-size: 10.5px; background: #eef2f6; color: var(--ink); user-select: none; font-family: inherit;
+  }
+  .active-chip .ac-x {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; border-radius: 50%; font-size: 10px;
+    cursor: pointer; color: var(--muted); line-height: 1;
+  }
+  .active-chip .ac-x:hover { background: rgba(0,0,0,.1); color: var(--ink); }
+
+  .filter-panel {
+    margin-top: 6px; border: 1px solid var(--line); border-radius: 8px;
+    background: #fafbfc; overflow: hidden; max-height: 0;
+    transition: max-height .25s ease, opacity .2s ease; opacity: 0;
+  }
+  .filter-panel.open { max-height: 60vh; opacity: 1; overflow-y: auto; }
+  .fp-section { padding: 8px 10px; }
+  .fp-section + .fp-section { border-top: 1px solid var(--line); }
+  .fp-section-title {
+    font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;
+    letter-spacing: .4px; margin-bottom: 6px;
+  }
+
+  .sp-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sp-chip {
+    border: 1px solid var(--line); border-radius: 14px; padding: 3px 10px;
+    font-size: 11.5px; cursor: pointer; background: #fff; color: var(--ink);
+    user-select: none; font-family: inherit; display: inline-flex; align-items: center; gap: 3px;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .sp-chip:hover { background: #f0f4f8; border-color: #cdd5de; }
   .sp-chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-  .sp-chip img { height: 12px; width: auto; vertical-align: -2px; margin-right: 1px; border-radius: 2px; }
+  .sp-chip img { height: 14px; width: auto; vertical-align: -1px; border-radius: 2px; }
   .sp-presence { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 4px; font-size: 12px; }
   .sp-presence-item { display: inline-flex; align-items: center; gap: 3px; }
   .sp-presence-item img { height: 16px; width: auto; border-radius: 2px; }
   .adv h3 .sp-h-img { height: 18px; width: auto; vertical-align: -3px; margin-right: 3px; border-radius: 2px; }
 
-  .filter-dd { position: relative; }
-  .dd-btn {
-    border: 1px solid var(--line); background: #fff; border-radius: 6px;
-    padding: 3px 8px; font-size: 11px; cursor: pointer; color: var(--muted);
-    font-weight: 600; font-family: inherit; white-space: nowrap;
+  .acc-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: start; }
+  .acc-label { font-size: 11.5px; color: var(--muted); font-weight: 600; padding-top: 2px; white-space: nowrap; }
+  .acc-opts { display: flex; flex-wrap: wrap; gap: 3px; }
+  .acc-opt {
+    display: inline-flex; align-items: center; gap: 3px;
+    border: 1px solid var(--line); border-radius: 12px; padding: 2px 8px;
+    font-size: 10.5px; cursor: pointer; background: #fff; color: var(--muted);
+    user-select: none; font-family: inherit;
+    transition: background .15s, color .15s, border-color .15s;
   }
-  .dd-btn.on { background: #1e88e5; color: #fff; border-color: #1e88e5; }
-  .dd-menu {
-    display: none; position: absolute; top: calc(100% + 4px); left: 0;
-    background: var(--panel-bg); border: 1px solid var(--line);
-    border-radius: 7px; box-shadow: 0 4px 12px rgba(0,0,0,.12);
-    min-width: 150px; z-index: 20; padding: 4px 0;
-  }
-  .dd-menu.open { display: block; }
-  .dd-item {
-    display: flex; align-items: center; gap: 6px;
-    padding: 5px 10px; font-size: 11.5px; cursor: pointer; user-select: none;
-  }
-  .dd-item:hover { background: #e3f1ff; }
-  .dd-item input[type="checkbox"] { margin: 0; pointer-events: none; }
+  .acc-opt:hover { background: #f0f4f8; border-color: #cdd5de; }
+  .acc-opt.on { background: #1e88e5; color: #fff; border-color: #1e88e5; }
   .ctx-menu {
     position: absolute; z-index: 50; background: var(--panel-bg); border: 1px solid var(--line);
     border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.18); padding: 4px 0;
@@ -200,11 +234,24 @@
     <input type="text" id="search-input" autocomplete="off">
     <div class="search-results" id="search-results"></div>
   </div>
-  <div class="legend" id="legend"></div>
   <div class="filter-bar" id="filter-bar">
     <button class="fbtn" id="btn-open-now" onclick="toggleOpenNow()"></button>
+    <button class="fbtn" id="btn-filters" onclick="toggleFilterPanel()"><span id="lbl-filters"></span><span class="f-badge" id="filter-badge" style="display:none">0</span></button>
+    <span class="filter-count" id="filter-count"></span>
+    <button class="filter-clear" id="filter-clear" onclick="clearAllFilters()" style="display:none"></button>
   </div>
-  <div class="sp-chips" id="species-chips"></div>
+  <div class="active-chips" id="active-chips"></div>
+  <div class="filter-panel" id="filter-panel">
+    <div class="fp-section">
+      <div class="fp-section-title" id="fp-species-title"></div>
+      <div class="sp-chips" id="species-chips"></div>
+    </div>
+    <div class="fp-section">
+      <div class="fp-section-title" id="fp-access-title"></div>
+      <div class="acc-grid" id="access-grid"></div>
+    </div>
+  </div>
+  <div class="legend" id="legend"></div>
   <div class="transport-toggles">
     <button id="btn-bus" onclick="toggleTransport('bus')"><span class="dot" style="background:#e65100"></span><span id="lbl-bus"></span></button>
     <button id="btn-air" onclick="toggleTransport('airport')"><span class="dot" style="background:#6a1b9a"></span><span id="lbl-air"></span></button>
@@ -268,6 +315,11 @@ const I18N = {
     tpOrigin: "Santiago",
     searchPlaceholder: "Buscar río o lago...",
     openNow: "Abiertos ahora",
+    filters: "Filtros",
+    clearAll: "Limpiar",
+    showing: (n, t) => `${n} de ${t}`,
+    speciesSection: "Especies",
+    accessSection: "Acceso y logística",
     accTitle: "Acceso y logística",
     accTag: "— guía editorial",
     accTown: "Pueblo base",
@@ -328,6 +380,11 @@ const I18N = {
     tpOrigin: "Santiago",
     searchPlaceholder: "Search river or lake...",
     openNow: "Open now",
+    filters: "Filters",
+    clearAll: "Clear",
+    showing: (n, t) => `${n} of ${t}`,
+    speciesSection: "Species",
+    accessSection: "Access & logistics",
     accTitle: "Access & logistics",
     accTag: "— editorial guide",
     accTown: "Base town",
@@ -686,6 +743,7 @@ function buildSpeciesChips() {
   const container = document.getElementById("species-chips");
   if (!allSpecies.size) { container.style.display = "none"; return; }
   container.style.display = "";
+  document.getElementById("fp-species-title").textContent = t.speciesSection;
   const sorted = [...allSpecies].sort();
   container.innerHTML =
     `<span class="sp-chip${!filterSpecies ? " on" : ""}" onclick="setSpeciesFilter(null)">${t.all}</span>` +
@@ -695,8 +753,9 @@ function buildSpeciesChips() {
 
 function buildAccessFilters() {
   const t = T();
-  const bar = document.getElementById("filter-bar");
-  bar.querySelectorAll(".filter-dd").forEach(el => el.remove());
+  const grid = document.getElementById("access-grid");
+  grid.innerHTML = "";
+  document.getElementById("fp-access-title").textContent = t.accessSection;
   const cats = [
     { key: "road", label: t.accRoad, vals: t.accRoadVals },
     { key: "transport", label: t.accTransport, vals: t.accTransportVals },
@@ -705,42 +764,114 @@ function buildAccessFilters() {
     { key: "diff", label: t.accDifficulty, vals: t.accDiffVals },
   ];
   for (const cat of cats) {
-    const dd = document.createElement("div");
-    dd.className = "filter-dd";
-    const btn = document.createElement("button");
-    btn.className = "dd-btn" + (filterAccess[cat.key].size ? " on" : "");
-    btn.textContent = cat.label + " ▾";
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      const menu = dd.querySelector(".dd-menu");
-      document.querySelectorAll(".dd-menu.open").forEach(m => { if (m !== menu) m.classList.remove("open"); });
-      menu.classList.toggle("open");
-    });
-    const menu = document.createElement("div");
-    menu.className = "dd-menu";
+    const label = document.createElement("div");
+    label.className = "acc-label";
+    label.textContent = cat.label;
+    const opts = document.createElement("div");
+    opts.className = "acc-opts";
     for (const [val, display] of Object.entries(cat.vals)) {
-      const item = document.createElement("label");
-      item.className = "dd-item";
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.checked = filterAccess[cat.key].has(val);
-      cb.addEventListener("change", () => {
-        if (cb.checked) filterAccess[cat.key].add(val);
-        else filterAccess[cat.key].delete(val);
-        btn.classList.toggle("on", filterAccess[cat.key].size > 0);
+      const opt = document.createElement("span");
+      opt.className = "acc-opt" + (filterAccess[cat.key].has(val) ? " on" : "");
+      opt.textContent = display;
+      opt.addEventListener("click", () => {
+        if (filterAccess[cat.key].has(val)) filterAccess[cat.key].delete(val);
+        else filterAccess[cat.key].add(val);
+        opt.classList.toggle("on", filterAccess[cat.key].has(val));
         applyFilters();
       });
-      item.append(cb, document.createTextNode(display));
-      menu.append(item);
+      opts.append(opt);
     }
-    dd.append(btn, menu);
-    bar.append(dd);
+    grid.append(label, opts);
   }
 }
 
-document.addEventListener("click", e => {
-  if (!e.target.closest(".filter-dd")) document.querySelectorAll(".dd-menu.open").forEach(m => m.classList.remove("open"));
-});
+function toggleFilterPanel() {
+  const panel = document.getElementById("filter-panel");
+  panel.classList.toggle("open");
+  document.getElementById("btn-filters").classList.toggle("on", panel.classList.contains("open"));
+}
+
+function clearAllFilters() {
+  filterOpenNow = false;
+  document.getElementById("btn-open-now").classList.remove("on");
+  filterSpecies = null;
+  buildSpeciesChips();
+  for (const s of Object.values(filterAccess)) s.clear();
+  buildAccessFilters();
+  applyFilters();
+}
+
+function getActiveFilterCount() {
+  let n = 0;
+  if (filterOpenNow) n++;
+  if (filterSpecies) n++;
+  for (const s of Object.values(filterAccess)) n += s.size;
+  return n;
+}
+
+function updateFilterBadge() {
+  const n = getActiveFilterCount();
+  const badge = document.getElementById("filter-badge");
+  const clear = document.getElementById("filter-clear");
+  if (n > 0) {
+    badge.textContent = n;
+    badge.style.display = "";
+    clear.style.display = "";
+  } else {
+    badge.style.display = "none";
+    clear.style.display = "none";
+  }
+}
+
+function updateActiveChips() {
+  const t = T();
+  const container = document.getElementById("active-chips");
+  const chips = [];
+  if (filterOpenNow)
+    chips.push({ label: t.openNow, remove: () => { toggleOpenNow(); } });
+  if (filterSpecies)
+    chips.push({ label: speciesName(filterSpecies), remove: () => { setSpeciesFilter(null); } });
+  for (const [k, s] of Object.entries(filterAccess)) {
+    const valMap = { road: t.accRoadVals, transport: t.accTransportVals, wade: t.accWadeVals, size: t.accSizeVals, diff: t.accDiffVals };
+    for (const v of s) {
+      chips.push({ label: (valMap[k] || {})[v] || v, remove: () => {
+        filterAccess[k].delete(v);
+        buildAccessFilters();
+        applyFilters();
+      }});
+    }
+  }
+  container.innerHTML = "";
+  for (const chip of chips) {
+    const el = document.createElement("span");
+    el.className = "active-chip";
+    el.innerHTML = `${chip.label}<span class="ac-x">&times;</span>`;
+    el.querySelector(".ac-x").addEventListener("click", chip.remove);
+    container.append(el);
+  }
+}
+
+function updateFilterCount() {
+  const t = T();
+  const source = map.getSource("wb");
+  if (!source) return;
+  const total = FEATURES.length;
+  let visible = total;
+  if (getActiveFilterCount() > 0) {
+    const today = new Date().toISOString().slice(0, 10);
+    visible = FEATURES.filter(f => {
+      const p = f.properties;
+      if (filterOpenNow && !p._open) return false;
+      if (filterSpecies && p._species.indexOf("|" + filterSpecies + "|") < 0) return false;
+      const accMap = { road: "_road", transport: "_transport", wade: "_wade", size: "_size", diff: "_diff" };
+      for (const [k, prop] of Object.entries(accMap)) {
+        if (filterAccess[k].size && !filterAccess[k].has(p[prop])) return false;
+      }
+      return true;
+    }).length;
+  }
+  document.getElementById("filter-count").textContent = getActiveFilterCount() > 0 ? t.showing(visible, total) : "";
+}
 
 function applyFilters() {
   const conditions = [];
@@ -760,6 +891,9 @@ function applyFilters() {
   map.setFilter("wb-fill", polyFilter);
   map.setFilter("wb-outline", polyFilter);
   map.setFilter("wb-river", lineFilter);
+  updateFilterBadge();
+  updateActiveChips();
+  updateFilterCount();
 }
 
 function updateHash(id) {
@@ -852,6 +986,10 @@ function applyLang() {
   document.getElementById("lbl-air").textContent = t.airBtn;
   document.getElementById("search-input").placeholder = t.searchPlaceholder;
   document.getElementById("btn-open-now").textContent = t.openNow;
+  document.getElementById("lbl-filters").textContent = t.filters;
+  document.getElementById("filter-clear").textContent = t.clearAll;
+  document.getElementById("fp-species-title").textContent = t.speciesSection;
+  document.getElementById("fp-access-title").textContent = t.accessSection;
   document.getElementById("btn-copy-llm").title = t.copyLlm;
   document.getElementById("btn-share").title = t.shareLink;
   buildSpeciesChips();
@@ -1140,6 +1278,8 @@ function removeCtxMenu() { if (ctxMenu) { ctxMenu.remove(); ctxMenu = null; } }
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") {
     if (ctxMenu) { removeCtxMenu(); e.preventDefault(); return; }
+    const fp = document.getElementById("filter-panel");
+    if (fp.classList.contains("open")) { fp.classList.remove("open"); document.getElementById("btn-filters").classList.remove("on"); e.preventDefault(); return; }
     const panel = document.getElementById("panel");
     if (panel.classList.contains("open")) { closePanel(); e.preventDefault(); }
   }

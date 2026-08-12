@@ -170,17 +170,18 @@
     letter-spacing: .4px; margin-bottom: 6px;
   }
 
-  .sp-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sp-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
   .sp-chip {
-    border: 1px solid var(--line); border-radius: 14px; padding: 3px 10px;
-    font-size: 11.5px; cursor: pointer; background: #fff; color: var(--ink);
-    user-select: none; font-family: inherit; display: inline-flex; align-items: center; gap: 3px;
-    transition: background .15s, color .15s, border-color .15s;
+    border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px;
+    font-size: 12px; cursor: pointer; background: #fff; color: var(--ink);
+    user-select: none; font-family: inherit; display: inline-flex; align-items: center; gap: 4px;
+    transition: background .15s, color .15s, border-color .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
   }
   .sp-chip:hover { background: #f0f4f8; border-color: #cdd5de; }
   .sp-chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .sp-chip.all { grid-column: 1 / -1; justify-content: center; border-radius: 14px; }
 
-  .sp-chip img { height: 14px; width: auto; vertical-align: -1px; border-radius: 2px; }
+  .sp-chip img { height: 18px; width: auto; border-radius: 2px; }
   .sp-presence { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 4px; font-size: 12px; }
   .sp-presence-item { display: inline-flex; align-items: center; gap: 3px; }
   .sp-presence-item img { height: 16px; width: auto; border-radius: 2px; }
@@ -494,7 +495,7 @@ let tpPopup = null;
 const tpState = { bus: false, airport: false };
 let FEATURES = [];
 let filterOpenNow = false;
-let filterSpecies = null;
+let filterSpecies = new Set();
 const filterAccess = { road: new Set(), transport: new Set(), wade: new Set(), size: new Set(), diff: new Set() };
 
 map.on("load", async () => {
@@ -730,7 +731,9 @@ function toggleOpenNow() {
 }
 
 function setSpeciesFilter(species) {
-  filterSpecies = filterSpecies === species ? null : species;
+  if (species === null) filterSpecies.clear();
+  else if (filterSpecies.has(species)) filterSpecies.delete(species);
+  else filterSpecies.add(species);
   buildSpeciesChips();
   applyFilters();
 }
@@ -746,8 +749,8 @@ function buildSpeciesChips() {
   document.getElementById("fp-species-title").textContent = t.speciesSection;
   const sorted = [...allSpecies].sort();
   container.innerHTML =
-    `<span class="sp-chip${!filterSpecies ? " on" : ""}" onclick="setSpeciesFilter(null)">${t.all}</span>` +
-    sorted.map(s => `<span class="sp-chip${filterSpecies === s ? " on" : ""}"
+    `<span class="sp-chip all${!filterSpecies.size ? " on" : ""}" onclick="setSpeciesFilter(null)">${t.all}</span>` +
+    sorted.map(s => `<span class="sp-chip${filterSpecies.has(s) ? " on" : ""}"
       onclick="setSpeciesFilter('${s}')">${speciesImg(s)}${speciesName(s)}</span>`).join("");
 }
 
@@ -794,7 +797,7 @@ function toggleFilterPanel() {
 function clearAllFilters() {
   filterOpenNow = false;
   document.getElementById("btn-open-now").classList.remove("on");
-  filterSpecies = null;
+  filterSpecies.clear();
   buildSpeciesChips();
   for (const s of Object.values(filterAccess)) s.clear();
   buildAccessFilters();
@@ -804,7 +807,7 @@ function clearAllFilters() {
 function getActiveFilterCount() {
   let n = 0;
   if (filterOpenNow) n++;
-  if (filterSpecies) n++;
+  n += filterSpecies.size;
   for (const s of Object.values(filterAccess)) n += s.size;
   return n;
 }
@@ -829,8 +832,8 @@ function updateActiveChips() {
   const chips = [];
   if (filterOpenNow)
     chips.push({ label: t.openNow, remove: () => { toggleOpenNow(); } });
-  if (filterSpecies)
-    chips.push({ label: speciesName(filterSpecies), remove: () => { setSpeciesFilter(null); } });
+  for (const sp of filterSpecies)
+    chips.push({ label: speciesName(sp), remove: () => { setSpeciesFilter(sp); } });
   for (const [k, s] of Object.entries(filterAccess)) {
     const valMap = { road: t.accRoadVals, transport: t.accTransportVals, wade: t.accWadeVals, size: t.accSizeVals, diff: t.accDiffVals };
     for (const v of s) {
@@ -862,7 +865,7 @@ function updateFilterCount() {
     visible = FEATURES.filter(f => {
       const p = f.properties;
       if (filterOpenNow && !p._open) return false;
-      if (filterSpecies && p._species.indexOf("|" + filterSpecies + "|") < 0) return false;
+      if (filterSpecies.size && ![...filterSpecies].some(s => p._species.indexOf("|" + s + "|") >= 0)) return false;
       const accMap = { road: "_road", transport: "_transport", wade: "_wade", size: "_size", diff: "_diff" };
       for (const [k, prop] of Object.entries(accMap)) {
         if (filterAccess[k].size && !filterAccess[k].has(p[prop])) return false;
@@ -876,7 +879,10 @@ function updateFilterCount() {
 function applyFilters() {
   const conditions = [];
   if (filterOpenNow) conditions.push(["==", ["get", "_open"], true]);
-  if (filterSpecies) conditions.push(["in", "|" + filterSpecies + "|", ["get", "_species"]]);
+  if (filterSpecies.size) {
+    const spClauses = [...filterSpecies].map(s => ["in", "|" + s + "|", ["get", "_species"]]);
+    conditions.push(spClauses.length === 1 ? spClauses[0] : ["any", ...spClauses]);
+  }
   const accMap = { road: "_road", transport: "_transport", wade: "_wade", size: "_size", diff: "_diff" };
   for (const [k, prop] of Object.entries(accMap)) {
     if (filterAccess[k].size)
@@ -1241,7 +1247,7 @@ function showToast(msg) {
 function saveFilters() {
   const state = {
     openNow: filterOpenNow,
-    species: filterSpecies,
+    species: [...filterSpecies],
     access: {}
   };
   for (const [k, s] of Object.entries(filterAccess))
@@ -1254,7 +1260,7 @@ function restoreFilters() {
     if (!raw) return;
     const s = JSON.parse(raw);
     if (s.openNow) { filterOpenNow = true; document.getElementById("btn-open-now").classList.add("on"); }
-    if (s.species) { filterSpecies = s.species; buildSpeciesChips(); }
+    if (s.species) { filterSpecies = new Set(Array.isArray(s.species) ? s.species : [s.species]); buildSpeciesChips(); }
     if (s.access) {
       for (const [k, arr] of Object.entries(s.access))
         if (filterAccess[k]) for (const v of arr) filterAccess[k].add(v);
@@ -1289,7 +1295,7 @@ document.addEventListener("keydown", e => {
 document.getElementById("btn-share").addEventListener("click", () => {
   const params = new URLSearchParams();
   if (filterOpenNow) params.set("open", "1");
-  if (filterSpecies) params.set("sp", filterSpecies);
+  if (filterSpecies.size) params.set("sp", [...filterSpecies].join(","));
   for (const [k, s] of Object.entries(filterAccess))
     if (s.size) params.set("f_" + k, [...s].join(","));
   if (lang !== "es") params.set("lang", lang);
@@ -1305,7 +1311,7 @@ function restoreUrlFilters() {
     filterOpenNow = true;
     document.getElementById("btn-open-now").classList.add("on");
   }
-  if (params.get("sp")) { filterSpecies = params.get("sp"); buildSpeciesChips(); }
+  if (params.get("sp")) { filterSpecies = new Set(params.get("sp").split(",")); buildSpeciesChips(); }
   const accKeys = ["road", "transport", "wade", "size", "diff"];
   for (const k of accKeys) {
     const v = params.get("f_" + k);
